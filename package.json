@@ -20,7 +20,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettier:write": "prettier src/**/*.{ts,tsx,js,jsx} --write"
+    "prettier:write": "prettier src/**/*.{ts,tsx,js,jsx} --write",
+    "postinstall": "husky install",
+    "hooks:install": "husky install",
+    "hooks:uninstall": "husky uninstall",
+    "lint": "eslint ."
   },
   "browserslist": {
     "production": [
@@ -36,16 +40,21 @@
   },
   "packageManager": "yarn@3.2.3",
   "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "eslint": "^8.0.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard-with-typescript": "latest",
+    "eslint-import-resolver-typescript": "^3.5.1",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "latest",
-    "prettier": "^2.7.1"
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1",
+    "pretty-quick": "^3.1.3"
   }
 }
