@@ -6,7 +6,8 @@
     "extends": [
       "airbnb",
       "plugin:react/recommended",
-      "plugin:@typescript-eslint/recommended"
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -16,8 +17,9 @@
       "ecmaVersion": "latest",
       "sourceType": "module"
     },
-    "plugins": ["react", "react-hooks", "@typescript-eslint"],
+    "plugins": ["react", "react-hooks", "@typescript-eslint","prettier"],
     "rules": {
+        "prettier/prettier": "error",
       "import/no-import-module-exports": "off",
       "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
       "import/extensions": [
