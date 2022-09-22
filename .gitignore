@@ -1,15 +1,11 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
@@ -18,6 +14,35 @@
 .env.test.local
 .env.production.local
 
+# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# exclude webstorm and idea files
+.idea
+
+# exclude environment variables
+.env*
+
+# include encrypted environment variables
+!.env*.encrypted
+
+# exclude keys
+*.aes
+
+# exclude coverage
+/coverage
+.nyc_output
+
+# yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# cypress
+cypress/screenshots
+cypress/videos
