@@ -37,39 +37,10 @@ const App: FC = () => {
 
   return (
     <div className="App">
-      <div className="button-modalities-wrapper">
-        <label>
-          <input
-            type="checkbox"
-            checked={viewModeEnabled}
-            onChange={() => setViewModeEnabled(!viewModeEnabled)}
-          />
-          View mode
-        </label>
-
-        <label>
-          <input
-            type="checkbox"
-            checked={zenModeEnabled}
-            onChange={() => setZenModeEnabled(!zenModeEnabled)}
-          />
-          Zen mode
-        </label>
-
-        <label>
-          <input
-            type="checkbox"
-            checked={gridModeEnabled}
-            onChange={() => setGridModeEnabled(!gridModeEnabled)}
-          />
-          Grid mode
-        </label>
-      </div>
       <div
         className="excalidraw-wrapper"
         style={{
           height: '800px',
-          margin: '50px',
         }}
       >
         <>
