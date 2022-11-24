@@ -37,7 +37,7 @@ const App: FC = () => {
 
       // eslint-disable-next-line no-fallthrough
       case Context.PLAYER:
-        // find if data posted and send it.
+        // todo: find if data posted and send it.
         return getView(InitialData);
       // eslint-disable-next-line no-fallthrough
       default:

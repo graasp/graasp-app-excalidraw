@@ -9,7 +9,7 @@ import {
   ExcalidrawProps,
 } from '@excalidraw/excalidraw/types/types';
 
-function getView(initialData: any): ReactElement {
+export default function getView(initialData: any): ReactElement {
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null);
   const [viewModeEnabled] = useState(false);
   const [zenModeEnabled] = useState(false);
