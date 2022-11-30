@@ -1,20 +1,27 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import React, { ReactElement, useRef, useState } from 'react';
+import React, { ReactElement, useRef } from 'react';
+
+import { AppData } from '@graasp/apps-query-client';
 
 import { Excalidraw } from '@excalidraw/excalidraw';
 import type { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types';
 import {
   AppState,
   ExcalidrawImperativeAPI,
-  ExcalidrawProps,
 } from '@excalidraw/excalidraw/types/types';
 
-export default function getView(initialData: any): ReactElement {
+import initialData from '../InitialData';
+import { APP_DATA_VISIBILITY } from '../config/appDataTypes';
+import { useAppDataContext } from './context/AppDataContext';
+
+const GetView = (data: AppData): ReactElement => {
+  const { patchAppData } = useAppDataContext();
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null);
-  const [viewModeEnabled] = useState(false);
-  const [zenModeEnabled] = useState(false);
-  const [gridModeEnabled] = useState(false);
-  const [theme] = useState<ExcalidrawProps['theme']>('light');
+  const viewModeEnabled = false;
+  const zenModeEnabled = false;
+  const gridModeEnabled = false;
+  const theme = 'light';
+  // eslint-disable-next-line react/destructuring-assignment
+  const { id } = data;
 
   return (
     <div className="App">
@@ -29,10 +36,11 @@ export default function getView(initialData: any): ReactElement {
           initialData={initialData}
           onChange={(elements: readonly ExcalidrawElement[], state: AppState) =>
             () => {
-              console.log('Elements :', elements, 'State : ', state);
-              // post elements and state
+              patchAppData({
+                data: { elements, state },
+                id,
+              });
             }}
-          onPointerUpdate={(payload) => console.log(payload)}
           viewModeEnabled={viewModeEnabled}
           zenModeEnabled={zenModeEnabled}
           gridModeEnabled={gridModeEnabled}
@@ -42,4 +50,25 @@ export default function getView(initialData: any): ReactElement {
       </div>
     </div>
   );
-}
+};
+const LoadView = (): ReactElement => {
+  const { postAppData, appDataArray } = useAppDataContext();
+  // get if empty send empty and create else send new vals
+  if (appDataArray.isEmpty()) {
+    postAppData({
+      data: {
+        elements: [],
+        state: {
+          viewBackgroundColor: '#AFEEEE',
+          currentItemFontFamily: 1,
+        },
+      },
+      type: 'session',
+      visibility: APP_DATA_VISIBILITY.MEMBER,
+    });
+  }
+  const appData = appDataArray.find(({ type }) => type === 'session');
+  if (appData) return GetView(appData);
+  return LoadView();
+};
+export default LoadView;
