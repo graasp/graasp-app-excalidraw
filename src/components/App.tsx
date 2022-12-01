@@ -27,11 +27,11 @@ const App: FC = () => {
   const renderContent = (): ReactElement => {
     switch (context.get('context')) {
       case Context.BUILDER:
-        return LoadView();
+        return <LoadView />;
       case Context.ANALYTICS:
-        return LoadView();
+        return <LoadView />;
       case Context.PLAYER:
-        return LoadView();
+        return <LoadView />;
       default:
         return <PlayerView />;
     }

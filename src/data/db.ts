@@ -64,6 +64,22 @@ const buildDatabase = (
       createdAt: new Date(Date.now() - 1500).toISOString(),
       updatedAt: new Date(Date.now() - 1500).toISOString(),
     },
+    {
+      id: v4(),
+      data: {
+        elements: [],
+        state: {
+          viewBackgroundColor: '#AFEEEE',
+          currentItemFontFamily: 1,
+        },
+      },
+      memberId: mockMembers[0].id,
+      type: 'session',
+      itemId: appContext.itemId || '',
+      creator: mockMembers[1].id,
+      createdAt: new Date(Date.now() - 1500).toISOString(),
+      updatedAt: new Date(Date.now() - 1500).toISOString(),
+    },
   ],
   appActions: [],
   members: members ?? mockMembers,

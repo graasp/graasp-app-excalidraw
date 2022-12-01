@@ -9,11 +9,14 @@ import {
   ExcalidrawImperativeAPI,
 } from '@excalidraw/excalidraw/types/types';
 
-import initialData from '../InitialData';
+import getInitialData from '../InitialData';
+// import initialData from '../InitialData';
 import { APP_DATA_VISIBILITY } from '../config/appDataTypes';
+import Loader from './common/Loader';
 import { useAppDataContext } from './context/AppDataContext';
 
-const GetView = (data: AppData): ReactElement => {
+const GetView = (arg: { appData: AppData }): ReactElement => {
+  console.log('getting view');
   const { patchAppData } = useAppDataContext();
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null);
   const viewModeEnabled = false;
@@ -21,7 +24,9 @@ const GetView = (data: AppData): ReactElement => {
   const gridModeEnabled = false;
   const theme = 'light';
   // eslint-disable-next-line react/destructuring-assignment
-  const { id } = data;
+  const { id, data } = arg.appData;
+  const { elements, state } = data;
+  const iData = getInitialData(elements, state);
 
   return (
     <div className="App">
@@ -33,11 +38,15 @@ const GetView = (data: AppData): ReactElement => {
       >
         <Excalidraw
           ref={excalidrawRef}
-          initialData={initialData}
-          onChange={(elements: readonly ExcalidrawElement[], state: AppState) =>
+          initialData={iData}
+          onChange={(
+              elementsNew: readonly ExcalidrawElement[],
+              stateNew: AppState,
+            ) =>
             () => {
+              console.log('patching');
               patchAppData({
-                data: { elements, state },
+                data: { elementsNew, stateNew },
                 id,
               });
             }}
@@ -54,7 +63,9 @@ const GetView = (data: AppData): ReactElement => {
 const LoadView = (): ReactElement => {
   const { postAppData, appDataArray } = useAppDataContext();
   // get if empty send empty and create else send new vals
-  if (appDataArray.isEmpty()) {
+  const appData = appDataArray.find(({ type }) => type === 'session');
+  if (!appData) {
+    console.log('app data:', appData);
     postAppData({
       data: {
         elements: [],
@@ -66,9 +77,9 @@ const LoadView = (): ReactElement => {
       type: 'session',
       visibility: APP_DATA_VISIBILITY.MEMBER,
     });
+    console.log(postAppData);
+    return <Loader />;
   }
-  const appData = appDataArray.find(({ type }) => type === 'session');
-  if (appData) return GetView(appData);
-  return LoadView();
+  return <GetView appData={appData} />;
 };
 export default LoadView;
