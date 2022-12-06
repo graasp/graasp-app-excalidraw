@@ -16,7 +16,6 @@ import Loader from './common/Loader';
 import { useAppDataContext } from './context/AppDataContext';
 
 const GetView = (arg: { appData: AppData }): ReactElement => {
-  console.log('getting view');
   const { patchAppData } = useAppDataContext();
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null);
   const viewModeEnabled = false;
@@ -25,8 +24,7 @@ const GetView = (arg: { appData: AppData }): ReactElement => {
   const theme = 'light';
   // eslint-disable-next-line react/destructuring-assignment
   const { id, data } = arg.appData;
-  const { elements, state } = data;
-  const iData = getInitialData(elements, state);
+  const iData = getInitialData(data.elements, data.state);
 
   return (
     <div className="App">
@@ -40,16 +38,15 @@ const GetView = (arg: { appData: AppData }): ReactElement => {
           ref={excalidrawRef}
           initialData={iData}
           onChange={(
-              elementsNew: readonly ExcalidrawElement[],
-              stateNew: AppState,
-            ) =>
-            () => {
-              console.log('patching');
-              patchAppData({
-                data: { elementsNew, stateNew },
-                id,
-              });
-            }}
+            elements: readonly ExcalidrawElement[],
+            state: AppState,
+          ) => {
+            console.log(`ID =${id}`);
+            patchAppData({
+              data: { elements, state },
+              id,
+            });
+          }}
           viewModeEnabled={viewModeEnabled}
           zenModeEnabled={zenModeEnabled}
           gridModeEnabled={gridModeEnabled}
@@ -77,7 +74,6 @@ const LoadView = (): ReactElement => {
       type: 'session',
       visibility: APP_DATA_VISIBILITY.MEMBER,
     });
-    console.log(postAppData);
     return <Loader />;
   }
   return <GetView appData={appData} />;

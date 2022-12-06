@@ -3,16 +3,14 @@ import { init } from 'i18next';
 
 import { ImportedDataState } from '@excalidraw/excalidraw/types/data/types';
 
-let initialData: ImportedDataState = {
-  elements: [],
-  appState: { viewBackgroundColor: '#AFEEEE', currentItemFontFamily: 1 },
-  scrollToContent: true,
-};
-
 const getInitialData = (elements: any, state: any): ImportedDataState => {
-  initialData.elements = elements;
-  initialData.appState = state;
-  return initialData;
+  console.log(elements);
+  let data: ImportedDataState = {
+    elements,
+    appState: state,
+    scrollToContent: true,
+  };
+  return data;
 };
 
 export default getInitialData;
