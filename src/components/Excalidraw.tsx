@@ -1,4 +1,6 @@
-import React, { ReactElement, useRef } from 'react';
+import { debounce } from 'lodash';
+
+import React, { ReactElement, useRef, useState } from 'react';
 
 import { AppData } from '@graasp/apps-query-client';
 
@@ -16,15 +18,40 @@ import Loader from './common/Loader';
 import { useAppDataContext } from './context/AppDataContext';
 
 const GetView = (arg: { appData: AppData }): ReactElement => {
-  const { patchAppData } = useAppDataContext();
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null);
   const viewModeEnabled = false;
   const zenModeEnabled = false;
   const gridModeEnabled = false;
   const theme = 'light';
+  const { patchAppData } = useAppDataContext();
   // eslint-disable-next-line react/destructuring-assignment
   const { id, data } = arg.appData;
   const iData = getInitialData(data.elements, data.state);
+
+  const debouncedPatch = React.useRef(
+    debounce((elements, state) => {
+      if (excalidrawRef.current?.ready && !state.isLoading) {
+        patchAppData({
+          data: { elements, state },
+          id,
+        });
+      }
+    }, 5000),
+  ).current;
+
+  function handleChange(
+    elements: readonly ExcalidrawElement[],
+    state: AppState,
+  ): void {
+    debouncedPatch(elements, state);
+  }
+
+  React.useEffect(
+    () => () => {
+      debouncedPatch.cancel();
+    },
+    [debouncedPatch],
+  );
 
   return (
     <div className="App">
@@ -37,16 +64,9 @@ const GetView = (arg: { appData: AppData }): ReactElement => {
         <Excalidraw
           ref={excalidrawRef}
           initialData={iData}
-          onChange={(
-            elements: readonly ExcalidrawElement[],
-            state: AppState,
-          ) => {
-            console.log(`ID =${id}`);
-            patchAppData({
-              data: { elements, state },
-              id,
-            });
-          }}
+          onChange={(elements: readonly ExcalidrawElement[], state: AppState) =>
+            handleChange(elements, state)
+          }
           viewModeEnabled={viewModeEnabled}
           zenModeEnabled={zenModeEnabled}
           gridModeEnabled={gridModeEnabled}
@@ -62,7 +82,7 @@ const LoadView = (): ReactElement => {
   // get if empty send empty and create else send new vals
   const appData = appDataArray.find(({ type }) => type === 'session');
   if (!appData) {
-    console.log('app data:', appData);
+    console.log('posting appdata');
     postAppData({
       data: {
         elements: [],
