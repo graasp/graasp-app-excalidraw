@@ -9440,9 +9440,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graasp-app-template-ts@workspace:.":
+"graasp-app-excalidraw@workspace:.":
   version: 0.0.0-use.local
-  resolution: "graasp-app-template-ts@workspace:."
+  resolution: "graasp-app-excalidraw@workspace:."
   dependencies:
     "@commitlint/cli": 17.1.2
     "@commitlint/config-conventional": 17.1.0

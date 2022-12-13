@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 enum APP_DATA_TYPES {
   MOCK_TYPE = 'mock_type',
+  SESSION_TYPE = 'session',
 }
 
 enum APP_DATA_VISIBILITY {

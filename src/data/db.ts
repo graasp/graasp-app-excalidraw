@@ -39,49 +39,10 @@ const buildDatabase = (
   appContext: Partial<LocalContext>,
   members?: Member[],
 ): Database => ({
-  appData: [
-    {
-      id: v4(),
-      data: {
-        content: '',
-      },
-      memberId: mockMembers[1].id,
-      type: APP_DATA_TYPES.MOCK_TYPE,
-      itemId: appContext.itemId || '',
-      creator: mockMembers[1].id,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: v4(),
-      data: {
-        content: 'Another AppData',
-      },
-      memberId: mockMembers[0].id,
-      type: APP_DATA_TYPES.MOCK_TYPE,
-      itemId: appContext.itemId || '',
-      creator: mockMembers[1].id,
-      createdAt: new Date(Date.now() - 1500).toISOString(),
-      updatedAt: new Date(Date.now() - 1500).toISOString(),
-    },
-  ],
+  appData: [],
   appActions: [],
   members: members ?? mockMembers,
-  appSettings: [
-    {
-      id: v4(),
-      name: MOCK_SETTING_KEY,
-      data: {
-        ...DEFAULT_MOCK_SETTING,
-        // todo: place here any setting you would like to overwrite
-        // settingKey: value
-      },
-      itemId: appContext.itemId || '',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      creator: mockMembers[0].id,
-    },
-  ],
+  appSettings: [],
 });
 
 export default buildDatabase;

@@ -9,10 +9,10 @@ import '../App.css';
 import { DEFAULT_CONTEXT_LANGUAGE } from '../config/appSettings';
 import i18n from '../config/i18n';
 import LoadView from './Excalidraw';
+import Loader from './common/Loader';
 import { AppDataProvider } from './context/AppDataContext';
 import { AppSettingProvider } from './context/AppSettingContext';
 import { MembersProvider } from './context/MembersContext';
-import PlayerView from './views/read/PlayerView';
 
 const App: FC = () => {
   const context: RecordOf<LocalContext> = useContext(HOCContext);
@@ -27,13 +27,11 @@ const App: FC = () => {
   const renderContent = (): ReactElement => {
     switch (context.get('context')) {
       case Context.BUILDER:
-        return <LoadView />;
       case Context.ANALYTICS:
-        return <LoadView />;
       case Context.PLAYER:
         return <LoadView />;
       default:
-        return <PlayerView />;
+        return <Loader />;
     }
   };
 

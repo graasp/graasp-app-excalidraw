@@ -1,11 +1,11 @@
 {
-  "name": "graasp-app-template-ts",
+  "name": "graasp-app-excalidraw",
   "version": "0.1.0",
   "private": true,
   "license": "AGPL-3.0-only",
   "author": "Graasp",
   "contributors": [
-    "Basile Spaenlehauer"
+    "Luna Godier"
   ],
   "homepage": ".",
   "dependencies": {

@@ -1,6 +1,6 @@
 import { debounce } from 'lodash';
 
-import React, { ReactElement, useRef, useState } from 'react';
+import React, { ReactElement, useRef } from 'react';
 
 import { AppData } from '@graasp/apps-query-client';
 
@@ -11,13 +11,17 @@ import {
   ExcalidrawImperativeAPI,
 } from '@excalidraw/excalidraw/types/types';
 
-import getInitialData from '../InitialData';
-// import initialData from '../InitialData';
-import { APP_DATA_VISIBILITY } from '../config/appDataTypes';
+import { APP_DATA_TYPES, APP_DATA_VISIBILITY } from '../config/appDataTypes';
+import {
+  currentItemFontFamily,
+  debounceValue,
+  viewBackgroundColor,
+} from '../config/settings';
+import getInitialData from './InitialData';
 import Loader from './common/Loader';
 import { useAppDataContext } from './context/AppDataContext';
 
-const GetView = (arg: { appData: AppData }): ReactElement => {
+const GetView = (prop: { appData: AppData }): ReactElement => {
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null);
   const viewModeEnabled = false;
   const zenModeEnabled = false;
@@ -25,7 +29,7 @@ const GetView = (arg: { appData: AppData }): ReactElement => {
   const theme = 'light';
   const { patchAppData } = useAppDataContext();
   // eslint-disable-next-line react/destructuring-assignment
-  const { id, data } = arg.appData;
+  const { id, data } = prop.appData;
   const iData = getInitialData(data.elements, data.state);
 
   const debouncedPatch = React.useRef(
@@ -36,7 +40,7 @@ const GetView = (arg: { appData: AppData }): ReactElement => {
           id,
         });
       }
-    }, 5000),
+    }, debounceValue),
   ).current;
 
   function handleChange(
@@ -53,12 +57,15 @@ const GetView = (arg: { appData: AppData }): ReactElement => {
     [debouncedPatch],
   );
 
+  const date = new Date();
+  const name = `darwing${date.toISOString()}`;
   return (
     <div className="App">
       <div
         className="excalidraw-wrapper"
         style={{
-          height: '800px',
+          height: '100%',
+          width: '100%',
         }}
       >
         <Excalidraw
@@ -71,7 +78,7 @@ const GetView = (arg: { appData: AppData }): ReactElement => {
           zenModeEnabled={zenModeEnabled}
           gridModeEnabled={gridModeEnabled}
           theme={theme}
-          name="Custom name of drawing"
+          name={name}
         />
       </div>
     </div>
@@ -82,16 +89,15 @@ const LoadView = (): ReactElement => {
   // get if empty send empty and create else send new vals
   const appData = appDataArray.find(({ type }) => type === 'session');
   if (!appData) {
-    console.log('posting appdata');
     postAppData({
       data: {
         elements: [],
         state: {
-          viewBackgroundColor: '#AFEEEE',
-          currentItemFontFamily: 1,
+          viewBackgroundColor,
+          currentItemFontFamily,
         },
       },
-      type: 'session',
+      type: APP_DATA_TYPES.SESSION_TYPE,
       visibility: APP_DATA_VISIBILITY.MEMBER,
     });
     return <Loader />;
