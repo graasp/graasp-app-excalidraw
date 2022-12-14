@@ -3,13 +3,8 @@
 // when testing with cypress (defined in /cypress/fixtures/).
 
 /* istanbul ignore file */
-import { v4 } from 'uuid';
-
 import type { Database, LocalContext, Member } from '@graasp/apps-query-client';
 
-import { APP_DATA_TYPES } from '../config/appDataTypes';
-import { MOCK_SETTING_KEY } from '../config/appSettingTypes';
-import { DEFAULT_MOCK_SETTING } from '../config/appSettings';
 import { REACT_APP_API_HOST } from '../config/env';
 
 export const mockContext: LocalContext = {
