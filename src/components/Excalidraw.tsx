@@ -30,7 +30,10 @@ const GetView = (prop: { appData: AppData }): ReactElement => {
   const { patchAppData } = useAppDataContext();
   // eslint-disable-next-line react/destructuring-assignment
   const { id, data } = prop.appData;
-  const iData = getInitialData(data.elements, data.state);
+  const iData = getInitialData(
+    data.elements as readonly ExcalidrawElement[],
+    data.state as AppState,
+  );
 
   const debouncedPatch = React.useRef(
     debounce((elements, state) => {
