@@ -13,9 +13,9 @@ import {
 
 import { APP_DATA_TYPES, APP_DATA_VISIBILITY } from '../config/appDataTypes';
 import {
-  currentItemFontFamily,
-  debounceValue,
-  viewBackgroundColor,
+  CURRENT_ITEM_FONT_FAMILY,
+  DEBOUNCE_VALE,
+  VIEW_BACKGROUND_COLOR,
 } from '../config/settings';
 import getInitialData from './InitialData';
 import Loader from './common/Loader';
@@ -40,7 +40,7 @@ const GetView = (prop: { appData: AppData }): ReactElement => {
           id,
         });
       }
-    }, debounceValue),
+    }, DEBOUNCE_VALE),
   ).current;
 
   function handleChange(
@@ -93,8 +93,8 @@ const LoadView = (): ReactElement => {
       data: {
         elements: [],
         state: {
-          viewBackgroundColor,
-          currentItemFontFamily,
+          viewBackgroundColor: VIEW_BACKGROUND_COLOR,
+          currentItemFontFamily: CURRENT_ITEM_FONT_FAMILY,
         },
       },
       type: APP_DATA_TYPES.SESSION_TYPE,
