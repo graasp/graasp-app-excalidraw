@@ -14,7 +14,7 @@ import {
 import { APP_DATA_TYPES, APP_DATA_VISIBILITY } from '../config/appDataTypes';
 import {
   CURRENT_ITEM_FONT_FAMILY,
-  DEBOUNCE_VALE,
+  DEBOUNCE_VALUE,
   VIEW_BACKGROUND_COLOR,
 } from '../config/settings';
 import getInitialData from './InitialData';
@@ -43,7 +43,7 @@ const GetView = (prop: { appData: AppData }): ReactElement => {
           id,
         });
       }
-    }, DEBOUNCE_VALE),
+    }, DEBOUNCE_VALUE),
   ).current;
 
   function handleChange(
