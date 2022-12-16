@@ -1,0 +1,86 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: set up node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Yarn Install and Cache
+        uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
+        with:
+          cypress: true
+
+      - name: Build
+        run: yarn build
+        shell: bash
+        env:
+          REACT_APP_API_HOST: http://localhost:3636
+          REACT_APP_GRAASP_DOMAIN: localhost
+          REACT_APP_GRAASP_APP_ID: id-1234567890
+          REACT_APP_ENABLE_MOCK_API: true
+          NODE_ENV: test
+
+      # Uncomment to enable cypress tests
+      #####################################
+      # - name: cypress run
+      #   uses: cypress-io/github-action@v4
+      #   env:
+      #     REACT_APP_API_HOST: http://localhost:3636
+      #     REACT_APP_GRAASP_DOMAIN: localhost
+      #     REACT_APP_GRAASP_APP_ID: id-1234567890
+      #     REACT_APP_ENABLE_MOCK_API: true
+      #     NODE_ENV: test
+      #   with:
+      #     build: yarn build
+      #     config: baseUrl=http://localhost:3000
+      #     start: yarn start:ci
+      #     wait-on: 'http://localhost:3000'
+      #     wait-on-timeout: 180
+      #     browser: chrome
+      #     quiet: true
+      #     # point to new cypress@10 config file
+      #     config-file: cypress.config.ts
+
+      # # after the test run completes
+      # # store videos and any screenshots
+      # # NOTE: screenshots will be generated only if E2E test failed
+      # # thus we store screenshots only on failures
+      # # Alternative: create and commit an empty cypress/screenshots folder
+      # # to always have something to upload
+      # - uses: actions/upload-artifact@v3
+      #   if: failure()
+      #   with:
+      #     name: cypress-screenshots
+      #     path: cypress/screenshots
+
+      # - name: coverage report
+      #   run: npx nyc report --reporter=text-summary
+
+      # - name: coverage commit status
+      #   run: |
+      #     total=$(cat coverage/coverage-summary.json | jq .total.lines.pct)
+      #     echo Total coverage ${total}
+      #     curl -S -s \
+      #       -X POST \
+      #       -H "Accept: application/vnd.github+json" \
+      #       -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+      #       https://api.github.com/repos/${REPO_PATH}/statuses/${COMMIT_SHA} \
+      #       -d "{\"state\":\"success\",\"target_url\":\"https://github.com/${REPO_PATH}/actions/runs/${RUN_ID}\",\"description\":\"${total}%\",\"context\":\"code-coverage\"}"
+      #   env:
+      #     GITHUB_TOKEN: ${{ github.token }}
+      #     REPO_PATH: ${{ github.repository }}
+      #     COMMIT_SHA: ${{ github.sha }}
+      #     RUN_ID: ${{ github.run_id }}
