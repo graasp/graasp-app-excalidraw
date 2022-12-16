@@ -1,46 +1,108 @@
-# Getting Started with Create React App
+# Graasp App Template Typescript
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository hosts a template for a Graasp app using Typescript, React, MUI and the Graasp API.
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+### Local Env Files
 
-### `yarn start`
+To pass different configurations to the app when running locally, we advise to create:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- A _development_ configuration file: This file will be used when you **work** on the app.
+  It will be called `.env.development`.
+- A _test_ configuration file: This file will be used when you want to **perform automated tests**.
+  It will be called `.env.test`.
+- A _local_ configuration file: This file will be used to **test the app with the graasp frontend** (no mocked API).
+  It will be called `.env.local`.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The required variables to put inside the configuration file are:
 
-### `yarn test`
+| variable name             | description                                                                                                                                                  |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `REACT_APP_GRAASP_APP_ID` | Id of the app. Should be unique and can be generated [here](https://www.uuidgenerator.net/version4)                                                          |
+| `REACT_APP_MOCK_API`      | Whether to use the mocked API (lighter development environnement)                                                                                            |
+| `REACT_APP_API_HOST`      | URL of the graasp backend. When using the mock api this can be any url                                                                                       |
+| `REACT_APP_GRAASP_DOMAIN` | Domain where the app will be hosted. When working locally, this should be `localhost`                                                                        |
+| `PORT`                    | Specify the port to be used, when not set the app will run on port 3000 by default, so you can access it at [`http://localhost:3000`](http://localhost:3000) |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Following these instructions we recommend using the following files (adapt to your need):
 
-### `yarn build`
+`.env.development`:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```sh
+# id of the app (generate one yourself)
+REACT_APP_GRAASP_APP_ID=25c25f3f-ce4a-4f08-a7d5-61eb5be8778c
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# whether to use the mock api
+# (fakes the db so you don't need the graasp backend running)
+REACT_APP_MOCK_API=true
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# the url of the api backend
+# when using the mock api this can be any url
+REACT_APP_API_HOST=http://localhost:3636
 
-### `yarn eject`
+# domain of the app
+REACT_APP_GRAASP_DOMAIN=localhost
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# port to use when running the app
+PORT=3005
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`env.local`:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```sh
+PORT=3008
+CYPRESS_BASE_URL=http://localhost:3008
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# do not use fake api
+REACT_APP_MOCK_API=false
 
-## Learn More
+REACT_APP_GRAASP_APP_ID=147e89b5-7760-48b3-81ef-10c4a2dcc786
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# this is the url of the graasp api listening on port 3000 (default)
+REACT_APP_API_HOST=http://localhost:3000
+REACT_APP_GRAASP_DOMAIN=localhost
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# set the environment to production to replicate as closely as possible the real world
+NODE_ENV=production
+```
+
+### Sentry
+
+Add the `SENTRY_DSN` secret to the GitHub repo secrets to track errors using Sentry.  
+See the [Sentry Docs](https://docs.sentry.io/platforms/javascript/guides/react/).
+
+## Running the app
+
+Run the app with:
+
+```bash
+yarn start:dev
+```
+
+## Testing the app
+
+### Test-driven development (TDD)
+
+To develop your app following the [test-driven development](https://en.wikipedia.org/wiki/Test-driven_development) methodology you should:
+
+1. Open 2 terminals (or 2 tabs)
+2. Run `yarn start:dev` in your first terminal to **launch the app**
+3. Run `yarn cypress:open` in your second terminal to **open the cypress runner** and execute the test you want
+
+### Run all tests
+
+To run all the tests on your app and get a coverage report you should:
+
+1. Open a terminal
+2. Run `yarn test`, which will start your app _and_ run all the cypress tests you wrote
+
+When the tests finish you will get a report of your code coverage. If some tests fail, try to run the independently using the TDD method above.
+
+## Documentation
+
+### More info on the tools
+
+Please have a look at the documentation to [start your app and setup all necessary tools](docs/SETUP.md).
+
+Also have a look at the [MUI quick guide](docs/MUI.md).
