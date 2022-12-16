@@ -32,7 +32,7 @@ const GetView = (prop: { appData: AppData }): ReactElement => {
   const { id, data } = prop.appData;
   const iData = getInitialData(
     data.elements as readonly ExcalidrawElement[],
-    data.state as AppState,
+    // data.state as AppState,
   );
 
   const debouncedPatch = React.useRef(
