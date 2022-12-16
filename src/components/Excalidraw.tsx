@@ -67,7 +67,7 @@ const GetView = (prop: { appData: AppData }): ReactElement => {
       <div
         className="excalidraw-wrapper"
         style={{
-          height: '100%',
+          height: '100vh',
           width: '100%',
         }}
       >
