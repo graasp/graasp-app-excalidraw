@@ -1,6 +1,7 @@
 import { ImportedDataState } from '@excalidraw/excalidraw/types/data/types';
 import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types';
-import { AppState } from '@excalidraw/excalidraw/types/types';
+
+// import { AppState } from '@excalidraw/excalidraw/types/types';
 
 const getInitialData = (
   elements: readonly ExcalidrawElement[],
