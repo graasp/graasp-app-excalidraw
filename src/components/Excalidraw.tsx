@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { debounce } from 'lodash';
 
 import React, { ReactElement, useRef } from 'react';
@@ -50,6 +51,7 @@ const GetView = (prop: { appData: AppData }): ReactElement => {
     elements: readonly ExcalidrawElement[],
     state: AppState,
   ): void {
+    console.log('handling changes');
     debouncedPatch(elements, state);
   }
 
@@ -92,6 +94,7 @@ const LoadView = (): ReactElement => {
   // get if empty send empty and create else send new vals
   const appData = appDataArray.find(({ type }) => type === 'session');
   if (!appData) {
+    console.log('posting app data');
     postAppData({
       data: {
         elements: [],
@@ -103,6 +106,7 @@ const LoadView = (): ReactElement => {
       type: APP_DATA_TYPES.SESSION_TYPE,
       visibility: APP_DATA_VISIBILITY.MEMBER,
     });
+    console.log('stopped here in Load View');
     return <Loader />;
   }
   return <GetView appData={appData} />;
