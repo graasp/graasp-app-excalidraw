@@ -26,7 +26,7 @@ export const generateSentryConfig = (): SentryConfigType => {
   }
 
   return {
-    dsn: (!window.Cypress && process.env.SENTRY_DSN) || '',
+    dsn: (!window.Cypress && process.env.REACT_APP_SENTRY_DSN) || '',
     environment: SENTRY_ENVIRONMENT,
     tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
   };
