@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { debounce } from 'lodash';
 
 import React, { ReactElement, useRef } from 'react';
@@ -14,7 +15,7 @@ import {
 import { APP_DATA_TYPES, APP_DATA_VISIBILITY } from '../config/appDataTypes';
 import {
   CURRENT_ITEM_FONT_FAMILY,
-  DEBOUNCE_VALE,
+  DEBOUNCE_VALUE,
   VIEW_BACKGROUND_COLOR,
 } from '../config/settings';
 import getInitialData from './InitialData';
@@ -32,7 +33,7 @@ const GetView = (prop: { appData: AppData }): ReactElement => {
   const { id, data } = prop.appData;
   const iData = getInitialData(
     data.elements as readonly ExcalidrawElement[],
-    data.state as AppState,
+    // data.state as AppState,
   );
 
   const debouncedPatch = React.useRef(
@@ -43,13 +44,14 @@ const GetView = (prop: { appData: AppData }): ReactElement => {
           id,
         });
       }
-    }, DEBOUNCE_VALE),
+    }, DEBOUNCE_VALUE),
   ).current;
 
   function handleChange(
     elements: readonly ExcalidrawElement[],
     state: AppState,
   ): void {
+    console.log('handling changes');
     debouncedPatch(elements, state);
   }
 
@@ -92,6 +94,7 @@ const LoadView = (): ReactElement => {
   // get if empty send empty and create else send new vals
   const appData = appDataArray.find(({ type }) => type === 'session');
   if (!appData) {
+    console.log('posting app data');
     postAppData({
       data: {
         elements: [],
@@ -103,6 +106,7 @@ const LoadView = (): ReactElement => {
       type: APP_DATA_TYPES.SESSION_TYPE,
       visibility: APP_DATA_VISIBILITY.MEMBER,
     });
+    console.log('stopped here in Load View');
     return <Loader />;
   }
   return <GetView appData={appData} />;

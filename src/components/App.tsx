@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { RecordOf } from 'immutable';
 
 import React, { FC, ReactElement, useContext, useEffect } from 'react';
@@ -27,8 +28,12 @@ const App: FC = () => {
   const renderContent = (): ReactElement => {
     switch (context.get('context')) {
       case Context.BUILDER:
+        console.log('rendering for builder');
+        return <LoadView />;
       case Context.ANALYTICS:
+        return <Loader />;
       case Context.PLAYER:
+        console.log('rendering for player');
         return <LoadView />;
       default:
         return <Loader />;
