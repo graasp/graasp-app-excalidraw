@@ -1,6 +1,6 @@
 import { debounce } from 'lodash';
 
-import React, { ReactElement, useRef } from 'react';
+import React, { ReactElement, useEffect, useRef } from 'react';
 
 import { AppData } from '@graasp/apps-query-client';
 
@@ -95,6 +95,8 @@ const LoadView = (): ReactElement => {
   // get if empty send empty and create else send new vals
   const appData = appDataArray.find(({ type }) => type === 'session');
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  useEffect(() => {}, [appDataArray]);
   if (!appData) {
     // eslint-disable-next-line no-console
     console.log('posting app data');
