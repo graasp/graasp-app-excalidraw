@@ -4,7 +4,6 @@
     "es2021": true
   },
   "extends": [
-    "plugin:react/jsx-runtime",
     "airbnb",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",

@@ -3856,6 +3856,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash.debounce@npm:4.0.7":
+  version: 4.0.7
+  resolution: "@types/lodash.debounce@npm:4.0.7"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: e873b2d77f89010876baba3437ef826b17221b98948e00b5590828334a481dea1c8f9d28543210e564adc53199584f42c3cb171f8b6c3614fefc0b4e0888679c
+  languageName: node
+  linkType: hard
+
 "@types/lodash.isobject@npm:3.0.7":
   version: 3.0.7
   resolution: "@types/lodash.isobject@npm:3.0.7"
@@ -9226,6 +9235,7 @@ __metadata:
     "@testing-library/react": 13.4.0
     "@trivago/prettier-plugin-sort-imports": 4.0.0
     "@types/i18n": 0.13.6
+    "@types/lodash.debounce": 4.0.7
     "@types/lodash.isobject": 3.0.7
     "@types/lodash.isstring": 4.0.7
     "@types/node": 18.11.17
@@ -9251,7 +9261,7 @@ __metadata:
     husky: 8.0.2
     i18next: 22.4.6
     immutable: 4.1.0
-    lodash: ^4.17.21
+    lodash.debounce: 4.0.8
     lodash.isobject: 3.0.2
     lodash.isstring: 4.0.1
     nyc: 15.1.0
@@ -11494,7 +11504,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.debounce@npm:^4.0.8":
+"lodash.debounce@npm:4.0.8, lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
   checksum: a3f527d22c548f43ae31c861ada88b2637eb48ac6aa3eb56e82d44917971b8aa96fbb37aa60efea674dc4ee8c42074f90f7b1f772e9db375435f6c83a19b3bc6
