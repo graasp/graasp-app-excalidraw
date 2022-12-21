@@ -79,7 +79,8 @@ const Root: FC = () => {
   const AppWithContextAndToken = withContext(AppWithContext, {
     LoadingComponent: <Loader />,
     useGetLocalContext: hooks.useGetLocalContext,
-    useAutoResize: hooks.useAutoResize,
+    // do not use because this will collapse the view
+    // useAutoResize: hooks.useAutoResize,
     onError:
       /* istanbul ignore next */
       () => {
