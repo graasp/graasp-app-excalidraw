@@ -2342,22 +2342,22 @@ __metadata:
   linkType: hard
 
 "@graasp/apps-query-client@github:graasp/graasp-apps-query-client":
-  version: 0.2.0
-  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=393d61cca45d06be40f277b9877ca378277ef2b3"
+  version: 0.4.1
+  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=bb68d9c6b2116d92642db3870d2f7e21e7b5cfb0"
   dependencies:
-    "@graasp/utils": "github:graasp/graasp-utils"
+    "@graasp/sdk": "github:graasp/graasp-sdk"
     axios: 0.27.2
     http-status-codes: 2.2.0
     immutable: 4.1.0
-    miragejs: 0.1.45
-    qs: 6.10.5
+    miragejs: 0.1.46
+    qs: 6.11.0
     react-query: 4.0.0-beta.23
     standard-version: 9.5.0
     tsc: 2.0.4
-    uuid: 8.3.2
+    uuid: 9.0.0
   peerDependencies:
-    react: ^17.0.0
-  checksum: dad0d190ba817793d7b7cb69c91e96d51ea53f959dafdf22a78197bd38065aa96c2fe53d282726c372db52994365340a30b2fc39abe4c590c6ecd57ff33bdd03
+    react: ^17.0.0 || ^18.0.0
+  checksum: f2cf552a13a0deb0c10541a6f1499bf1dfef2cfc5b3d3f4e1ef00380d0f6f1974a4c5d9557f3f66eb0ead8ffb81ffef48ed385b81785352cbad985b9254a1986
   languageName: node
   linkType: hard
 
@@ -2375,23 +2375,6 @@ __metadata:
     slonik: 28.1.1
     uuid: 8.3.2
   checksum: 9af6a948678de50d9ae48792982e340d9aafd20e528185b4d34f8e54df7374573d011843741faabf5197cb8d73cf2fbadf033998937a313ceed61295f013dbc8
-  languageName: node
-  linkType: hard
-
-"@graasp/utils@github:graasp/graasp-utils":
-  version: 0.1.0
-  resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=4fa31e8d473b13bfa0bad3e10da9e7b9ca4f20d5"
-  dependencies:
-    "@fastify/secure-session": 5.2.0
-    aws-sdk: 2.1111.0
-    fastify: ^3.29.1
-    fluent-json-schema: 3.1.0
-    immutable: 4.1.0
-    js-cookie: 3.0.1
-    qs: 6.11.0
-    slonik: 28.1.1
-    uuid: 8.3.2
-  checksum: adb0be2eda0f90aa6ec526e0c51b6f8f415d736e23f6adfac4ad458bb0e50e3e098349a4d493d0b6b2b86571644858eb71f9810e535d3147290110f1a0f69f53
   languageName: node
   linkType: hard
 
@@ -12358,9 +12341,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"miragejs@npm:0.1.45":
-  version: 0.1.45
-  resolution: "miragejs@npm:0.1.45"
+"miragejs@npm:0.1.46":
+  version: 0.1.46
+  resolution: "miragejs@npm:0.1.46"
   dependencies:
     "@miragejs/pretender-node-polyfill": ^0.1.0
     inflected: ^2.0.4
@@ -12388,7 +12371,7 @@ __metadata:
     lodash.uniqby: ^4.7.0
     lodash.values: ^4.3.0
     pretender: ^3.4.7
-  checksum: 27d53f9697022d45f65bae67f3ab046e0dd08bd93cfa50d1308d7ee652300651e536a9db43049d449c6b62cc4db445b78f1844c36d4ef41996a87d31410780ee
+  checksum: 1184cd053c6e49bd39333fcebb21750eda64e79f002bdf16199eeec0b494091caf758b0624c9300778075f06f6d4b795c6ef09136930ebe25acba1e0374adcba
   languageName: node
   linkType: hard
 
@@ -14488,15 +14471,6 @@ __metadata:
   version: 1.5.1
   resolution: "q@npm:1.5.1"
   checksum: 147baa93c805bc1200ed698bdf9c72e9e42c05f96d007e33a558b5fdfd63e5ea130e99313f28efc1783e90e6bdb4e48b67a36fcc026b7b09202437ae88a1fb12
-  languageName: node
-  linkType: hard
-
-"qs@npm:6.10.5":
-  version: 6.10.5
-  resolution: "qs@npm:6.10.5"
-  dependencies:
-    side-channel: ^1.0.4
-  checksum: b3873189a11bcf48445864b3ba66f7a76db0d9d874955d197779f561addfa604884f7b107971526ce1eca02c99bf7d1e47f28a3e7e6e29204d798fb279164226
   languageName: node
   linkType: hard
 
