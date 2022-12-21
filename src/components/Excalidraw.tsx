@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { debounce } from 'lodash';
 
 import React, { ReactElement, useRef } from 'react';
@@ -51,6 +50,7 @@ const GetView = (prop: { appData: AppData }): ReactElement => {
     elements: readonly ExcalidrawElement[],
     state: AppState,
   ): void {
+    // eslint-disable-next-line no-console
     console.log('handling changes');
     debouncedPatch(elements, state);
   }
@@ -63,7 +63,7 @@ const GetView = (prop: { appData: AppData }): ReactElement => {
   );
 
   const date = new Date();
-  const name = `darwing${date.toISOString()}`;
+  const name = `drawing${date.toISOString()}`;
   return (
     <div className="App">
       <div
@@ -89,11 +89,14 @@ const GetView = (prop: { appData: AppData }): ReactElement => {
     </div>
   );
 };
+
 const LoadView = (): ReactElement => {
   const { postAppData, appDataArray } = useAppDataContext();
   // get if empty send empty and create else send new vals
   const appData = appDataArray.find(({ type }) => type === 'session');
+
   if (!appData) {
+    // eslint-disable-next-line no-console
     console.log('posting app data');
     postAppData({
       data: {
@@ -106,7 +109,6 @@ const LoadView = (): ReactElement => {
       type: APP_DATA_TYPES.SESSION_TYPE,
       visibility: APP_DATA_VISIBILITY.MEMBER,
     });
-    console.log('stopped here in Load View');
     return <Loader />;
   }
   return <GetView appData={appData} />;

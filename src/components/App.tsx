@@ -1,9 +1,6 @@
-/* eslint-disable no-console */
-import { RecordOf } from 'immutable';
+import { FC, ReactElement, useEffect } from 'react';
 
-import React, { FC, ReactElement, useContext, useEffect } from 'react';
-
-import { Context as HOCContext, LocalContext } from '@graasp/apps-query-client';
+import { useLocalContext } from '@graasp/apps-query-client';
 import { Context } from '@graasp/sdk';
 
 import '../App.css';
@@ -16,7 +13,10 @@ import { AppSettingProvider } from './context/AppSettingContext';
 import { MembersProvider } from './context/MembersContext';
 
 const App: FC = () => {
-  const context: RecordOf<LocalContext> = useContext(HOCContext);
+  const context = useLocalContext();
+  // eslint-disable-next-line no-console
+  console.log(context.toJS());
+
   useEffect(() => {
     // handle a change of language
     const lang = context?.get('lang') ?? DEFAULT_CONTEXT_LANGUAGE;
@@ -28,11 +28,11 @@ const App: FC = () => {
   const renderContent = (): ReactElement => {
     switch (context.get('context')) {
       case Context.BUILDER:
-        console.log('rendering for builder');
         return <LoadView />;
       case Context.ANALYTICS:
         return <Loader />;
       case Context.PLAYER:
+        // eslint-disable-next-line no-console
         console.log('rendering for player');
         return <LoadView />;
       default:
