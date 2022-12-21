@@ -13,7 +13,7 @@
     "@emotion/styled": "11.10.5",
     "@excalidraw/excalidraw": "^0.13.0",
     "@graasp/apps-query-client": "^0.4.1",
-    "@graasp/sdk": "github:graasp/graasp-sdk",
+    "@graasp/sdk": "0.1.0",
     "@mui/icons-material": "5.11.0",
     "@mui/lab": "5.0.0-alpha.84",
     "@mui/material": "5.11.1",

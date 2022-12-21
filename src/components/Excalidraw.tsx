@@ -1,6 +1,6 @@
 import { debounce } from 'lodash';
 
-import React, { ReactElement, useEffect, useRef } from 'react';
+import { ReactElement, useEffect, useRef } from 'react';
 
 import { AppData } from '@graasp/apps-query-client';
 
@@ -35,7 +35,7 @@ const GetView = (prop: { appData: AppData }): ReactElement => {
     // data.state as AppState,
   );
 
-  const debouncedPatch = React.useRef(
+  const debouncedPatch = useRef(
     debounce((elements, state) => {
       if (excalidrawRef.current?.ready && !state.isLoading) {
         patchAppData({
@@ -55,7 +55,7 @@ const GetView = (prop: { appData: AppData }): ReactElement => {
     debouncedPatch(elements, state);
   }
 
-  React.useEffect(
+  useEffect(
     () => () => {
       debouncedPatch.cancel();
     },
