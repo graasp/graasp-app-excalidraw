@@ -36,7 +36,7 @@ const App: FC = () => {
         console.log('rendering for player');
         return <LoadView />;
       default:
-        return <Loader />;
+        return <LoadView />;
     }
   };
 
