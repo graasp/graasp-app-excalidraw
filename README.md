@@ -1,8 +1,8 @@
 # Graasp App Excalidraw
 
 This repository hosts the code for Excalidraw's integration into a Graasp application.
-This app alows the user to use 2D geometric primitives, free draw and stylet their design using the offered features,
-It is codes in typescript and uses React.js to import the open-source main compononent : Excalidraw.
+This app allows the user to use 2D geometric primitives, free draw and style their design using the offered features.
+It is written in TypeScript and uses React.js to import the open-source main component : Excalidraw.
 
 ## Installation
 If used locally, the needed dependencies can be installed with 
