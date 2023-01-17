@@ -65,6 +65,6 @@ Below you can find a screenshot of the app inside the Graasp Builder view.
 
 For future versions, here is a list of features to be implemented and points to be optimized:
 
-* Enabling collaboration and saving state
+* Enabling collaboration and saving state (tool selected, etc...)
 * Creating admin view allowing access to a table of submissions linked to the corresponding Excalidraw canvas
 * Choosing method to handle changes so that the list of current elements is checked for equality before treating the change.
