@@ -57,7 +57,7 @@ To use this app, you can either run it locally which will give you direct access
 Excalidraw's documentation can be found [here](https://github.com/excalidraw/excalidraw#documentation), and a description of the tools is available on canvas by clicking on the ? button.
 
 ## Example
-Below you can find a screenshot of the app inside the Graasp hierarchy.
+Below you can find a screenshot of the app inside the Graasp Builder view.
 
 ![image](AppGraasp.png)
 
