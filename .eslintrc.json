@@ -5,10 +5,15 @@
   },
   "extends": [
     "airbnb",
-    "plugin:react/recommended",
+    "plugin:cypress/recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "prettier",
+    "plugin:react/recommended"
   ],
+  "globals": {
+    "cy": true,
+    "Cypress": true
+  },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -19,15 +24,27 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
+    "react/no-array-index-key": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/destructuring-assignment": "off",
+    "react/require-default-props": "off",
     "react/react-in-jsx-scope": "off",
-    "prettier/prettier": "error",
+    "@typescript-eslint/ban-ts-comment": "off",
     "import/no-import-module-exports": "off",
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "prettier/prettier": "error",
     "import/extensions": [
       "error",
       "ignorePackages",
       {
         "ts": "never",
+        "js": "never",
         "tsx": "never"
       }
     ],
@@ -37,22 +54,38 @@
         "allowExpressions": true
       }
     ],
+    "@typescript-eslint/no-var-requires": "off",
+    "global-require": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "comma-dangle": "off",
+    "@typescript-eslint/comma-dangle": "off",
     "react/jsx-one-expression-per-line": "off",
-    "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [".tsx"]
+      }
+    ],
     "react/function-component-definition": [
       2,
-      { "namedComponents": "arrow-function" }
-    ]
+      {
+        "namedComponents": "arrow-function"
+      }
+    ],
+    // eslint rule reports false error
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"]
   },
   "settings": {
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
+    "react": {
+      "version": "detect"
     },
     "import/resolver": {
       "typescript": {}
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
     }
   }
 }
