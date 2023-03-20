@@ -5,7 +5,15 @@
   "license": "AGPL-3.0-only",
   "author": "Graasp",
   "contributors": [
-    "Luna Godier"
+    {
+      "name": "Jérémy La Scala",
+      "email": "jeremy.lascala@epfl.ch",
+      "url": "https://github.com/swouf"
+    },
+    {
+      "name": "Luna Godier",
+      "email": "luna.godier@epfl.ch"
+    }
   ],
   "homepage": ".",
   "dependencies": {
@@ -24,6 +32,7 @@
     "i18next": "22.4.12",
     "immutable": "4.1.0",
     "lodash.debounce": "4.0.8",
+    "lodash.isequal": "~4.5.0",
     "lodash.isobject": "3.0.2",
     "lodash.isstring": "4.0.1",
     "qs": "6.11.1",
@@ -67,6 +76,7 @@
     "@cypress/instrument-cra": "1.4.0",
     "@trivago/prettier-plugin-sort-imports": "4.1.1",
     "@types/i18n": "0.13.6",
+    "@types/lodash.isequal": "~4.5.6",
     "@types/lodash.isobject": "3.0.7",
     "@types/lodash.isstring": "4.0.7",
     "@types/node": "18.15.3",
