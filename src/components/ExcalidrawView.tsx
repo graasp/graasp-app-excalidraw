@@ -166,6 +166,8 @@ const ExcalidrawView: FC = () => {
     }
   };
 
+  // Prevent the debounced requests from running when the component is
+  // unmounted
   useEffect(() => {
     debouncedSaveElements.cancel();
     debouncedSaveState.cancel();
