@@ -30,6 +30,7 @@ i18n.use(initReactI18next).init({
     escapeValue: false,
     formatSeparator: ',',
   },
+  fallbackLng: 'en',
 });
 
 export default i18n;
