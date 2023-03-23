@@ -3,15 +3,15 @@ import { List } from 'immutable';
 import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
 
 import { AppData } from '@graasp/apps-query-client';
+import { AppDataVisibility } from '@graasp/apps-query-client/dist/config/constants';
 
-import { APP_DATA_VISIBILITY } from '../../config/appDataTypes';
 import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
 import Loader from '../common/Loader';
 
 type PostAppDataType = {
   data: { [key: string]: unknown };
   type: string;
-  visibility?: APP_DATA_VISIBILITY;
+  visibility?: AppDataVisibility;
 };
 
 type PatchAppDataType = {
@@ -28,6 +28,7 @@ export type AppDataContextType = {
   patchAppData: (payload: PatchAppDataType) => void;
   deleteAppData: (payload: DeleteAppDataType) => void;
   appDataArray: List<AppData>;
+  status: { isLoading: boolean; isFetching: boolean; isPreviousData: boolean };
 };
 
 const defaultContextValue = {
@@ -35,12 +36,17 @@ const defaultContextValue = {
   patchAppData: () => null,
   deleteAppData: () => null,
   appDataArray: List<AppData>(),
+  status: {
+    isFetching: false,
+    isLoading: true,
+    isPreviousData: false,
+  },
 };
 
 const AppDataContext = createContext<AppDataContextType>(defaultContextValue);
 
 export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
-  const appData = hooks.useAppData();
+  const { data, isLoading, isFetching, isPreviousData } = hooks.useAppData();
 
   const { mutate: postAppData } = useMutation<
     unknown,
@@ -65,12 +71,25 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
       },
       patchAppData,
       deleteAppData,
-      appDataArray: appData.data || List<AppData>(),
+      appDataArray: data || List<AppData>(),
+      status: {
+        isFetching,
+        isLoading,
+        isPreviousData,
+      },
     }),
-    [appData.data, deleteAppData, patchAppData, postAppData],
+    [
+      data,
+      deleteAppData,
+      isFetching,
+      isLoading,
+      isPreviousData,
+      patchAppData,
+      postAppData,
+    ],
   );
 
-  if (appData.isLoading) {
+  if (isLoading) {
     return <Loader />;
   }
 

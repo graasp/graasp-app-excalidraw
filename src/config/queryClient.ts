@@ -23,6 +23,7 @@ const {
   keepPreviousData: true,
   // avoid refetching when same data are closely fetched
   staleTime: 1000, // ms
+  cacheTime: 2000, // ms
   GRAASP_APP_ID: REACT_APP_GRAASP_APP_ID,
   targetWindow: MOCK_API
     ? // build mock parent window given cypress (app) context or mock data

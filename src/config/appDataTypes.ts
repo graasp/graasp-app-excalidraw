@@ -1,12 +1,35 @@
+import { AppData } from '@graasp/apps-query-client';
+import { AppDataVisibility } from '@graasp/apps-query-client/dist/config/constants';
+
+import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types';
+import { AppState } from '@excalidraw/excalidraw/types/types';
+
 /* eslint-disable no-shadow */
 enum APP_DATA_TYPES {
   MOCK_TYPE = 'mock_type',
   SESSION_TYPE = 'session',
+  EXCALIDRAW_ELEMENTS = 'excalidraw_elements',
+  EXCALIDRAW_STATE = 'excalidraw_state',
 }
 
-enum APP_DATA_VISIBILITY {
-  MEMBER = 'member',
-  ITEM = 'item',
-}
+type ExcalidrawElementsAppDataExtension = {
+  type: APP_DATA_TYPES.EXCALIDRAW_ELEMENTS;
+  data: {
+    elements: ExcalidrawElement[];
+  };
+  visibility?: AppDataVisibility.ITEM;
+};
 
-export { APP_DATA_TYPES, APP_DATA_VISIBILITY };
+type ExcalidrawStateAppDataExtension = {
+  type: APP_DATA_TYPES.EXCALIDRAW_STATE;
+  data: {
+    appState: AppState;
+  };
+  visibility?: AppDataVisibility.MEMBER;
+};
+
+type ExcalidrawElementsAppData = AppData & ExcalidrawElementsAppDataExtension;
+type ExcalidrawStateAppData = AppData & ExcalidrawStateAppDataExtension;
+
+export { APP_DATA_TYPES };
+export type { ExcalidrawElementsAppData, ExcalidrawStateAppData };
