@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/graasp/graasp-app-excalidraw/compare/v1.0.0...v2.0.0) (2023-03-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* the data management scheme changed.
+
+### Features
+
+* refactor state saving for collaboration ([af1c111](https://github.com/graasp/graasp-app-excalidraw/commit/af1c111b9519c9c410308d6c16b3db7a643d60a9))
+
 ## 1.0.0 (2023-01-18)
 
 
