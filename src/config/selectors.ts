@@ -3,3 +3,5 @@ export const buildDataCy = (selector: string): string =>
 
 export const buildTextFieldSelectorCy = (selector: string): string =>
   `${buildDataCy(selector)} input`;
+
+export const RELOAD_BUTTON_CY = 'reloadButton';

@@ -32,6 +32,7 @@ import {
   EXCALIDRAW_THEME,
 } from '../config/settings';
 import { reconcileElements } from '../utils/reconciliation';
+import RefreshButton from './common/RefreshButton';
 import { useAppDataContext } from './context/AppDataContext';
 
 const ExcalidrawView: FC = () => {
@@ -188,6 +189,7 @@ const ExcalidrawView: FC = () => {
         theme={EXCALIDRAW_THEME}
         name={name}
         langCode={lang}
+        renderTopRightUI={() => <RefreshButton />}
       />
     </Box>
   );
