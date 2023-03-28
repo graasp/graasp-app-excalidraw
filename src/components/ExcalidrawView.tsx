@@ -21,20 +21,23 @@ import {
   DEFAULT_EXCALIDRAW_ELEMENTS_APP_DATA,
   DEFAULT_EXCALIDRAW_STATE_APP_DATA,
 } from '../config/constants';
+import i18n from '../config/i18n';
 import {
   DEBOUNCE_COMPARE_ELEMENTS,
   DEBOUNCE_SAVE_ELEMENTS,
   DEBOUNCE_SAVE_STATE,
+  EXCALIDRAW_ENABLE_GRID_MODE,
+  EXCALIDRAW_ENABLE_VIEW_MODE,
+  EXCALIDRAW_ENABLE_ZEN_MODE,
+  EXCALIDRAW_THEME,
 } from '../config/settings';
 import { reconcileElements } from '../utils/reconciliation';
+import RefreshButton from './common/RefreshButton';
 import { useAppDataContext } from './context/AppDataContext';
 
 const ExcalidrawView: FC = () => {
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null);
-  const viewModeEnabled = false;
-  const zenModeEnabled = false;
-  const gridModeEnabled = false;
-  const theme = 'light';
+  const lang = i18n.language;
   const date = new Date();
   const name = `drawing${date.toISOString()}`;
 
@@ -180,11 +183,13 @@ const ExcalidrawView: FC = () => {
         initialData={{ elements: localElements, appState }}
         ref={excalidrawRef}
         onChange={handleChange}
-        viewModeEnabled={viewModeEnabled}
-        zenModeEnabled={zenModeEnabled}
-        gridModeEnabled={gridModeEnabled}
-        theme={theme}
+        viewModeEnabled={EXCALIDRAW_ENABLE_VIEW_MODE}
+        zenModeEnabled={EXCALIDRAW_ENABLE_ZEN_MODE}
+        gridModeEnabled={EXCALIDRAW_ENABLE_GRID_MODE}
+        theme={EXCALIDRAW_THEME}
         name={name}
+        langCode={lang}
+        renderTopRightUI={() => <RefreshButton />}
       />
     </Box>
   );
