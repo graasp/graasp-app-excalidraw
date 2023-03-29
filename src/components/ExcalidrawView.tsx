@@ -1,14 +1,21 @@
+import { List } from 'immutable';
 import debounce from 'lodash.debounce';
 import isEqual from 'lodash.isequal';
 
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
 
 import { Excalidraw } from '@excalidraw/excalidraw';
-import type { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types';
+import type {
+  ExcalidrawElement,
+  FileId,
+} from '@excalidraw/excalidraw/types/element/types';
 import {
   AppState,
+  BinaryFileData,
+  BinaryFiles,
+  DataURL,
   ExcalidrawImperativeAPI,
 } from '@excalidraw/excalidraw/types/types';
 
@@ -16,6 +23,7 @@ import {
   APP_DATA_TYPES,
   ExcalidrawElementsAppData,
   ExcalidrawStateAppData,
+  FileAppData,
 } from '../config/appDataTypes';
 import {
   DEFAULT_EXCALIDRAW_ELEMENTS_APP_DATA,
@@ -32,6 +40,7 @@ import {
   EXCALIDRAW_THEME,
 } from '../config/settings';
 import { reconcileElements } from '../utils/reconciliation';
+import Loader from './common/Loader';
 import RefreshButton from './common/RefreshButton';
 import { useAppDataContext } from './context/AppDataContext';
 
@@ -46,8 +55,57 @@ const ExcalidrawView: FC = () => {
   const [idElements, setIdElements] = useState<string>('');
   const [idState, setIdState] = useState<string>('');
   const [appState, setAppState] = useState<AppState>();
+  const [filesAppData, setFilesAppData] = useState<List<FileAppData>>(List());
 
-  const { appDataArray, patchAppData, postAppData } = useAppDataContext();
+  const {
+    appDataArray,
+    patchAppData,
+    postAppData,
+    deleteAppData,
+    uploadFile,
+    getFileContent,
+    status,
+  } = useAppDataContext();
+
+  const { isLoading } = status;
+
+  const getFile = useCallback(
+    async (fileAppData: FileAppData): Promise<BinaryFileData> => {
+      const { id, data } = fileAppData;
+      const { name: fileName, mimetype } = data.extra.s3File;
+      const fileData = await getFileContent(id || '').then((result) => {
+        console.log('fileData', result);
+        return result;
+      });
+      const file: BinaryFileData = {
+        mimeType: mimetype as BinaryFileData['mimeType'],
+        id: fileName as FileId,
+        dataURL: URL.createObjectURL(fileData) as DataURL,
+        created: data?.created as number,
+      };
+
+      return file;
+    },
+    [getFileContent],
+  );
+
+  const addAllFilesToExcalidraw = useCallback(
+    async (filesAppDataToAdd: List<FileAppData>): Promise<void> => {
+      const promisedFiles = filesAppDataToAdd.map(getFile);
+      const files: BinaryFileData[] = [];
+      promisedFiles.map((promisedFile) =>
+        promisedFile.then((d) => files.push(d)),
+      );
+      console.log('Files to be added: ', files);
+      excalidrawRef.current?.addFiles(files);
+    },
+    [getFile],
+  );
+
+  useEffect(() => {
+    // Add all the files to excalidraw
+    addAllFilesToExcalidraw(filesAppData);
+  }, [addAllFilesToExcalidraw, filesAppData]);
 
   useEffect(() => {
     const elementsAppData: ExcalidrawElementsAppData = (appDataArray.find(
@@ -65,6 +123,13 @@ const ExcalidrawView: FC = () => {
       id: '',
       data: { appState: {} },
     };
+
+    setFilesAppData(
+      appDataArray.filter(
+        ({ type }) => type === APP_DATA_TYPES.FILE,
+      ) as List<FileAppData>,
+    );
+
     const { id, data: newData } = elementsAppData;
     setIdElements(id);
     const { elements: newElements } = newData;
@@ -143,6 +208,35 @@ const ExcalidrawView: FC = () => {
     }
   };
 
+  const compareAndSaveFiles = useCallback(
+    async (
+      files: BinaryFiles,
+      currentFileData: List<FileAppData>,
+    ): Promise<void> => {
+      const listOfFiles = List(Object.values(files));
+      console.log('Handling these files: ', listOfFiles);
+      console.log('With already these files: ', currentFileData);
+
+      const listOfIds = listOfFiles.map(({ id }) => String(id));
+      currentFileData
+        .filterNot(({ data: fileData }) => listOfIds.includes(fileData.name))
+        .forEach(({ id }) => deleteAppData({ id }));
+      if (!listOfFiles.isEmpty()) {
+        const listOfNames = currentFileData.map(
+          ({ data: fileData }) => fileData.name,
+        );
+        listOfFiles
+          .filterNot(({ id }) => listOfNames.includes(id))
+          .forEach((file) => {
+            if (file.id) {
+              uploadFile(file);
+            }
+          });
+      }
+    },
+    [deleteAppData, uploadFile],
+  );
+
   const debouncedCompareElements = useRef(
     debounce(compareAndSaveElements, DEBOUNCE_COMPARE_ELEMENTS),
   ).current;
@@ -151,16 +245,26 @@ const ExcalidrawView: FC = () => {
     debounce(saveState, DEBOUNCE_SAVE_STATE),
   ).current;
 
+  const debouncedCompareAndSaveFiles = useRef(
+    debounce(compareAndSaveFiles, DEBOUNCE_COMPARE_ELEMENTS),
+  ).current;
+
   const handleChange = (
     elements: readonly ExcalidrawElement[],
     newAppState: AppState,
+    files: BinaryFiles,
   ): void => {
-    const { isResizing, isRotating, isLoading } = newAppState;
+    const {
+      isResizing,
+      isRotating,
+      isLoading: isExcalidrawLoading,
+    } = newAppState;
     if (
-      !(isLoading || isResizing || isRotating) &&
+      !(isExcalidrawLoading || isResizing || isRotating) &&
       typeof localElements !== 'undefined'
     ) {
       debouncedCompareElements(elements, localElements, idElements);
+      debouncedCompareAndSaveFiles(files, filesAppData);
       debouncedSaveState(newAppState, idState);
     } else {
       debouncedCompareElements.cancel();
@@ -177,10 +281,17 @@ const ExcalidrawView: FC = () => {
     debouncedCompareElements.cancel();
   });
 
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <Box height="100vh" width="100%">
       <Excalidraw
-        initialData={{ elements: localElements, appState }}
+        initialData={{
+          elements: localElements,
+          appState,
+          files: filesAppData.map(getFile).toArray(),
+        }}
         ref={excalidrawRef}
         onChange={handleChange}
         viewModeEnabled={EXCALIDRAW_ENABLE_VIEW_MODE}

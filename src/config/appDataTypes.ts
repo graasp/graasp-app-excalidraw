@@ -10,6 +10,7 @@ enum APP_DATA_TYPES {
   SESSION_TYPE = 'session',
   EXCALIDRAW_ELEMENTS = 'excalidraw_elements',
   EXCALIDRAW_STATE = 'excalidraw_state',
+  FILE = 'file',
 }
 
 type ExcalidrawElementsAppDataExtension = {
@@ -31,5 +32,25 @@ type ExcalidrawStateAppDataExtension = {
 type ExcalidrawElementsAppData = AppData & ExcalidrawElementsAppDataExtension;
 type ExcalidrawStateAppData = AppData & ExcalidrawStateAppDataExtension;
 
+type s3FileData = {
+  name: string;
+  type: string;
+  extra: {
+    s3File: {
+      name: string;
+      path: string;
+      size: number;
+      mimetype: string;
+    };
+  };
+};
+
+type FileAppData = AppData & { data: s3FileData };
+
 export { APP_DATA_TYPES };
-export type { ExcalidrawElementsAppData, ExcalidrawStateAppData };
+export type {
+  ExcalidrawElementsAppData,
+  ExcalidrawStateAppData,
+  s3FileData,
+  FileAppData,
+};

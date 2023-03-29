@@ -18,3 +18,14 @@ export const DEFAULT_EXCALIDRAW_STATE_APP_DATA = {
     appState: {},
   },
 };
+
+export const ALLOWED_MIMETYPES = [
+  'image/png',
+  'image/jpeg',
+  'image/svg+xml',
+  'image/gif',
+  'image/webp',
+  'image/bmp',
+  'image/x-icon',
+  'application/octet-stream',
+];
