@@ -58,7 +58,9 @@ export type AppDataContextType = {
   patchAppData: (payload: PatchAppDataType) => void;
   deleteAppData: (payload: DeleteAppDataType) => void;
   uploadFile: (fileToUpload: FileToUploadType) => Promise<void>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getFileContent: (fileId: string) => Promise<any>;
+  deleteFile: (fileId: string) => Promise<void>;
   appDataArray: List<AppData>;
   status: { isLoading: boolean; isFetching: boolean; isPreviousData: boolean };
 };
@@ -69,8 +71,10 @@ const defaultContextValue = {
   deleteAppData: () => null,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   uploadFile: () => new Promise<void>(() => {}), // Maybe there is a better way to write this?
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-explicit-any
   getFileContent: () => new Promise<any>(() => {}),
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  deleteFile: () => new Promise<void>(() => {}),
   appDataArray: List<AppData>(),
   status: {
     isFetching: false,
@@ -109,7 +113,8 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const uploadFile = useCallback(
     async (fileToUpload: FileToUploadType): Promise<void> => {
-      const { mimeType, id, dataURL } = fileToUpload;
+      // console.log('Uploading: ', fileToUpload);
+      const { mimeType, id, dataURL, created } = fileToUpload;
       const xhr = new XMLHttpRequest();
       xhr.open(
         'POST',
@@ -123,30 +128,40 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
       formData.append(id, file, id);
       xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-          console.log(`File ${id} of type ${mimeType} successfully sent!`);
+          // console.log(`File ${id} of type ${mimeType} successfully sent!`);
           onFileUploadComplete({
             id: itemId,
-            data: xhr.response?.body?.[0].filter(Boolean),
+            data: { ...xhr.response?.body?.[0].filter(Boolean), created },
           });
         }
       };
-      console.log(`Sending ${id} of type ${mimeType}...`);
+      // console.log(`Sending ${id} of type ${mimeType}...`);
       xhr.send(formData);
     },
     [itemId, onFileUploadComplete, token],
   );
 
   const getFileContent = useCallback(
-    (fileId: string): Promise<any> => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async (fileId: string): Promise<any> => {
       const content = Api.getFileContent({
         id: fileId,
         apiHost: REACT_APP_API_HOST,
         token: token || '',
       }).then((contentData) => contentData);
-      console.log('File content: ', content);
       return content;
     },
     [token],
+  );
+
+  const deleteFile = useCallback(
+    async (fileId: string) => {
+      const fileAppData = data?.find(({ data: file }) => file?.name === fileId);
+      if (fileAppData) {
+        deleteAppData(fileAppData);
+      }
+    },
+    [data, deleteAppData],
   );
 
   const contextValue: AppDataContextType = useMemo(
@@ -159,6 +174,7 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
       appDataArray: data || List<AppData>(),
       uploadFile,
       getFileContent,
+      deleteFile,
       status: {
         isFetching,
         isLoading,
@@ -166,15 +182,16 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
       },
     }),
     [
-      data,
+      patchAppData,
       deleteAppData,
+      data,
+      uploadFile,
+      getFileContent,
+      deleteFile,
       isFetching,
       isLoading,
       isPreviousData,
-      patchAppData,
       postAppData,
-      uploadFile,
-      getFileContent,
     ],
   );
 

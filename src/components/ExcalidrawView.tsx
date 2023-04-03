@@ -9,13 +9,11 @@ import Box from '@mui/material/Box';
 import { Excalidraw } from '@excalidraw/excalidraw';
 import type {
   ExcalidrawElement,
-  FileId,
+  ExcalidrawImageElement,
 } from '@excalidraw/excalidraw/types/element/types';
 import {
   AppState,
-  BinaryFileData,
   BinaryFiles,
-  DataURL,
   ExcalidrawImperativeAPI,
 } from '@excalidraw/excalidraw/types/types';
 
@@ -39,6 +37,7 @@ import {
   EXCALIDRAW_ENABLE_ZEN_MODE,
   EXCALIDRAW_THEME,
 } from '../config/settings';
+import { getListOfFileIds, useFiles } from '../data/files';
 import { reconcileElements } from '../utils/reconciliation';
 import Loader from './common/Loader';
 import RefreshButton from './common/RefreshButton';
@@ -50,62 +49,25 @@ const ExcalidrawView: FC = () => {
   const date = new Date();
   const name = `drawing${date.toISOString()}`;
 
-  const [localElements, setLocalElements] =
-    useState<readonly ExcalidrawElement[]>();
+  const [localElements, setLocalElements] = useState<
+    readonly ExcalidrawElement[]
+  >([]);
   const [idElements, setIdElements] = useState<string>('');
   const [idState, setIdState] = useState<string>('');
   const [appState, setAppState] = useState<AppState>();
   const [filesAppData, setFilesAppData] = useState<List<FileAppData>>(List());
+  const files = useFiles(filesAppData);
 
   const {
     appDataArray,
     patchAppData,
     postAppData,
-    deleteAppData,
     uploadFile,
-    getFileContent,
+    deleteFile,
     status,
   } = useAppDataContext();
 
   const { isLoading } = status;
-
-  const getFile = useCallback(
-    async (fileAppData: FileAppData): Promise<BinaryFileData> => {
-      const { id, data } = fileAppData;
-      const { name: fileName, mimetype } = data.extra.s3File;
-      const fileData = await getFileContent(id || '').then((result) => {
-        console.log('fileData', result);
-        return result;
-      });
-      const file: BinaryFileData = {
-        mimeType: mimetype as BinaryFileData['mimeType'],
-        id: fileName as FileId,
-        dataURL: URL.createObjectURL(fileData) as DataURL,
-        created: data?.created as number,
-      };
-
-      return file;
-    },
-    [getFileContent],
-  );
-
-  const addAllFilesToExcalidraw = useCallback(
-    async (filesAppDataToAdd: List<FileAppData>): Promise<void> => {
-      const promisedFiles = filesAppDataToAdd.map(getFile);
-      const files: BinaryFileData[] = [];
-      promisedFiles.map((promisedFile) =>
-        promisedFile.then((d) => files.push(d)),
-      );
-      console.log('Files to be added: ', files);
-      excalidrawRef.current?.addFiles(files);
-    },
-    [getFile],
-  );
-
-  useEffect(() => {
-    // Add all the files to excalidraw
-    addAllFilesToExcalidraw(filesAppData);
-  }, [addAllFilesToExcalidraw, filesAppData]);
 
   useEffect(() => {
     const elementsAppData: ExcalidrawElementsAppData = (appDataArray.find(
@@ -143,7 +105,7 @@ const ExcalidrawView: FC = () => {
         elements: reconciledElements,
         commitToHistory: false,
       });
-      setLocalElements(reconciledElements);
+      setLocalElements(reconciledElements as readonly ExcalidrawElement[]);
     } else {
       setLocalElements(newElements);
     }
@@ -154,6 +116,10 @@ const ExcalidrawView: FC = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appDataArray]);
+
+  useEffect(() => {
+    excalidrawRef.current?.addFiles(files);
+  }, [files]);
 
   const saveElements = (
     elements: readonly ExcalidrawElement[],
@@ -210,31 +176,31 @@ const ExcalidrawView: FC = () => {
 
   const compareAndSaveFiles = useCallback(
     async (
-      files: BinaryFiles,
-      currentFileData: List<FileAppData>,
+      filesLocal: BinaryFiles,
+      filesAppDataCurrent: List<FileAppData>,
+      elements: ExcalidrawElement[],
     ): Promise<void> => {
-      const listOfFiles = List(Object.values(files));
-      console.log('Handling these files: ', listOfFiles);
-      console.log('With already these files: ', currentFileData);
-
-      const listOfIds = listOfFiles.map(({ id }) => String(id));
-      currentFileData
-        .filterNot(({ data: fileData }) => listOfIds.includes(fileData.name))
-        .forEach(({ id }) => deleteAppData({ id }));
-      if (!listOfFiles.isEmpty()) {
-        const listOfNames = currentFileData.map(
-          ({ data: fileData }) => fileData.name,
-        );
-        listOfFiles
-          .filterNot(({ id }) => listOfNames.includes(id))
-          .forEach((file) => {
-            if (file.id) {
-              uploadFile(file);
-            }
-          });
-      }
+      const listOfIds = getListOfFileIds(
+        elements.filter(
+          (element) =>
+            Object.keys(element).includes('fileId') &&
+            element?.isDeleted === false,
+        ) as ExcalidrawImageElement[],
+      );
+      const listOfUploadedIds = filesAppDataCurrent.map(
+        ({ data }) => data.name,
+      );
+      Object.values(filesLocal).forEach((file) => {
+        const isUsed = listOfIds.includes(file.id);
+        const isUploaded = listOfUploadedIds.includes(file.id);
+        if (isUsed && !isUploaded) {
+          uploadFile(file);
+        } else if (!isUsed && isUploaded) {
+          deleteFile(file.id);
+        }
+      });
     },
-    [deleteAppData, uploadFile],
+    [deleteFile, uploadFile],
   );
 
   const debouncedCompareElements = useRef(
@@ -252,7 +218,7 @@ const ExcalidrawView: FC = () => {
   const handleChange = (
     elements: readonly ExcalidrawElement[],
     newAppState: AppState,
-    files: BinaryFiles,
+    filesLocal: BinaryFiles,
   ): void => {
     const {
       isResizing,
@@ -264,12 +230,15 @@ const ExcalidrawView: FC = () => {
       typeof localElements !== 'undefined'
     ) {
       debouncedCompareElements(elements, localElements, idElements);
-      debouncedCompareAndSaveFiles(files, filesAppData);
+      if (!appState?.pendingImageElementId) {
+        debouncedCompareAndSaveFiles(filesLocal, filesAppData, [...elements]);
+      }
       debouncedSaveState(newAppState, idState);
     } else {
       debouncedCompareElements.cancel();
       debouncedSaveElements.cancel();
       debouncedSaveState.cancel();
+      debouncedCompareAndSaveFiles.cancel();
     }
   };
 
@@ -290,7 +259,7 @@ const ExcalidrawView: FC = () => {
         initialData={{
           elements: localElements,
           appState,
-          files: filesAppData.map(getFile).toArray(),
+          files,
         }}
         ref={excalidrawRef}
         onChange={handleChange}
