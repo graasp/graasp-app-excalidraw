@@ -14,15 +14,14 @@ import {
   AppDataData,
   useLocalContext,
 } from '@graasp/apps-query-client';
-import { AppDataVisibility } from '@graasp/apps-query-client/dist/config/constants';
 
-import { REACT_APP_API_HOST } from '../../config/env';
 import {
   API_ROUTES,
   MUTATION_KEYS,
   hooks,
   useMutation,
 } from '../../config/queryClient';
+import { AppDataVisibility } from '../../types/appData';
 import Loader from '../common/Loader';
 
 type PostAppDataType = {
@@ -43,6 +42,7 @@ type DeleteAppDataType = {
 type FileUploadCompleteType = {
   id: string;
   data: AppDataData;
+  visibility?: AppDataVisibility;
 };
 
 type FileToUploadType = {
@@ -87,7 +87,7 @@ const AppDataContext = createContext<AppDataContextType>(defaultContextValue);
 
 export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
   const { data, isLoading, isFetching, isPreviousData } = hooks.useAppData();
-  const { itemId } = useLocalContext();
+  const { itemId, apiHost } = useLocalContext();
   const { data: token } = hooks.useAuthToken(itemId);
 
   const { mutate: postAppData } = useMutation<
@@ -118,27 +118,28 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
       const xhr = new XMLHttpRequest();
       xhr.open(
         'POST',
-        `${REACT_APP_API_HOST}/${API_ROUTES.buildUploadFilesRoute(itemId)}`,
+        `${apiHost}/${API_ROUTES.buildUploadFilesRoute(itemId)}`,
         true,
       );
       xhr.setRequestHeader('authorization', `Bearer ${token}`);
       const blob = await fetch(dataURL).then((res) => res.blob());
       const file = new File([blob], id, { type: mimeType });
       const formData = new FormData();
-      formData.append(id, file, id);
+      formData.append('file', file, id);
       xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
           // console.log(`File ${id} of type ${mimeType} successfully sent!`);
           onFileUploadComplete({
             id: itemId,
             data: { ...xhr.response?.body?.[0].filter(Boolean), created },
+            visibility: AppDataVisibility.ITEM,
           });
         }
       };
       // console.log(`Sending ${id} of type ${mimeType}...`);
       xhr.send(formData);
     },
-    [itemId, onFileUploadComplete, token],
+    [apiHost, itemId, onFileUploadComplete, token],
   );
 
   const getFileContent = useCallback(
@@ -146,17 +147,18 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
     async (fileId: string): Promise<any> => {
       const content = Api.getFileContent({
         id: fileId,
-        apiHost: REACT_APP_API_HOST,
+        apiHost,
         token: token || '',
       }).then((contentData) => contentData);
       return content;
     },
-    [token],
+    [apiHost, token],
   );
 
   const deleteFile = useCallback(
     async (fileId: string) => {
       const fileAppData = data?.find(({ data: file }) => file?.name === fileId);
+      // console.log('Data from which to delete: ', data);
       if (fileAppData) {
         deleteAppData(fileAppData);
       }
