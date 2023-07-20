@@ -1,5 +1,6 @@
 import { AppData } from '@graasp/apps-query-client';
 import { AppDataVisibility } from '@graasp/apps-query-client/dist/config/constants';
+import { S3FileItemExtra } from '@graasp/sdk';
 
 import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types';
 import { AppState } from '@excalidraw/excalidraw/types/types';
@@ -10,6 +11,7 @@ enum APP_DATA_TYPES {
   SESSION_TYPE = 'session',
   EXCALIDRAW_ELEMENTS = 'excalidraw_elements',
   EXCALIDRAW_STATE = 'excalidraw_state',
+  FILE = 'file',
 }
 
 type ExcalidrawElementsAppDataExtension = {
@@ -31,5 +33,20 @@ type ExcalidrawStateAppDataExtension = {
 type ExcalidrawElementsAppData = AppData & ExcalidrawElementsAppDataExtension;
 type ExcalidrawStateAppData = AppData & ExcalidrawStateAppDataExtension;
 
+type s3FileData = {
+  name: string;
+  type: string;
+  extra: {
+    s3File: S3FileItemExtra;
+  };
+};
+
+type FileAppData = AppData & { data: s3FileData };
+
 export { APP_DATA_TYPES };
-export type { ExcalidrawElementsAppData, ExcalidrawStateAppData };
+export type {
+  ExcalidrawElementsAppData,
+  ExcalidrawStateAppData,
+  s3FileData,
+  FileAppData,
+};
