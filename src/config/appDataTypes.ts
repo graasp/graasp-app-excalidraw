@@ -1,5 +1,6 @@
 import { AppData } from '@graasp/apps-query-client';
 import { AppDataVisibility } from '@graasp/apps-query-client/dist/config/constants';
+import { S3FileItemExtra } from '@graasp/sdk';
 
 import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types';
 import { AppState } from '@excalidraw/excalidraw/types/types';
@@ -36,12 +37,7 @@ type s3FileData = {
   name: string;
   type: string;
   extra: {
-    s3File: {
-      name: string;
-      path: string;
-      size: number;
-      mimetype: string;
-    };
+    s3File: S3FileItemExtra;
   };
 };
 
