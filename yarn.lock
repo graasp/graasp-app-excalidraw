@@ -2241,13 +2241,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@excalidraw/excalidraw@npm:^0.14.2":
-  version: 0.14.2
-  resolution: "@excalidraw/excalidraw@npm:0.14.2"
+"@excalidraw/excalidraw@npm:^0.15.2":
+  version: 0.15.2
+  resolution: "@excalidraw/excalidraw@npm:0.15.2"
   peerDependencies:
     react: ^17.0.2 || ^18.2.0
     react-dom: ^17.0.2 || ^18.2.0
-  checksum: 4adb2f2b14cd65fceb9330d44240ece73cdc74f6586d14fd1d7f1ec95f4ed1e7873b765723681da2bae5923fae57a2fc761da88942904d7879974fed79b5e956
+  checksum: f35ea7cd40c6a19745f0b0c1ddbaf7a6a8580e917120b41851ded508cc1489267c406b7bd70cdec208cc0663cd154516a2dd53bdd510da5375943cf5a1da86b6
   languageName: node
   linkType: hard
 
@@ -9558,7 +9558,7 @@ __metadata:
     "@cypress/instrument-cra": 1.4.0
     "@emotion/react": 11.11.1
     "@emotion/styled": 11.11.0
-    "@excalidraw/excalidraw": ^0.14.2
+    "@excalidraw/excalidraw": ^0.15.2
     "@graasp/apps-query-client": ^0.4.2
     "@graasp/sdk": 0.9.2
     "@mui/icons-material": 5.14.1
