@@ -58,19 +58,13 @@ const ExcalidrawView: FC = () => {
   const [filesAppData, setFilesAppData] = useState<List<FileAppData>>(List());
   const files = useFiles(filesAppData);
 
-  const {
-    appDataArray,
-    patchAppData,
-    postAppData,
-    uploadFile,
-    deleteFile,
-    status,
-  } = useAppDataContext();
+  const { appData, patchAppData, postAppData, uploadFile, deleteFile, status } =
+    useAppDataContext();
 
   const { isLoading } = status;
 
   useEffect(() => {
-    const elementsAppData: ExcalidrawElementsAppData = (appDataArray.find(
+    const elementsAppData: ExcalidrawElementsAppData = (appData.find(
       ({ type }) => type === APP_DATA_TYPES.EXCALIDRAW_ELEMENTS,
     ) as ExcalidrawElementsAppData) ?? {
       type: APP_DATA_TYPES.EXCALIDRAW_ELEMENTS,
@@ -78,7 +72,7 @@ const ExcalidrawView: FC = () => {
       data: { elements: [] },
     };
 
-    const stateAppData: ExcalidrawStateAppData = (appDataArray.find(
+    const stateAppData: ExcalidrawStateAppData = (appData.find(
       ({ type }) => type === APP_DATA_TYPES.EXCALIDRAW_STATE,
     ) as ExcalidrawStateAppData) ?? {
       type: APP_DATA_TYPES.EXCALIDRAW_STATE,
@@ -87,7 +81,7 @@ const ExcalidrawView: FC = () => {
     };
 
     setFilesAppData(
-      appDataArray.filter(
+      appData.filter(
         ({ type }) => type === APP_DATA_TYPES.FILE,
       ) as List<FileAppData>,
     );
@@ -115,7 +109,7 @@ const ExcalidrawView: FC = () => {
       collaborators: new Map<string, never>(),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appDataArray]);
+  }, [appData]);
 
   useEffect(() => {
     excalidrawRef.current?.addFiles(files);
@@ -259,7 +253,7 @@ const ExcalidrawView: FC = () => {
         initialData={{
           elements: localElements,
           appState,
-          files,
+          // files, // To be reimplemented.
         }}
         ref={excalidrawRef}
         onChange={handleChange}

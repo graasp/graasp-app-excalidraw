@@ -10,8 +10,8 @@ import {
 import i18n from '../config/i18n';
 import ExcalidrawView from './ExcalidrawView';
 import { AppDataProvider } from './context/AppDataContext';
-import { AppSettingProvider } from './context/AppSettingContext';
 import { MembersProvider } from './context/MembersContext';
+import { SettingsProvider } from './context/SettingsContext';
 
 const App: FC = () => {
   const context = useLocalContext();
@@ -26,11 +26,11 @@ const App: FC = () => {
 
   const renderContext = (c: Context | string): JSX.Element => {
     switch (c) {
-      case Context.BUILDER:
+      case Context.Builder:
         return <ExcalidrawView />;
-      case Context.ANALYTICS:
+      case Context.Analytics:
         return <>View not implemented</>;
-      case Context.PLAYER:
+      case Context.Player:
       default:
         return <ExcalidrawView />;
     }
@@ -39,9 +39,9 @@ const App: FC = () => {
   return (
     <MembersProvider>
       <AppDataProvider>
-        <AppSettingProvider>
+        <SettingsProvider>
           {renderContext(context.context ?? DEFAULT_CONTEXT)}
-        </AppSettingProvider>
+        </SettingsProvider>
       </AppDataProvider>
     </MembersProvider>
   );

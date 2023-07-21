@@ -8,3 +8,4 @@ export const {
 } = window.Cypress ? Cypress.env() : process.env;
 
 export const MOCK_API = REACT_APP_MOCK_API === 'true';
+export const GRAASP_APP_ID = REACT_APP_GRAASP_APP_ID;
