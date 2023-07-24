@@ -23,7 +23,7 @@ module.exports = (on, config) => {
       ...config.env,
       REACT_APP_API_HOST: process.env.REACT_APP_API_HOST,
       REACT_APP_MOCK_API: process.env.REACT_APP_MOCK_API,
-      REACT_APP_GRAASP_APP_ID: process.env.REACT_APP_GRAASP_APP_ID,
+      REACT_APP_GRAASP_APP_KEY: process.env.REACT_APP_GRAASP_APP_ID,
       REACT_APP_VERSION: process.env.REACT_APP_VERSION,
       REACT_APP_GOOGLE_ANALYTICS_ID: process.env.REACT_APP_GOOGLE_ANALYTICS_ID,
     },

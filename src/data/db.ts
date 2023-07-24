@@ -4,7 +4,7 @@
 
 /* istanbul ignore file */
 import type { Database, LocalContext } from '@graasp/apps-query-client';
-import { Member, PermissionLevel } from '@graasp/sdk';
+import { Item, ItemSettings, Member, PermissionLevel } from '@graasp/sdk';
 
 import { API_HOST } from '../config/env';
 
@@ -37,6 +37,17 @@ export const mockMembers: Member[] = [
   },
 ];
 
+const mockItem: Item<ItemSettings> = {
+  id: mockContext.itemId,
+  name: 'app-brainwriting',
+  description: null,
+  path: '',
+  settings: {},
+  creator: mockMembers[0],
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
+
 const buildDatabase = (
   appContext: Partial<LocalContext>,
   members?: Member[],
@@ -45,7 +56,7 @@ const buildDatabase = (
   appActions: [],
   members: members ?? mockMembers,
   appSettings: [],
-  items: [],
+  items: [mockItem],
 });
 
 export default buildDatabase;

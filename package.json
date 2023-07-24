@@ -48,6 +48,7 @@
     "uuid": "9.0.0"
   },
   "scripts": {
+    "dev:mock": "VITE_MOCK_API=true && yarn vite",
     "dev": "yarn vite",
     "start:test": "yarn vite --mode test",
     "build": "yarn vite build",
@@ -82,6 +83,7 @@
     "@types/uuid": "9.0.2",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
+    "@vitejs/plugin-basic-ssl": "^1.0.1",
     "@vitejs/plugin-react": "^4.0.3",
     "concurrently": "8.2.0",
     "cypress": "12.17.2",
