@@ -1,9 +1,6 @@
 import { AppDataVisibility, S3FileItemExtra } from '@graasp/sdk';
 import { AppDataRecord } from '@graasp/sdk/frontend';
 
-import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types';
-import { AppState } from '@excalidraw/excalidraw/types/types';
-
 /* eslint-disable no-shadow */
 enum APP_DATA_TYPES {
   MOCK_TYPE = 'mock_type',
@@ -16,7 +13,7 @@ enum APP_DATA_TYPES {
 type ExcalidrawElementsAppDataExtension = {
   type: APP_DATA_TYPES.EXCALIDRAW_ELEMENTS;
   data: {
-    elements: ExcalidrawElement[];
+    elements: string;
   };
   visibility?: AppDataVisibility.Item;
 };
@@ -24,7 +21,7 @@ type ExcalidrawElementsAppDataExtension = {
 type ExcalidrawStateAppDataExtension = {
   type: APP_DATA_TYPES.EXCALIDRAW_STATE;
   data: {
-    appState: AppState;
+    appState: string;
   };
   visibility?: AppDataVisibility.Member;
 };

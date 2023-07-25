@@ -8,8 +8,8 @@ import React, {
   useMemo,
 } from 'react';
 
-import { Api, AppDataData, useLocalContext } from '@graasp/apps-query-client';
-import { AppData } from '@graasp/sdk';
+import { Api, useLocalContext } from '@graasp/apps-query-client';
+import { AppData, AppDataVisibility } from '@graasp/sdk';
 import { AppDataRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
 
@@ -19,12 +19,11 @@ import {
   hooks,
   useMutation,
 } from '../../config/queryClient';
-import { AppDataVisibility } from '../../types/appData';
 
 type PostAppDataType = {
   data: { [key: string]: unknown };
   type: string;
-  visibility?: AppDataVisibility;
+  visibility?: AppData['visibility'];
 };
 
 type PatchAppDataType = {
@@ -38,7 +37,7 @@ type DeleteAppDataType = {
 
 type FileUploadCompleteType = {
   id: string;
-  data: AppDataData;
+  data: { [key: string]: unknown };
   visibility?: AppDataVisibility;
 };
 
@@ -125,7 +124,7 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
           onFileUploadComplete({
             id: itemId,
             data: { ...xhr.response?.body?.[0].filter(Boolean), created },
-            visibility: AppDataVisibility.ITEM,
+            visibility: AppDataVisibility.Item,
           });
         }
       };
