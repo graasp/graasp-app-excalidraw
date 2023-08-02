@@ -1,5 +1,28 @@
 # Changelog
 
+## [3.0.0](https://github.com/graasp/graasp-app-excalidraw/compare/v2.0.0...v3.0.0) (2023-08-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* the data model changed and this new version will not work with previous types of app data
+
+### refactor
+
+* serde elements and app state in app data ([e7755a2](https://github.com/graasp/graasp-app-excalidraw/commit/e7755a26957d5d3c178261c1a7ebe6444c6cc63e))
+
+
+### Features
+
+* add refresh button ([b95038a](https://github.com/graasp/graasp-app-excalidraw/commit/b95038a9c8c2ae5f5856d10d903ae24d1dbe1aee))
+* implement file upload and download ([33c310a](https://github.com/graasp/graasp-app-excalidraw/commit/33c310a951d97dbf5aa44c38bc45306563ffac82))
+* save images (wip) ([ed9def3](https://github.com/graasp/graasp-app-excalidraw/commit/ed9def3b097d54133c70c725b0b20117f542775c))
+
+
+### Bug Fixes
+
+* refactor form data when uploading file ([e184b8e](https://github.com/graasp/graasp-app-excalidraw/commit/e184b8e38be044e3c19ea69da815739c07e194e0))
+
 ## [2.0.0](https://github.com/graasp/graasp-app-excalidraw/compare/v1.0.0...v2.0.0) (2023-03-23)
 
 
