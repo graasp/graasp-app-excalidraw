@@ -58,43 +58,37 @@ const ExcalidrawView: FC = () => {
   const [filesAppData, setFilesAppData] = useState<List<FileAppData>>(List());
   const files = useFiles(filesAppData);
 
-  const {
-    appDataArray,
-    patchAppData,
-    postAppData,
-    uploadFile,
-    deleteFile,
-    status,
-  } = useAppDataContext();
+  const { appData, patchAppData, postAppData, uploadFile, deleteFile, status } =
+    useAppDataContext();
 
   const { isLoading } = status;
 
   useEffect(() => {
-    const elementsAppData: ExcalidrawElementsAppData = (appDataArray.find(
+    const elementsAppData: ExcalidrawElementsAppData = (appData.find(
       ({ type }) => type === APP_DATA_TYPES.EXCALIDRAW_ELEMENTS,
     ) as ExcalidrawElementsAppData) ?? {
       type: APP_DATA_TYPES.EXCALIDRAW_ELEMENTS,
       id: '',
-      data: { elements: [] },
+      data: { elements: '[]' },
     };
 
-    const stateAppData: ExcalidrawStateAppData = (appDataArray.find(
+    const stateAppData: ExcalidrawStateAppData = (appData.find(
       ({ type }) => type === APP_DATA_TYPES.EXCALIDRAW_STATE,
     ) as ExcalidrawStateAppData) ?? {
       type: APP_DATA_TYPES.EXCALIDRAW_STATE,
       id: '',
-      data: { appState: {} },
+      data: { appState: '{}' },
     };
 
     setFilesAppData(
-      appDataArray.filter(
+      appData.filter(
         ({ type }) => type === APP_DATA_TYPES.FILE,
       ) as List<FileAppData>,
     );
 
     const { id, data: newData } = elementsAppData;
     setIdElements(id);
-    const { elements: newElements } = newData;
+    const newElements = JSON.parse(newData.elements);
     if (excalidrawRef.current && typeof localElements !== 'undefined') {
       const reconciledElements = reconcileElements(
         localElements,
@@ -111,20 +105,17 @@ const ExcalidrawView: FC = () => {
     }
     setIdState(stateAppData.id);
     setAppState({
-      ...stateAppData.data.appState,
+      ...JSON.parse(stateAppData.data.appState),
       collaborators: new Map<string, never>(),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appDataArray]);
+  }, [appData]);
 
   useEffect(() => {
     excalidrawRef.current?.addFiles(files);
   }, [files]);
 
-  const saveElements = (
-    elements: readonly ExcalidrawElement[],
-    id: string,
-  ): void => {
+  const saveElements = (elements: string, id: string): void => {
     if (id.length > 0) {
       patchAppData({
         id,
@@ -143,18 +134,19 @@ const ExcalidrawView: FC = () => {
   };
 
   const saveState = (newAppState: AppState, id: string): void => {
+    const newAppStateJSON = JSON.stringify(newAppState);
     if (id.length > 0) {
       patchAppData({
         id,
         data: {
-          appState: newAppState,
+          appState: newAppStateJSON,
         },
       });
     } else {
       postAppData({
         ...DEFAULT_EXCALIDRAW_STATE_APP_DATA,
         data: {
-          appState: newAppState,
+          appState: newAppStateJSON,
         },
       });
     }
@@ -169,8 +161,10 @@ const ExcalidrawView: FC = () => {
     prevElements: readonly ExcalidrawElement[],
     id: string,
   ): void => {
-    if (!isEqual(elements, prevElements)) {
-      debouncedSaveElements(elements, id);
+    const elementsJSON = JSON.stringify(elements);
+    const prevElementsJSON = JSON.stringify(prevElements);
+    if (!isEqual(elementsJSON, prevElementsJSON)) {
+      debouncedSaveElements(elementsJSON, id);
     }
   };
 
@@ -259,7 +253,7 @@ const ExcalidrawView: FC = () => {
         initialData={{
           elements: localElements,
           appState,
-          files,
+          // files, // TODO: reimplement.
         }}
         ref={excalidrawRef}
         onChange={handleChange}

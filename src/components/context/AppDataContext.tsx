@@ -8,12 +8,10 @@ import React, {
   useMemo,
 } from 'react';
 
-import {
-  Api,
-  AppData,
-  AppDataData,
-  useLocalContext,
-} from '@graasp/apps-query-client';
+import { Api, useLocalContext } from '@graasp/apps-query-client';
+import { AppData, AppDataVisibility } from '@graasp/sdk';
+import { AppDataRecord } from '@graasp/sdk/frontend';
+import { Loader } from '@graasp/ui';
 
 import {
   API_ROUTES,
@@ -21,13 +19,11 @@ import {
   hooks,
   useMutation,
 } from '../../config/queryClient';
-import { AppDataVisibility } from '../../types/appData';
-import Loader from '../common/Loader';
 
 type PostAppDataType = {
   data: { [key: string]: unknown };
   type: string;
-  visibility?: AppDataVisibility;
+  visibility?: AppData['visibility'];
 };
 
 type PatchAppDataType = {
@@ -41,7 +37,7 @@ type DeleteAppDataType = {
 
 type FileUploadCompleteType = {
   id: string;
-  data: AppDataData;
+  data: { [key: string]: unknown };
   visibility?: AppDataVisibility;
 };
 
@@ -55,23 +51,25 @@ type FileToUploadType = {
 
 export type AppDataContextType = {
   postAppData: (payload: PostAppDataType) => void;
+  postAppDataAsync: (payload: PostAppDataType) => Promise<AppData> | undefined;
   patchAppData: (payload: PatchAppDataType) => void;
   deleteAppData: (payload: DeleteAppDataType) => void;
+  appData: List<AppDataRecord>;
   uploadFile: (fileToUpload: FileToUploadType) => Promise<void>;
   getFileContent: (fileId: string) => Promise<unknown>;
   deleteFile: (fileId: string) => Promise<void>;
-  appDataArray: List<AppData>;
   status: { isLoading: boolean; isFetching: boolean; isPreviousData: boolean };
 };
 
 const defaultContextValue = {
   postAppData: () => null,
+  postAppDataAsync: () => undefined,
   patchAppData: () => null,
   deleteAppData: () => null,
   uploadFile: () => Promise.resolve(),
   getFileContent: () => Promise.resolve(),
   deleteFile: () => Promise.resolve(),
-  appDataArray: List<AppData>(),
+  appData: List<AppDataRecord>(),
   status: {
     isFetching: false,
     isLoading: true,
@@ -86,8 +84,8 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
   const { itemId, apiHost } = useLocalContext();
   const { data: token } = hooks.useAuthToken(itemId);
 
-  const { mutate: postAppData } = useMutation<
-    unknown,
+  const { mutate: postAppData, mutateAsync: postAppDataAsync } = useMutation<
+    AppData,
     unknown,
     PostAppDataType
   >(MUTATION_KEYS.POST_APP_DATA);
@@ -113,7 +111,7 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
       const xhr = new XMLHttpRequest();
       xhr.open(
         'POST',
-        `${apiHost}/${API_ROUTES.buildUploadFilesRoute(itemId)}`,
+        `${apiHost}/${API_ROUTES.buildUploadAppDataFilesRoute(itemId)}`,
         true,
       );
       xhr.setRequestHeader('authorization', `Bearer ${token}`);
@@ -126,7 +124,7 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
           onFileUploadComplete({
             id: itemId,
             data: { ...xhr.response?.body?.[0].filter(Boolean), created },
-            visibility: AppDataVisibility.ITEM,
+            visibility: AppDataVisibility.Item,
           });
         }
       };
@@ -137,7 +135,7 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const getFileContent = useCallback(
     async (fileId: string): Promise<unknown> => {
-      const content = Api.getFileContent({
+      const content = Api.getAppDataFile({
         id: fileId,
         apiHost,
         token: token || '',
@@ -162,9 +160,10 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
       postAppData: (payload: PostAppDataType) => {
         postAppData(payload);
       },
+      postAppDataAsync,
       patchAppData,
       deleteAppData,
-      appDataArray: data || List<AppData>(),
+      appData: data || List<AppDataRecord>(),
       uploadFile,
       getFileContent,
       deleteFile,
@@ -175,6 +174,7 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
       },
     }),
     [
+      postAppDataAsync,
       patchAppData,
       deleteAppData,
       data,

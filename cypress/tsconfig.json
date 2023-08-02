@@ -5,5 +5,5 @@
     "types": ["cypress", "node"],
     "esModuleInterop": true
   },
-  "include": ["**/*.ts", "../@types/window.ts"]
+  "include": ["**/*.ts", "../src/@types/window.ts"]
 }

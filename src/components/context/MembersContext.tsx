@@ -2,7 +2,7 @@ import { List } from 'immutable';
 
 import React, { FC, ReactElement, createContext, useMemo } from 'react';
 
-import { Member } from '@graasp/apps-query-client';
+import { Member } from '@graasp/sdk';
 
 import { hooks } from '../../config/queryClient';
 import Loader from '../common/Loader';

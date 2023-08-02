@@ -1,9 +1,5 @@
-import { AppData } from '@graasp/apps-query-client';
-import { AppDataVisibility } from '@graasp/apps-query-client/dist/config/constants';
-import { S3FileItemExtra } from '@graasp/sdk';
-
-import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types';
-import { AppState } from '@excalidraw/excalidraw/types/types';
+import { AppDataVisibility, S3FileItemExtra } from '@graasp/sdk';
+import { AppDataRecord } from '@graasp/sdk/frontend';
 
 /* eslint-disable no-shadow */
 enum APP_DATA_TYPES {
@@ -17,21 +13,22 @@ enum APP_DATA_TYPES {
 type ExcalidrawElementsAppDataExtension = {
   type: APP_DATA_TYPES.EXCALIDRAW_ELEMENTS;
   data: {
-    elements: ExcalidrawElement[];
+    elements: string;
   };
-  visibility?: AppDataVisibility.ITEM;
+  visibility?: AppDataVisibility.Item;
 };
 
 type ExcalidrawStateAppDataExtension = {
   type: APP_DATA_TYPES.EXCALIDRAW_STATE;
   data: {
-    appState: AppState;
+    appState: string;
   };
-  visibility?: AppDataVisibility.MEMBER;
+  visibility?: AppDataVisibility.Member;
 };
 
-type ExcalidrawElementsAppData = AppData & ExcalidrawElementsAppDataExtension;
-type ExcalidrawStateAppData = AppData & ExcalidrawStateAppDataExtension;
+type ExcalidrawElementsAppData = AppDataRecord &
+  ExcalidrawElementsAppDataExtension;
+type ExcalidrawStateAppData = AppDataRecord & ExcalidrawStateAppDataExtension;
 
 type s3FileData = {
   name: string;
@@ -41,7 +38,7 @@ type s3FileData = {
   };
 };
 
-type FileAppData = AppData & { data: s3FileData };
+type FileAppData = AppDataRecord & { data: s3FileData };
 
 export { APP_DATA_TYPES };
 export type {
