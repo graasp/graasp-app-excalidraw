@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 export const arrayToMapWithIndex = <T extends { id: string }>(
   elements: readonly T[],
 ) =>
