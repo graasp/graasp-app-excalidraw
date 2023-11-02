@@ -4706,10 +4706,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/router@npm:1.7.2":
-  version: 1.7.2
-  resolution: "@remix-run/router@npm:1.7.2"
-  checksum: bb307582118de4767e8a2a6e4b8329dd7eb1268ac710b0c612eb8948e107ffda6921c782678fdac4bcda614cc88e42707ea3c7518f647ed16e8c058ca7d6342f
+"@remix-run/router@npm:1.11.0":
+  version: 1.11.0
+  resolution: "@remix-run/router@npm:1.11.0"
+  checksum: 629ec578b9dfd3c5cb5de64a0798dd7846ec5ba0351aa66f42b1c65efb43da8f30366be59b825303648965b0df55b638c110949b24ef94fd62e98117fdfb0c0f
   languageName: node
   linkType: hard
 
@@ -5314,33 +5314,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:4.32.0":
-  version: 4.32.0
-  resolution: "@tanstack/query-core@npm:4.32.0"
-  checksum: d81eabb1391aa92b95d94996798c9fc0077e3fee58cf050b7040aa07457693962fda449a6476371445461bc46f5e1d003d2b5cd286f3515bd5876fe57f5c9035
+"@tanstack/query-core@npm:4.36.1":
+  version: 4.36.1
+  resolution: "@tanstack/query-core@npm:4.36.1"
+  checksum: 7c648872cd491bcab2aa4c18e0b7ca130c072f05c277a5876977fa3bfa87634bbfde46e9d249236587d78c39866889a02e4e202b478dc6074ff96093732ae56d
   languageName: node
   linkType: hard
 
-"@tanstack/react-query-devtools@npm:^4.29.25":
-  version: 4.32.0
-  resolution: "@tanstack/react-query-devtools@npm:4.32.0"
+"@tanstack/react-query-devtools@npm:^4.36.1":
+  version: 4.36.1
+  resolution: "@tanstack/react-query-devtools@npm:4.36.1"
   dependencies:
     "@tanstack/match-sorter-utils": "npm:^8.7.0"
     superjson: "npm:^1.10.0"
     use-sync-external-store: "npm:^1.2.0"
   peerDependencies:
-    "@tanstack/react-query": 4.32.0
+    "@tanstack/react-query": ^4.36.1
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 6ea604804d483c9805f90d590223000638efce3d4ac9a63af0fc0197ada3b8ca5f6c4127201d8483ec27d401c58e013fdb4b454ca341bb08d7625e70b241fd5b
+  checksum: f21896c97a50304071d9ebe130c9d1ea35b29462830fd3f908b986690a9d7f018d76c7595406154d83e4e173ffc2fe0be5ae78f19b36f6df2a3f4d551776d2b7
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^4.29.25":
-  version: 4.32.0
-  resolution: "@tanstack/react-query@npm:4.32.0"
+"@tanstack/react-query@npm:^4.36.1":
+  version: 4.36.1
+  resolution: "@tanstack/react-query@npm:4.36.1"
   dependencies:
-    "@tanstack/query-core": "npm:4.32.0"
+    "@tanstack/query-core": "npm:4.36.1"
     use-sync-external-store: "npm:^1.2.0"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -5351,7 +5351,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: c48b2309ad2e49dc5c3b8845cc78f39ccb946a2d70e84900441ac8cd947443f0fb22ecaf1c7aa4fbd528973c45edb98a3e199b8e2daf73e7eadbd9bc662d3c72
+  checksum: 764b860c3ac8d254fc6b07e01054a0f58058644d59626c724b213293fbf1e31c198cbb26e4c32c0d16dcaec0353c0ae19147d9c667675b31f8cea1d64f1ff4ac
   languageName: node
   linkType: hard
 
@@ -5382,10 +5382,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/i18n@npm:0.13.6":
-  version: 0.13.6
-  resolution: "@types/i18n@npm:0.13.6"
-  checksum: f1caf1d55a98e8bcc6deb06ca97cce7a26c90a9ee25097c68e3c4e10950bdab28588c7967c42218639dc78338d79a2ead9df6338c287904154d770fd3e709420
+"@types/i18n@npm:0.13.8":
+  version: 0.13.8
+  resolution: "@types/i18n@npm:0.13.8"
+  checksum: 840eef987ae4c3edd4f1c91d974f35b910563701f797f7e1d43ab2afefc50d2cc3269dbd335189a1b7dd486d83ff3d414fff183052d4d6d63e3aa8acdc94b554
   languageName: node
   linkType: hard
 
@@ -5403,39 +5403,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash.debounce@npm:4.0.7":
-  version: 4.0.7
-  resolution: "@types/lodash.debounce@npm:4.0.7"
+"@types/lodash.debounce@npm:4.0.8":
+  version: 4.0.8
+  resolution: "@types/lodash.debounce@npm:4.0.8"
   dependencies:
     "@types/lodash": "npm:*"
-  checksum: e873b2d77f89010876baba3437ef826b17221b98948e00b5590828334a481dea1c8f9d28543210e564adc53199584f42c3cb171f8b6c3614fefc0b4e0888679c
+  checksum: 63f195cb053ca390135a9aca62bb60fa149ca81838519871506b60760ff4113333709becb8e4147707eaa3d916dab7eff66b0588caf4ce508cabda9bee9c5b60
   languageName: node
   linkType: hard
 
-"@types/lodash.isequal@npm:~4.5.6":
-  version: 4.5.6
-  resolution: "@types/lodash.isequal@npm:4.5.6"
+"@types/lodash.isequal@npm:~4.5.7":
+  version: 4.5.7
+  resolution: "@types/lodash.isequal@npm:4.5.7"
   dependencies:
     "@types/lodash": "npm:*"
-  checksum: 0f065989408a9e0584e6c27495be2cd4602e62650f55266aa195812582444463c0c8570c674ae84f947c11748f49ab43fd5b482fa120e08eeee4c23b162edc38
+  checksum: 1b30270e497dff3cfcdc6235b0c1fffac44995b6d7426455768f2413c69a114801b5cd2add219e2542f642b6d06dbda627c4511cd5870d20981ba75190af6444
   languageName: node
   linkType: hard
 
-"@types/lodash.isobject@npm:3.0.7":
-  version: 3.0.7
-  resolution: "@types/lodash.isobject@npm:3.0.7"
+"@types/lodash.isobject@npm:3.0.8":
+  version: 3.0.8
+  resolution: "@types/lodash.isobject@npm:3.0.8"
   dependencies:
     "@types/lodash": "npm:*"
-  checksum: 0ee50208a4bc641172d4e79f497c8cd59e437ad6109f2118bfe45c4e8815ecd0e5ea563fb04f307580a1e8f34e6e364b45eac8097db0448f521c78a50a2ce0ab
+  checksum: dd270da1271b3230074b90f7adb2a56b40d1a5b767e35a5aaba221966b57e3245996aabc25dd67b5227f1acf28c8fe5746c128f562fa49418d4a48e69d9b125d
   languageName: node
   linkType: hard
 
-"@types/lodash.isstring@npm:4.0.7":
-  version: 4.0.7
-  resolution: "@types/lodash.isstring@npm:4.0.7"
+"@types/lodash.isstring@npm:4.0.8":
+  version: 4.0.8
+  resolution: "@types/lodash.isstring@npm:4.0.8"
   dependencies:
     "@types/lodash": "npm:*"
-  checksum: 0718eadc1c53c830dde7133dca5cf13a46444512d8a80ffd98ba29a06f2eb926317b22b0eafe066b70a13844356063640be1e441a22d19518a1991eba250e677
+  checksum: 21d41964c2a71f53054bc9e5bbe1bfc1375da4f87e483b38550a17d644f4b658e1e027e74a0b883200c4213b1d3418231e252aeb523c8815670f7a0df992d294
   languageName: node
   linkType: hard
 
@@ -5467,10 +5467,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:18.16.19":
-  version: 18.16.19
-  resolution: "@types/node@npm:18.16.19"
-  checksum: e6d3dc91ddc7e824909ab2169d764d1b7db40abe11a6240892f037b3ce772d611ba87a9ef728e799a71cb69e0ee02300e0dae2a0c32e85e411f84c5d2e7c79a0
+"@types/node@npm:20.8.10":
+  version: 20.8.10
+  resolution: "@types/node@npm:20.8.10"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 8930039077c8ad74de74c724909412bea8110c3f8892bcef8dda3e9629073bed65632ee755f94b252bcdae8ca71cf83e89a4a440a105e2b1b7c9797b43483049
   languageName: node
   linkType: hard
 
@@ -5527,12 +5529,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.2.7":
-  version: 18.2.7
-  resolution: "@types/react-dom@npm:18.2.7"
+"@types/react-dom@npm:18.2.14":
+  version: 18.2.14
+  resolution: "@types/react-dom@npm:18.2.14"
   dependencies:
     "@types/react": "npm:*"
-  checksum: 9b70ef66cbe2d2898ea37eb79ee3697e0e4ad3d950e769a601f79be94097d43b8ef45b98a0b29528203c7d731c81666f637b2b7032deeced99214b4bc0662614
+  checksum: c7feb6542dbeb3de18c9c03260229377e0a0d47a3d2c0bb91861996e2353375a45c57de7216edb8b88448584e363677244bd4355ddec45c243e70e777c2a150b
   languageName: node
   linkType: hard
 
@@ -5565,14 +5567,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.15":
-  version: 18.2.15
-  resolution: "@types/react@npm:18.2.15"
+"@types/react@npm:18.2.34":
+  version: 18.2.34
+  resolution: "@types/react@npm:18.2.34"
   dependencies:
     "@types/prop-types": "npm:*"
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 282f3f86f94983ef1af1d66cb552b78131cf3650d29c3080e08a4de8f81489e5b6111c635ad59acf6984ce72281dfcf95004514985b84b5af35898d10414e84f
+  checksum: 6d16f86b384e829edc3710b1dd9ec4eb1d6b26bc079c5cf605bd0cbf77ae6224f15c76949afadb7f53df4544cfe4025c1111fbe36732cd7f660a320fbc2e5866
   languageName: node
   linkType: hard
 
@@ -5613,10 +5615,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/uuid@npm:9.0.2":
-  version: 9.0.2
-  resolution: "@types/uuid@npm:9.0.2"
-  checksum: 1754bcf3444e1e3aeadd6e774fc328eb53bc956665e2e8fb6ec127aa8e1f43d9a224c3d22a9a6233dca8dd81a12dc7fed4d84b8876dd5ec82d40f574f7ff8b68
+"@types/uuid@npm:9.0.6":
+  version: 9.0.6
+  resolution: "@types/uuid@npm:9.0.6"
+  checksum: 739dcb2e620ff097fa916edeab455eb75640c4883a850784fdb15b32f67b719e05275c6d6419bb6da11350d26bd14ed05ba5e992ff228411cdd98cbc772d71ef
   languageName: node
   linkType: hard
 
@@ -9313,18 +9315,18 @@ __metadata:
     "@mui/material": "npm:5.14.16"
     "@sentry/react": "npm:7.77.0"
     "@sentry/tracing": "npm:7.77.0"
-    "@tanstack/react-query": "npm:^4.29.25"
-    "@tanstack/react-query-devtools": "npm:^4.29.25"
+    "@tanstack/react-query": "npm:^4.36.1"
+    "@tanstack/react-query-devtools": "npm:^4.36.1"
     "@trivago/prettier-plugin-sort-imports": "npm:4.2.1"
-    "@types/i18n": "npm:0.13.6"
-    "@types/lodash.debounce": "npm:4.0.7"
-    "@types/lodash.isequal": "npm:~4.5.6"
-    "@types/lodash.isobject": "npm:3.0.7"
-    "@types/lodash.isstring": "npm:4.0.7"
-    "@types/node": "npm:18.16.19"
-    "@types/react": "npm:18.2.15"
-    "@types/react-dom": "npm:18.2.7"
-    "@types/uuid": "npm:9.0.2"
+    "@types/i18n": "npm:0.13.8"
+    "@types/lodash.debounce": "npm:4.0.8"
+    "@types/lodash.isequal": "npm:~4.5.7"
+    "@types/lodash.isobject": "npm:3.0.8"
+    "@types/lodash.isstring": "npm:4.0.8"
+    "@types/node": "npm:20.8.10"
+    "@types/react": "npm:18.2.34"
+    "@types/react-dom": "npm:18.2.14"
+    "@types/uuid": "npm:9.0.6"
     "@typescript-eslint/eslint-plugin": "npm:5.62.0"
     "@typescript-eslint/parser": "npm:5.62.0"
     "@vitejs/plugin-basic-ssl": "npm:^1.0.1"
@@ -9357,10 +9359,10 @@ __metadata:
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
     react-i18next: "npm:12.3.1"
-    react-router-dom: "npm:^6.14.2"
+    react-router-dom: "npm:^6.18.0"
     react-toastify: "npm:9.1.3"
     typescript: "npm:4.9.5"
-    uuid: "npm:9.0.0"
+    uuid: "npm:9.0.1"
     vite: "npm:^4.4.6"
     vite-plugin-checker: "npm:^0.6.1"
     vite-plugin-istanbul: "npm:^4.1.0"
@@ -12220,27 +12222,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^6.14.2":
-  version: 6.14.2
-  resolution: "react-router-dom@npm:6.14.2"
+"react-router-dom@npm:^6.18.0":
+  version: 6.18.0
+  resolution: "react-router-dom@npm:6.18.0"
   dependencies:
-    "@remix-run/router": "npm:1.7.2"
-    react-router: "npm:6.14.2"
+    "@remix-run/router": "npm:1.11.0"
+    react-router: "npm:6.18.0"
   peerDependencies:
     react: ">=16.8"
     react-dom: ">=16.8"
-  checksum: dd855b263db840356048edf9f7c5f2314388ed059bc9c5e25d1a5d2c580eeb6a23f7dcb9d1c6cba7493cc407be18789370e016368371d03be698f500be942edc
+  checksum: b0e72603d73172b6c6662afe2faed326753d5bbd9905aa560e3dade7996fc13d19e34e3ed668d2849efd685e2db2f711129c84b1439870e92c9cc91ddc343cf5
   languageName: node
   linkType: hard
 
-"react-router@npm:6.14.2":
-  version: 6.14.2
-  resolution: "react-router@npm:6.14.2"
+"react-router@npm:6.18.0":
+  version: 6.18.0
+  resolution: "react-router@npm:6.18.0"
   dependencies:
-    "@remix-run/router": "npm:1.7.2"
+    "@remix-run/router": "npm:1.11.0"
   peerDependencies:
     react: ">=16.8"
-  checksum: 24ae7d1c9d28c412d0113af085202a2edcc348b35fdf9cd88552b43b1536b9fc0479918674f16b65195386abe842d1f74c593390a02b0abaa082dc0ecbea83fa
+  checksum: a00c8f347b7ffee575f4a7731782e688e3fca458ca5bd970fb41cef66a6851853caa24464155ab438d5879f367b1223a539642a405a865913ffe7e63e53b1245
   languageName: node
   linkType: hard
 
@@ -14029,6 +14031,15 @@ __metadata:
   bin:
     uuid: dist/bin/uuid
   checksum: 23857699a616d1b48224bc2b8440eae6e57d25463c3a0200e514ba8279dfa3bde7e92ea056122237839cfa32045e57d8f8f4a30e581d720fd72935572853ae2e
+  languageName: node
+  linkType: hard
+
+"uuid@npm:9.0.1":
+  version: 9.0.1
+  resolution: "uuid@npm:9.0.1"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 9d0b6adb72b736e36f2b1b53da0d559125ba3e39d913b6072f6f033e0c87835b414f0836b45bcfaf2bdf698f92297fea1c3cc19b0b258bc182c9c43cc0fab9f2
   languageName: node
   linkType: hard
 
