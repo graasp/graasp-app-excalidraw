@@ -30,7 +30,8 @@ export const useFiles = (filesAppData: List<FileAppData>): BinaryFileData[] => {
           fr.onerror = (err) => reject(err);
           fr.readAsDataURL(file);
         });
-      const { name: fileName, mimetype } = fileAppDataData.extra.s3File;
+      // WHY ???
+      const { name: fileName, mimetype } = fileAppDataData.extra.s3File.s3File;
       const fileData = await getFileContent(id || '').then((result) =>
         reader(result),
       );

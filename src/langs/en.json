@@ -5,6 +5,17 @@
     "Local Context": "Local Context",
     "App Context": "App Context",
     "Members": "Members",
-    "REFRESH": "Refresh"
+    "REFRESH": "Refresh",
+    "SETTINGS": {
+      "TAB": "Settings",
+      "SAVE": "Save settings",
+      "TITLE": "Settings"
+    },
+    "ADMIN_VIEW": {
+      "TAB": "Admin View"
+    },
+    "EXCALIDRAW": {
+      "TAB": "Excalidraw"
+    }
   }
 }

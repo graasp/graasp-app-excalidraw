@@ -37,7 +37,7 @@ const Settings: FC<SettingsProps> = () => {
       <Typography variant="h3" fontSize="16pt">
         {t('SETTINGS.TITLE')}
       </Typography>
-      <Button onClick={handleSave}>{t('SAVE')}</Button>
+      <Button onClick={handleSave}>{t('SETTINGS.SAVE')}</Button>
     </Stack>
   );
 };

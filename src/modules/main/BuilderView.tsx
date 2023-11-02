@@ -34,7 +34,7 @@ const BuilderView = (): JSX.Element => {
 
   const activityTab = useMemo(
     () => ({
-      tabLabel: t('ACTIVITY_TAB'),
+      tabLabel: t('EXCALIDRAW.TAB'),
       tabChild: <p>Oups... Activity tab</p>,
     }),
     [t],
@@ -42,7 +42,7 @@ const BuilderView = (): JSX.Element => {
 
   const settingsTab = useMemo(
     () => ({
-      tabLabel: t('SETTINGS_TAB'),
+      tabLabel: t('SETTINGS.TAB'),
       tabChild: <Settings />,
     }),
     [t],

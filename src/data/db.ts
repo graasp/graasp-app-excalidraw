@@ -4,7 +4,7 @@
 
 /* istanbul ignore file */
 import type { Database, LocalContext } from '@graasp/apps-query-client';
-import { Item, ItemSettings, Member, PermissionLevel } from '@graasp/sdk';
+import { PermissionLevel } from '@graasp/sdk';
 
 import { API_HOST } from '../config/env';
 
@@ -16,7 +16,11 @@ export const mockContext: LocalContext = {
   memberId: 'mock-member-id',
 };
 
-export const mockMembers: Member[] = [
+// Workaround mismatch versions of SDK between direct dep and apps-query-client dep.
+type Members = Database['members'];
+type MockItems = Database['items'];
+
+export const mockMembers: Members = [
   {
     id: mockContext.memberId || '',
     type: 'individual',
@@ -37,26 +41,28 @@ export const mockMembers: Member[] = [
   },
 ];
 
-const mockItem: Item<ItemSettings> = {
-  id: mockContext.itemId,
-  name: 'app-brainwriting',
-  description: null,
-  path: '',
-  settings: {},
-  creator: mockMembers[0],
-  createdAt: new Date(),
-  updatedAt: new Date(),
-};
+const mockItems: MockItems = [
+  {
+    id: mockContext.itemId,
+    name: 'app-brainwriting',
+    description: null,
+    path: '',
+    settings: {},
+    creator: mockMembers[0],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+];
 
 const buildDatabase = (
   appContext: Partial<LocalContext>,
-  members?: Member[],
+  members?: Members,
 ): Database => ({
   appData: [],
   appActions: [],
   members: members ?? mockMembers,
   appSettings: [],
-  items: [mockItem],
+  items: mockItems,
 });
 
 export default buildDatabase;
