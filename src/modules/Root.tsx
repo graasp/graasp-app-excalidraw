@@ -19,8 +19,8 @@ import {
   queryClient,
 } from '../config/queryClient';
 import { showErrorToast } from '../utils/toast';
-import App from './App';
 import Loader from './common/Loader';
+import App from './main/App';
 
 // declare the module to enable theme modification
 declare module '@mui/material/styles' {
