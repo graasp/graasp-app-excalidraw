@@ -10,6 +10,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
 import { BUILDER_VIEW_CY } from '@/config/selectors';
+import Excalidraw from '@/modules/excalidraw/Excalidraw';
 
 import TabPanel from '../common/TabPanel';
 import Settings from '../settings/Settings';
@@ -35,7 +36,7 @@ const BuilderView = (): JSX.Element => {
   const activityTab = useMemo(
     () => ({
       tabLabel: t('EXCALIDRAW.TAB'),
-      tabChild: <p>Oups... Activity tab</p>,
+      tabChild: <Excalidraw />,
     }),
     [t],
   );
@@ -62,8 +63,14 @@ const BuilderView = (): JSX.Element => {
   );
 
   return (
-    <Stack data-cy={BUILDER_VIEW_CY} direction="row" spacing={2} width="100%">
-      <Paper elevation={0} sx={{ width: isAdmin ? '66%' : '100%' }}>
+    <Stack
+      data-cy={BUILDER_VIEW_CY}
+      direction="row"
+      spacing={2}
+      width="100%"
+      height="100%"
+    >
+      <Paper elevation={0} sx={{ width: '100%', height: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs
             value={selectedTab}

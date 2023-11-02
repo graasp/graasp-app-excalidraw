@@ -6,6 +6,31 @@ import { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
 
+import {
+  APP_DATA_TYPES,
+  ExcalidrawElementsAppData,
+  ExcalidrawStateAppData,
+  FileAppData,
+} from '@/config/appDataTypes';
+import {
+  DEFAULT_EXCALIDRAW_ELEMENTS_APP_DATA,
+  DEFAULT_EXCALIDRAW_STATE_APP_DATA,
+} from '@/config/constants';
+import i18n from '@/config/i18n';
+import {
+  DEBOUNCE_COMPARE_ELEMENTS,
+  DEBOUNCE_SAVE_ELEMENTS,
+  DEBOUNCE_SAVE_STATE,
+  EXCALIDRAW_ENABLE_GRID_MODE,
+  EXCALIDRAW_ENABLE_VIEW_MODE,
+  EXCALIDRAW_ENABLE_ZEN_MODE,
+  EXCALIDRAW_THEME,
+} from '@/config/settings';
+import { getListOfFileIds, useFiles } from '@/data/files';
+import Loader from '@/modules/common/Loader';
+import RefreshButton from '@/modules/common/RefreshButton';
+import { useAppDataContext } from '@/modules/context/AppDataContext';
+import { reconcileElements } from '@/utils/reconciliation';
 import { Excalidraw } from '@excalidraw/excalidraw';
 import type {
   ExcalidrawElement,
@@ -16,32 +41,6 @@ import {
   BinaryFiles,
   ExcalidrawImperativeAPI,
 } from '@excalidraw/excalidraw/types/types';
-
-import {
-  APP_DATA_TYPES,
-  ExcalidrawElementsAppData,
-  ExcalidrawStateAppData,
-  FileAppData,
-} from '../config/appDataTypes';
-import {
-  DEFAULT_EXCALIDRAW_ELEMENTS_APP_DATA,
-  DEFAULT_EXCALIDRAW_STATE_APP_DATA,
-} from '../config/constants';
-import i18n from '../config/i18n';
-import {
-  DEBOUNCE_COMPARE_ELEMENTS,
-  DEBOUNCE_SAVE_ELEMENTS,
-  DEBOUNCE_SAVE_STATE,
-  EXCALIDRAW_ENABLE_GRID_MODE,
-  EXCALIDRAW_ENABLE_VIEW_MODE,
-  EXCALIDRAW_ENABLE_ZEN_MODE,
-  EXCALIDRAW_THEME,
-} from '../config/settings';
-import { getListOfFileIds, useFiles } from '../data/files';
-import { reconcileElements } from '../utils/reconciliation';
-import Loader from './common/Loader';
-import RefreshButton from './common/RefreshButton';
-import { useAppDataContext } from './context/AppDataContext';
 
 const ExcalidrawView: FC = () => {
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null);
@@ -248,7 +247,7 @@ const ExcalidrawView: FC = () => {
     return <Loader />;
   }
   return (
-    <Box height="100vh" width="100%">
+    <Box height="100%" width="100%">
       <Excalidraw
         initialData={{
           elements: localElements,

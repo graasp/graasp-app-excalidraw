@@ -1,5 +1,5 @@
+import { styled } from '@mui/material';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -7,23 +7,24 @@ interface TabPanelProps {
   value: number;
 }
 
+const TabPanelDiv = styled('div')({
+  height: '100%',
+});
+
 const TabPanel = (props: TabPanelProps): JSX.Element => {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <TabPanelDiv
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
+      {/* TODO: Fix height problem with tabs. */}
+      {value === index && <Box sx={{ height: '100%' }}>{children}</Box>}
+    </TabPanelDiv>
   );
 };
 

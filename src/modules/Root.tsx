@@ -63,7 +63,7 @@ const theme = createTheme({
 
 const RootDiv = styled('div')({
   flexGrow: 1,
-  height: '100%',
+  height: window.innerHeight,
 });
 
 const Root: FC = () => {
@@ -80,7 +80,7 @@ const Root: FC = () => {
     LoadingComponent: <Loader />,
     useGetLocalContext: hooks.useGetLocalContext,
     // do not use because this will collapse the view
-    // useAutoResize: hooks.useAutoResize,
+    useAutoResize: hooks.useAutoResize,
     onError:
       /* istanbul ignore next */
       () => {
