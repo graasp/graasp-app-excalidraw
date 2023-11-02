@@ -15,7 +15,7 @@ type ExcalidrawElementsAppDataExtension = {
   data: {
     elements: string;
   };
-  visibility?: AppDataVisibility.Item;
+  visibility?: AppDataVisibility.Member;
 };
 
 type ExcalidrawStateAppDataExtension = {
