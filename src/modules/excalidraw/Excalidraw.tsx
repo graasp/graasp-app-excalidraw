@@ -27,7 +27,6 @@ import {
 } from '@/data/excalidraw';
 import { getListOfFileIds, useFiles } from '@/data/files';
 import Loader from '@/modules/common/Loader';
-import RefreshButton from '@/modules/common/RefreshButton';
 import { useAppDataContext } from '@/modules/context/AppDataContext';
 import { reconcileElements } from '@/utils/reconciliation';
 import { Excalidraw } from '@excalidraw/excalidraw';
@@ -40,6 +39,8 @@ import {
   BinaryFiles,
   ExcalidrawImperativeAPI,
 } from '@excalidraw/excalidraw/types/types';
+
+import MainMenu from './MainMenu';
 
 const ExcalidrawView: FC = () => {
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null);
@@ -271,8 +272,9 @@ const ExcalidrawView: FC = () => {
         theme={EXCALIDRAW_THEME}
         name={name}
         langCode={lang}
-        renderTopRightUI={() => <RefreshButton />}
-      />
+      >
+        <MainMenu />
+      </Excalidraw>
     </Box>
   );
 };

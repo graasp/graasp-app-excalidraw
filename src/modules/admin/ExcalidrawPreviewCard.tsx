@@ -1,4 +1,6 @@
-import { FC, useEffect, useState } from 'react';
+import { saveAs } from 'file-saver';
+
+import { FC, MouseEventHandler, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Member } from '@graasp/sdk';
@@ -17,6 +19,7 @@ import {
   getExcalidrawElementsFromAppData,
   getExcalidrawStateFromAppData,
 } from '@/data/excalidraw';
+import blobToDataURL from '@/utils/blobToDataUrl';
 import stringToColor from '@/utils/stringToColor';
 import { getInitials } from '@/utils/utils';
 import { exportToBlob } from '@excalidraw/excalidraw';
@@ -24,15 +27,7 @@ import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types';
 import { AppState } from '@excalidraw/excalidraw/types/types';
 
 import { useAppDataContext } from '../context/AppDataContext';
-
-const blobToDataURL = (blob: Blob): Promise<string> =>
-  new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = () => reject(reader.error);
-    reader.onabort = () => reject(new Error('Read aborted'));
-    reader.readAsDataURL(blob);
-  });
+import { useSettings } from '../context/SettingsContext';
 
 const ExcalidrawPreviewCard: FC<{
   member: Member;
@@ -40,7 +35,10 @@ const ExcalidrawPreviewCard: FC<{
   const { t } = useTranslation();
 
   const { appData } = useAppDataContext();
+  const { drawing } = useSettings();
   const [thumbnail, setThumbnail] = useState<string>('');
+
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     const elements = JSON.parse(
@@ -63,12 +61,42 @@ const ExcalidrawPreviewCard: FC<{
       },
       files: null,
     });
+
     thumbnailBlob.then((b) =>
       blobToDataURL(b).then((thumbnailDataUrl) =>
         setThumbnail(thumbnailDataUrl),
       ),
     );
   });
+
+  const handleDownload: MouseEventHandler<
+    HTMLButtonElement
+  > = async (): Promise<void> => {
+    const elements = JSON.parse(
+      getExcalidrawElementsFromAppData(appData, member.id).data.elements,
+    ) as readonly ExcalidrawElement[];
+    const appState = JSON.parse(
+      getExcalidrawStateFromAppData(appData).data.appState,
+    ) as AppState;
+
+    setIsDownloading(true);
+    await exportToBlob({
+      elements,
+      appState,
+      getDimensions: (w, h) => {
+        const { width } = drawing.export;
+        const { height } = drawing.export;
+        const scaleH = height / h;
+        const scaleW = width / w;
+
+        return { width, height, scale: Math.min(scaleH, scaleW) };
+      },
+      files: null,
+    }).then((b) => {
+      saveAs(b, `${drawing.name}.png`);
+      setIsDownloading(false);
+    });
+  };
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -88,7 +116,7 @@ const ExcalidrawPreviewCard: FC<{
         //     <MoreVertIcon />
         //   </IconButton>
         // }
-        title={t('EXCALIDRAW_PREV_CARD.TITLE', { name: member.name })}
+        title={drawing.name}
         subheader={t('EXCALIDRAW_PREV_CARD.SUBTITLE', { name: member.name })}
       />
       <CardMedia
@@ -99,7 +127,11 @@ const ExcalidrawPreviewCard: FC<{
       />
       <CardActions disableSpacing>
         <Tooltip title={t('EXCALIDRAW_PREV_CARD.DOWNLOAD_BUTTON')}>
-          <IconButton aria-label={t('EXCALIDRAW_PREV_CARD.DOWNLOAD_BUTTON')}>
+          <IconButton
+            disabled={isDownloading}
+            onClick={handleDownload}
+            aria-label={t('EXCALIDRAW_PREV_CARD.DOWNLOAD_BUTTON')}
+          >
             <DownloadIcon />
           </IconButton>
         </Tooltip>

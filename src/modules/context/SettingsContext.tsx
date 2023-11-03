@@ -2,19 +2,41 @@ import { FC, ReactElement, createContext, useContext } from 'react';
 
 import { AppSetting } from '@graasp/sdk';
 
+import {
+  DEFAULT_EXPORT_HEIGHT,
+  DEFAULT_EXPORT_WIDTH,
+} from '@/config/constants';
+
 import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
 import Loader from '../common/Loader';
 
 // mapping between Setting names and their data type
 // eslint-disable-next-line @typescript-eslint/ban-types
-type AllSettingsType = {};
+type AllSettingsType = {
+  drawing: {
+    name: string;
+    export: {
+      width: number;
+      height: number;
+    };
+  };
+};
 
 // default values for the data property of settings by name
-const defaultSettingsValues: AllSettingsType = {};
+const defaultSettingsValues: AllSettingsType = {
+  drawing: {
+    name: 'drawing',
+    export: {
+      width: DEFAULT_EXPORT_WIDTH,
+      height: DEFAULT_EXPORT_HEIGHT,
+    },
+  },
+};
 
 // list of the settings names
 const ALL_SETTING_NAMES = [
   // name of your settings
+  'drawing',
 ] as const;
 
 // automatically generated types
@@ -86,11 +108,16 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
       const allSettings: AllSettingsType = ALL_SETTING_NAMES.reduce(
         <T extends AllSettingsNameType>(acc: AllSettingsType, key: T) => {
           const setting = appSettingsList.find((s) => s.name === key);
-          const settingData = setting?.data;
-          acc[key] = settingData as AllSettingsType[T];
+          if (setting) {
+            const settingData =
+              setting?.data as unknown as AllSettingsType[typeof key];
+            acc[key] = settingData;
+          } else {
+            acc[key] = defaultSettingsValues[key];
+          }
           return acc;
         },
-        {},
+        defaultSettingsValues,
       );
       return {
         ...allSettings,

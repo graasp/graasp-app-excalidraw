@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@graasp/ui';
 
-import { Stack, Typography } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 import { hooks } from '@/config/queryClient';
 import { useMembersContext } from '@/modules/context/MembersContext';
@@ -16,20 +18,16 @@ interface SettingsProps {}
 const Settings: FC<SettingsProps> = () => {
   const { t } = useTranslation();
   const { data: appContext } = hooks.useAppContext();
-  const { saveSettings } = useSettings();
+  const { saveSettings, drawing } = useSettings();
   const members = useMembersContext();
 
+  const [name, setName] = useState<string>(drawing.name);
+
   const handleSave = (): void => {
-    // saveSettings('prompt', {
-    //   content: promptContent,
-    //   type: 'plain-text',
-    // });
-    // saveSettings('orchestrator', {
-    //   id: orchestratorId || '',
-    // });
-    // saveSettings('mode', {
-    //   mode: modeState,
-    // });
+    saveSettings('drawing', {
+      ...drawing,
+      name,
+    });
   };
 
   return (
@@ -37,6 +35,7 @@ const Settings: FC<SettingsProps> = () => {
       <Typography variant="h3" fontSize="16pt">
         {t('SETTINGS.TITLE')}
       </Typography>
+      <TextField value={name} onChange={(e) => setName(e.target.value)} />
       <Button onClick={handleSave}>{t('SETTINGS.SAVE')}</Button>
     </Stack>
   );

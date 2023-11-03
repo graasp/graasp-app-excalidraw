@@ -5599,6 +5599,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/file-saver@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "@types/file-saver@npm:2.0.6"
+  checksum: 4be4bc301bfbd8a173c7ed760594d73120c71ec9a0a74a6e7b4a2c8295397826a976cda3ee490fa1adf97f6a072d01bc9409343e07af3c9ffad218aad1746896
+  languageName: node
+  linkType: hard
+
 "@types/i18n@npm:0.13.8":
   version: 0.13.8
   resolution: "@types/i18n@npm:0.13.8"
@@ -9088,6 +9095,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"file-saver@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "file-saver@npm:2.0.5"
+  checksum: fbba443d9b682fec0be6676c048a7ac688b9bd33b105c02e8e1a1cb3e354ed441198dc1f15dcbc137fa044bea73f8a7549f2617e3a952fa7d96390356d54a7c3
+  languageName: node
+  linkType: hard
+
 "fill-range@npm:^7.0.1":
   version: 7.0.1
   resolution: "fill-range@npm:7.0.1"
@@ -9682,6 +9696,7 @@ __metadata:
     "@tanstack/react-query": "npm:^4.36.1"
     "@tanstack/react-query-devtools": "npm:^4.36.1"
     "@trivago/prettier-plugin-sort-imports": "npm:4.2.1"
+    "@types/file-saver": "npm:^2.0.6"
     "@types/i18n": "npm:0.13.8"
     "@types/lodash.debounce": "npm:4.0.8"
     "@types/lodash.isequal": "npm:~4.5.7"
@@ -9709,6 +9724,7 @@ __metadata:
     eslint-plugin-prettier: "npm:4.2.1"
     eslint-plugin-react: "npm:7.33.2"
     eslint-plugin-react-hooks: "npm:4.6.0"
+    file-saver: "npm:^2.0.5"
     husky: "npm:8.0.3"
     i18next: "npm:23.6.0"
     immutable: "npm:^4.3.1"

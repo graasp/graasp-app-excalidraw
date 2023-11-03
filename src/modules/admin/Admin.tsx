@@ -45,6 +45,7 @@ const Admin: FC = () => {
         ))}
       </Grid>
       <Fab
+        disabled
         color="primary"
         variant="extended"
         aria-label={t('ADMIN_VIEW.DOWNLOAD_ALL_FAB_ARIA')}

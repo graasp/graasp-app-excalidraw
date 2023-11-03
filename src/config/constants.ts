@@ -33,3 +33,6 @@ export const ALLOWED_MIMETYPES = [
 
 export const THUMBNAIL_WIDTH = 320;
 export const THUMBNAIL_HEIGHT = 200;
+
+export const DEFAULT_EXPORT_WIDTH = 1920;
+export const DEFAULT_EXPORT_HEIGHT = 1080;
