@@ -12,6 +12,7 @@ import Tabs from '@mui/material/Tabs';
 import { BUILDER_VIEW_CY } from '@/config/selectors';
 import Excalidraw from '@/modules/excalidraw/Excalidraw';
 
+import Admin from '../admin/Admin';
 import TabPanel from '../common/TabPanel';
 import Settings from '../settings/Settings';
 
@@ -52,7 +53,7 @@ const BuilderView = (): JSX.Element => {
   const ideasViewTab = useMemo(
     () => ({
       tabLabel: t('ADMIN_VIEW.TAB'),
-      tabChild: <p>ADMIN VIEW</p>,
+      tabChild: <Admin />,
     }),
     [t],
   );
@@ -70,7 +71,15 @@ const BuilderView = (): JSX.Element => {
       width="100%"
       height="100%"
     >
-      <Paper elevation={0} sx={{ width: '100%', height: '100%' }}>
+      <Paper
+        elevation={0}
+        sx={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs
             value={selectedTab}

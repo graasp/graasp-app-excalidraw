@@ -6,12 +6,7 @@ import { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
 
-import {
-  APP_DATA_TYPES,
-  ExcalidrawElementsAppData,
-  ExcalidrawStateAppData,
-  FileAppData,
-} from '@/config/appDataTypes';
+import { APP_DATA_TYPES, FileAppData } from '@/config/appDataTypes';
 import {
   DEFAULT_EXCALIDRAW_ELEMENTS_APP_DATA,
   DEFAULT_EXCALIDRAW_STATE_APP_DATA,
@@ -26,6 +21,10 @@ import {
   EXCALIDRAW_ENABLE_ZEN_MODE,
   EXCALIDRAW_THEME,
 } from '@/config/settings';
+import {
+  getExcalidrawElementsFromAppData,
+  getExcalidrawStateFromAppData,
+} from '@/data/excalidraw';
 import { getListOfFileIds, useFiles } from '@/data/files';
 import Loader from '@/modules/common/Loader';
 import RefreshButton from '@/modules/common/RefreshButton';
@@ -62,22 +61,11 @@ const ExcalidrawView: FC = () => {
 
   const { isLoading } = status;
 
+  // TODO: Big effect. To be refactored.
   useEffect(() => {
-    const elementsAppData: ExcalidrawElementsAppData = (appData.find(
-      ({ type }) => type === APP_DATA_TYPES.EXCALIDRAW_ELEMENTS,
-    ) as ExcalidrawElementsAppData) ?? {
-      type: APP_DATA_TYPES.EXCALIDRAW_ELEMENTS,
-      id: '',
-      data: { elements: '[]' },
-    };
+    const elementsAppData = getExcalidrawElementsFromAppData(appData);
 
-    const stateAppData: ExcalidrawStateAppData = (appData.find(
-      ({ type }) => type === APP_DATA_TYPES.EXCALIDRAW_STATE,
-    ) as ExcalidrawStateAppData) ?? {
-      type: APP_DATA_TYPES.EXCALIDRAW_STATE,
-      id: '',
-      data: { appState: '{}' },
-    };
+    const stateAppData = getExcalidrawStateFromAppData(appData);
 
     setFilesAppData(
       appData.filter(
@@ -110,10 +98,12 @@ const ExcalidrawView: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appData]);
 
+  // TODO: check if it works
   useEffect(() => {
     excalidrawRef.current?.addFiles(files);
   }, [files]);
 
+  // TODO: refactor
   const saveElements = (elements: string, id: string): void => {
     if (id.length > 0) {
       patchAppData({
@@ -132,6 +122,38 @@ const ExcalidrawView: FC = () => {
     }
   };
 
+  const debouncedSaveElements = useRef(
+    debounce(saveElements, DEBOUNCE_SAVE_ELEMENTS),
+  ).current;
+
+  /**
+   * Compare two sets of elements and only save if the elements are different than the previous elements.
+   *
+   * @param elements The _new_ elements.
+   * @param prevElements The previous elements.
+   * @param id The id of the *AppData* containing the elements.
+   */
+  const compareAndSaveElements = (
+    elements: readonly ExcalidrawElement[],
+    prevElements: readonly ExcalidrawElement[],
+    id: string,
+  ): void => {
+    const elementsJSON = JSON.stringify(elements);
+    const prevElementsJSON = JSON.stringify(prevElements);
+    if (!isEqual(elementsJSON, prevElementsJSON)) {
+      debouncedSaveElements(elementsJSON, id);
+    }
+  };
+
+  const debouncedCompareElements = useRef(
+    debounce(compareAndSaveElements, DEBOUNCE_COMPARE_ELEMENTS),
+  ).current;
+
+  /**
+   * Saves Excalidraw's app state in app data.
+   * @param newAppState The new AppState (from Excalidraw)
+   * @param id The id of the *AppData* containing the app state.
+   */
   const saveState = (newAppState: AppState, id: string): void => {
     const newAppStateJSON = JSON.stringify(newAppState);
     if (id.length > 0) {
@@ -151,22 +173,10 @@ const ExcalidrawView: FC = () => {
     }
   };
 
-  const debouncedSaveElements = useRef(
-    debounce(saveElements, DEBOUNCE_SAVE_ELEMENTS),
-  ).current;
-
-  const compareAndSaveElements = (
-    elements: readonly ExcalidrawElement[],
-    prevElements: readonly ExcalidrawElement[],
-    id: string,
-  ): void => {
-    const elementsJSON = JSON.stringify(elements);
-    const prevElementsJSON = JSON.stringify(prevElements);
-    if (!isEqual(elementsJSON, prevElementsJSON)) {
-      debouncedSaveElements(elementsJSON, id);
-    }
-  };
-
+  /**
+   * Compare and save the files uploaded to excalidraw.
+   * Currently not working.
+   */
   const compareAndSaveFiles = useCallback(
     async (
       filesLocal: BinaryFiles,
@@ -196,10 +206,6 @@ const ExcalidrawView: FC = () => {
     [deleteFile, uploadFile],
   );
 
-  const debouncedCompareElements = useRef(
-    debounce(compareAndSaveElements, DEBOUNCE_COMPARE_ELEMENTS),
-  ).current;
-
   const debouncedSaveState = useRef(
     debounce(saveState, DEBOUNCE_SAVE_STATE),
   ).current;
@@ -208,6 +214,12 @@ const ExcalidrawView: FC = () => {
     debounce(compareAndSaveFiles, DEBOUNCE_COMPARE_ELEMENTS),
   ).current;
 
+  /**
+   * Handle any change event.
+   * @param {ExcalidrawElement[]} elements The current excalidraw elements.
+   * @param {AppState} newAppState The current app state.
+   * @param {BinaryFiles} filesLocal The current files.
+   */
   const handleChange = (
     elements: readonly ExcalidrawElement[],
     newAppState: AppState,
