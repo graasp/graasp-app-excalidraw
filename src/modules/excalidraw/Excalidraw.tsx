@@ -61,7 +61,6 @@ const ExcalidrawView: FC = () => {
 
   const { isLoading } = status;
 
-  // TODO: Big effect. To be refactored.
   useEffect(() => {
     const elementsAppData = getExcalidrawElementsFromAppData(appData);
 
@@ -98,12 +97,10 @@ const ExcalidrawView: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appData]);
 
-  // TODO: check if it works
   useEffect(() => {
     excalidrawRef.current?.addFiles(files);
   }, [files]);
 
-  // TODO: refactor
   const saveElements = (elements: string, id: string): void => {
     if (id.length > 0) {
       patchAppData({
@@ -175,7 +172,7 @@ const ExcalidrawView: FC = () => {
 
   /**
    * Compare and save the files uploaded to excalidraw.
-   * Currently not working.
+   * Currently not working well.
    */
   const compareAndSaveFiles = useCallback(
     async (

@@ -9,6 +9,7 @@ interface TabPanelProps {
 
 const TabPanelDiv = styled('div')({
   flexGrow: 1,
+  width: '100%',
 });
 
 const TabPanel = (props: TabPanelProps): JSX.Element => {

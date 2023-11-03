@@ -51,8 +51,9 @@ const App = (): JSX.Element => {
 
   const renderContent = (): JSX.Element => {
     switch (context.context) {
-      case Context.Builder:
+      case Context.Builder: {
         return <BuilderView />;
+      }
 
       case Context.Analytics:
         return <AnalyticsView />;

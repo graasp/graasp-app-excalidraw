@@ -30,3 +30,6 @@ export const ALLOWED_MIMETYPES = [
   'image/x-icon',
   'application/octet-stream',
 ];
+
+export const THUMBNAIL_WIDTH = 320;
+export const THUMBNAIL_HEIGHT = 200;

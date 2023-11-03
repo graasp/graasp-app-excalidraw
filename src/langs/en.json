@@ -12,10 +12,21 @@
       "TITLE": "Settings"
     },
     "ADMIN_VIEW": {
-      "TAB": "Admin View"
+      "TAB": "Admin View",
+      "TITLE": "Admin View",
+      "HELPER_TEXT": "This is the admin view.",
+      "DOWNLOAD_ALL_FAB": "Download all",
+      "DOWNLOAD_ALL_FAB_ARIA": "download all"
     },
     "EXCALIDRAW": {
       "TAB": "Excalidraw"
+    },
+    "EXCALIDRAW_PREV_CARD": {
+      "AVATAR_ARIA": "Avatar of {{name}}",
+      "TITLE": "Drawing of {{name}}",
+      "SUBTITLE": "By {{name}}",
+      "DOWNLOAD_BUTTON": "Download",
+      "THUMB_ALT": "Thumbnail of drawing."
     }
   }
 }

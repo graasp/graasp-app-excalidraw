@@ -50,7 +50,7 @@ const BuilderView = (): JSX.Element => {
     [t],
   );
 
-  const ideasViewTab = useMemo(
+  const adminTab = useMemo(
     () => ({
       tabLabel: t('ADMIN_VIEW.TAB'),
       tabChild: <Admin />,
@@ -59,8 +59,8 @@ const BuilderView = (): JSX.Element => {
   );
 
   const tabs: TabType[] = useMemo(
-    () => (isAdmin ? [activityTab, ideasViewTab, settingsTab] : [activityTab]),
-    [isAdmin, activityTab, ideasViewTab, settingsTab],
+    () => (isAdmin ? [activityTab, adminTab, settingsTab] : [activityTab]),
+    [isAdmin, activityTab, adminTab, settingsTab],
   );
 
   return (

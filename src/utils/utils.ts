@@ -6,3 +6,10 @@ export const arrayToMapWithIndex = <T extends { id: string }>(
     acc.set(element.id, [element, idx]);
     return acc;
   }, new Map<string, [element: T, index: number]>());
+
+export const getInitials = (name: string) =>
+  name
+    .split(' ')
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase();

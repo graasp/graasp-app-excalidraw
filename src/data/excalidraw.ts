@@ -10,14 +10,28 @@ import {
 
 export const getExcalidrawElementsFromAppData = (
   appData: List<AppDataRecord>,
-): ExcalidrawElementsAppData =>
-  (appData.find(
-    ({ type }) => type === APP_DATA_TYPES.EXCALIDRAW_ELEMENTS,
-  ) as ExcalidrawElementsAppData) ?? {
-    type: APP_DATA_TYPES.EXCALIDRAW_ELEMENTS,
-    id: '',
-    data: { elements: '[]' },
-  };
+  memberId?: string,
+): ExcalidrawElementsAppData => {
+  let d: ExcalidrawElementsAppData;
+  if (memberId) {
+    d = appData.find(
+      ({ type, creator }) =>
+        type === APP_DATA_TYPES.EXCALIDRAW_ELEMENTS && creator?.id === memberId,
+    ) as ExcalidrawElementsAppData;
+  } else {
+    d = appData.find(
+      ({ type }) => type === APP_DATA_TYPES.EXCALIDRAW_ELEMENTS,
+    ) as ExcalidrawElementsAppData;
+  }
+
+  return (
+    d ?? {
+      type: APP_DATA_TYPES.EXCALIDRAW_ELEMENTS,
+      id: '',
+      data: { elements: '[]' },
+    }
+  );
+};
 
 export const getExcalidrawStateFromAppData = (
   appData: List<AppDataRecord>,
