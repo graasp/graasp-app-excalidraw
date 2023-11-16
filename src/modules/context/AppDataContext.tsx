@@ -52,6 +52,9 @@ type FileToUploadType = {
 export type AppDataContextType = {
   postAppData: (payload: PostAppDataType) => void;
   postAppDataAsync: (payload: PostAppDataType) => Promise<AppData> | undefined;
+  patchAppDataAsync: (
+    payload: PatchAppDataType,
+  ) => Promise<AppData> | undefined;
   patchAppData: (payload: PatchAppDataType) => void;
   deleteAppData: (payload: DeleteAppDataType) => void;
   appData: List<AppDataRecord>;
@@ -64,6 +67,7 @@ export type AppDataContextType = {
 const defaultContextValue = {
   postAppData: () => null,
   postAppDataAsync: () => undefined,
+  patchAppDataAsync: () => undefined,
   patchAppData: () => null,
   deleteAppData: () => null,
   uploadFile: () => Promise.resolve(),
@@ -89,8 +93,8 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
     unknown,
     PostAppDataType
   >(MUTATION_KEYS.POST_APP_DATA);
-  const { mutate: patchAppData } = useMutation<
-    unknown,
+  const { mutate: patchAppData, mutateAsync: patchAppDataAsync } = useMutation<
+    AppData,
     unknown,
     PatchAppDataType
   >(MUTATION_KEYS.PATCH_APP_DATA);
@@ -160,6 +164,7 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
       postAppData: (payload: PostAppDataType) => {
         postAppData(payload);
       },
+      patchAppDataAsync,
       postAppDataAsync,
       patchAppData,
       deleteAppData,
@@ -174,6 +179,7 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
       },
     }),
     [
+      patchAppDataAsync,
       postAppDataAsync,
       patchAppData,
       deleteAppData,

@@ -1,4 +1,5 @@
 import { List } from 'immutable';
+import cloneDeep from 'lodash.clonedeep';
 import debounce from 'lodash.debounce';
 import isEqual from 'lodash.isequal';
 
@@ -77,13 +78,14 @@ const ExcalidrawView: FC = () => {
     setIdElements(id);
     const newElements = JSON.parse(newData.elements);
     if (excalidrawRef.current && typeof localElements !== 'undefined') {
+      const currentAppState = excalidrawRef.current.getAppState();
       const reconciledElements = reconcileElements(
         localElements,
         newElements,
-        excalidrawRef.current.getAppState(),
+        currentAppState,
       );
       excalidrawRef.current.updateScene({
-        elements: reconciledElements,
+        elements: cloneDeep(reconciledElements),
         commitToHistory: false,
       });
       setLocalElements(reconciledElements as readonly ExcalidrawElement[]);
@@ -232,7 +234,7 @@ const ExcalidrawView: FC = () => {
       !(isExcalidrawLoading || isResizing || isRotating) &&
       typeof localElements !== 'undefined'
     ) {
-      debouncedCompareElements(elements, localElements, idElements);
+      compareAndSaveElements(elements, localElements, idElements);
       if (!appState?.pendingImageElementId) {
         debouncedCompareAndSaveFiles(filesLocal, filesAppData, [...elements]);
       }
