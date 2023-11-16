@@ -42,6 +42,6 @@ jobs:
           version: 'latest'
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-          aws-region: ${{ secrets.APPS_AWS_REGION_PROD }}
+          aws-region: ${{ vars.APPS_AWS_REGION_PROD }}
           aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_APPS_PROD }}
           cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_PROD }}
