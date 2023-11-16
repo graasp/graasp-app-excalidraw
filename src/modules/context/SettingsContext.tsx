@@ -14,22 +14,22 @@ import Loader from '../common/Loader';
 // eslint-disable-next-line @typescript-eslint/ban-types
 type AllSettingsType = {
   drawing: {
-    name: string;
-    export: {
-      width: number;
-      height: number;
-    };
+    defaultName: string;
+  };
+  exportSettings: {
+    width: number;
+    height: number;
   };
 };
 
 // default values for the data property of settings by name
 const defaultSettingsValues: AllSettingsType = {
   drawing: {
-    name: 'drawing',
-    export: {
-      width: DEFAULT_EXPORT_WIDTH,
-      height: DEFAULT_EXPORT_HEIGHT,
-    },
+    defaultName: 'drawing',
+  },
+  exportSettings: {
+    width: DEFAULT_EXPORT_WIDTH,
+    height: DEFAULT_EXPORT_HEIGHT,
   },
 };
 
@@ -37,6 +37,7 @@ const defaultSettingsValues: AllSettingsType = {
 const ALL_SETTING_NAMES = [
   // name of your settings
   'drawing',
+  'exportSettings',
 ] as const;
 
 // automatically generated types

@@ -35,7 +35,7 @@ const ExcalidrawPreviewCard: FC<{
   const { t } = useTranslation();
 
   const { appData } = useAppDataContext();
-  const { drawing } = useSettings();
+  const { drawing, exportSettings } = useSettings();
   const [thumbnail, setThumbnail] = useState<string>('');
 
   const [isDownloading, setIsDownloading] = useState(false);
@@ -84,8 +84,7 @@ const ExcalidrawPreviewCard: FC<{
       elements,
       appState,
       getDimensions: (w, h) => {
-        const { width } = drawing.export;
-        const { height } = drawing.export;
+        const { width, height } = exportSettings;
         const scaleH = height / h;
         const scaleW = width / w;
 
@@ -93,7 +92,7 @@ const ExcalidrawPreviewCard: FC<{
       },
       files: null,
     }).then((b) => {
-      saveAs(b, `${drawing.name}.png`);
+      saveAs(b, `${drawing.defaultName}.png`);
       setIsDownloading(false);
     });
   };
@@ -116,7 +115,7 @@ const ExcalidrawPreviewCard: FC<{
         //     <MoreVertIcon />
         //   </IconButton>
         // }
-        title={drawing.name}
+        title={drawing.defaultName}
         subheader={t('EXCALIDRAW_PREV_CARD.SUBTITLE', { name: member.name })}
       />
       <CardMedia

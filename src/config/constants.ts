@@ -35,4 +35,9 @@ export const THUMBNAIL_WIDTH = 320;
 export const THUMBNAIL_HEIGHT = 200;
 
 export const DEFAULT_EXPORT_WIDTH = 1920;
+export const MAX_EXPORT_WIDTH = 10000;
+export const MIN_EXPORT_WIDTH = 64;
+
 export const DEFAULT_EXPORT_HEIGHT = 1080;
+export const MAX_EXPORT_HEIGHT = 10000;
+export const MIN_EXPORT_HEIGHT = 64;

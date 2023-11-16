@@ -9,7 +9,11 @@
     "SETTINGS": {
       "TAB": "Settings",
       "SAVE": "Save settings",
-      "TITLE": "Settings"
+      "TITLE": "Settings",
+      "EXPORT_HEADER": "Export settings",
+      "EXPORT_INPUT_HELPER": "Please, enter a value between {{min}} and {{max}}.",
+      "DEFAULT_NAME_LABEL": "Default name for the drawing.",
+      "DEFAULT_NAME_HELPER": "Enter the default name that should be given to all drawing. Each user will be able to change its name."
     },
     "ADMIN_VIEW": {
       "TAB": "Admin View",
