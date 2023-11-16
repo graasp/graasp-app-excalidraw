@@ -31,7 +31,6 @@ const Settings: FC<SettingsProps> = () => {
     saveSettings('drawing', {
       defaultName: name,
     });
-    console.log(exportSettings);
     saveSettings('exportSettings', exportSettings);
   };
 

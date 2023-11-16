@@ -1,11 +1,9 @@
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import DownloadIcon from '@mui/icons-material/Download';
 import HelpIcon from '@mui/icons-material/Help';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
-import Fab from '@mui/material/Fab';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -15,6 +13,7 @@ import { styled } from '@mui/material/styles';
 import { ADMIN_VIEW_CY } from '@/config/selectors';
 
 import { useMembersContext } from '../context/MembersContext';
+import DownloadAllButton from './DownloadAllButton';
 import ExcalidrawPreviewCard from './ExcalidrawPreviewCard';
 
 const AdminDiv = styled('div')({
@@ -44,16 +43,7 @@ const Admin: FC = () => {
           </Grid>
         ))}
       </Grid>
-      <Fab
-        disabled
-        color="primary"
-        variant="extended"
-        aria-label={t('ADMIN_VIEW.DOWNLOAD_ALL_FAB_ARIA')}
-        sx={{ float: 'right', mr: 1, mb: 1 }}
-      >
-        <DownloadIcon />
-        {t('ADMIN_VIEW.DOWNLOAD_ALL_FAB')}
-      </Fab>
+      <DownloadAllButton />
     </AdminDiv>
   );
 };

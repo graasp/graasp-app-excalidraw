@@ -20,7 +20,8 @@
       "TITLE": "Admin View",
       "HELPER_TEXT": "This is the admin view.",
       "DOWNLOAD_ALL_FAB": "Download all",
-      "DOWNLOAD_ALL_FAB_ARIA": "download all"
+      "DOWNLOAD_ALL_FAB_ARIA": "download all",
+      "ERROR_DOWNLOAD_ALL": "Error when downloading all the drawings: {{reason}}"
     },
     "EXCALIDRAW": {
       "TAB": "Excalidraw"

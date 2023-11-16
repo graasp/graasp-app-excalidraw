@@ -35,9 +35,12 @@ export const getExcalidrawElementsFromAppData = (
 
 export const getExcalidrawStateFromAppData = (
   appData: List<AppDataRecord>,
+  memberId?: string,
 ): ExcalidrawStateAppData =>
-  (appData.find(
-    ({ type }) => type === APP_DATA_TYPES.EXCALIDRAW_STATE,
+  (appData.find(({ type, creator }) =>
+    type === APP_DATA_TYPES.EXCALIDRAW_STATE && memberId
+      ? memberId === creator?.id
+      : true,
   ) as ExcalidrawStateAppData) ?? {
     type: APP_DATA_TYPES.EXCALIDRAW_STATE,
     id: '',
