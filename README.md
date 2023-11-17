@@ -2,9 +2,9 @@
 
 This repository hosts the code for Excalidraw's integration into the Graasp ecosystem.
 
-Excalidraw is an open-source web drawing application. Find out more on the [Excalidraw website]()!
+Excalidraw is an open-source web drawing application. Try it directly with the [original Excalidraw app](https://excalidraw.com/)!
 
-## Awesome! How does it work?
+<! -- ## Awesome! How does it work? -->
 
 ## Development
 
@@ -15,9 +15,6 @@ To work with Graasp apps locally, follow the official Graasp documentation.
 To get started with this app, clone this repo. You will need to add a dotenv file `.env.development`.
 
 ```dotenv
-
-GRAASP_DEVELOPER_ID=6505fd8e-9762-49a3-9906-4cbabbb81130 # Your developer UUID in your local Graasp instance.
-
 VITE_PORT=3335 # The port on which you would like to serve the app.
 VITE_API_HOST=localhost # The hostname (localhost for local dev)
 VITE_MOCK_API=false # Mock the API by default (overriden by yarn dev:mock)
@@ -25,7 +22,7 @@ VITE_GRAASP_APP_KEY=82582612-92aa-408f-bfe9-0d202414a3b6 # The app key in your l
 VITE_VERSION=latest # The version of your app (not important for development)
 ```
 
-Install the dependencies by running [yarn]():
+Install the dependencies by running [yarn](https://yarnpkg.com/):
 
 ```bash
 yarn
@@ -37,11 +34,13 @@ And finally start the app. To serve it within your local Graasp instance:
 yarn dev
 ```
 
-And to serve it with a mocked API (see [the documentation]()):
+And to serve it with a mocked API (see [the documentation](https://graasp.github.io/docs/category/apps-development)):
 
 ```bash
 yarn dev:mock
 ```
+
+You can find a lot of informations on the [developer documentation of Excalidraw](https://docs.excalidraw.com/).
 
 ## How to use
 
@@ -58,6 +57,7 @@ Below you can find a screenshot of the app inside the Graasp Builder view.
 
 For future versions, here is a list of features to be implemented and points to be optimized:
 
-- Enabling collaboration and saving state (tool selected, etc...)
-- Creating admin view allowing access to a table of submissions linked to the corresponding Excalidraw canvas
-- Choosing method to handle changes so that the list of current elements is checked for equality before treating the change.
+- Enabling collaboration
+- Templates
+- Library
+- More options for exports
