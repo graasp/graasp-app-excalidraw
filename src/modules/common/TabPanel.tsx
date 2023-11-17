@@ -23,7 +23,6 @@ const TabPanel = (props: TabPanelProps): JSX.Element => {
       aria-labelledby={`tab-${index}`}
       {...other}
     >
-      {/* TODO: Fix height problem with tabs. */}
       {value === index && <Box sx={{ height: '100%' }}>{children}</Box>}
     </TabPanelDiv>
   );

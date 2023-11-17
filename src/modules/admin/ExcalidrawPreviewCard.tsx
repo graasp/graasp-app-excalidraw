@@ -111,11 +111,6 @@ const ExcalidrawPreviewCard: FC<{
             {getInitials(member.name)}
           </Avatar>
         }
-        // action={
-        //   <IconButton aria-label="settings">
-        //     <MoreVertIcon />
-        //   </IconButton>
-        // }
         title={drawing.defaultName}
         subheader={t('EXCALIDRAW_PREV_CARD.SUBTITLE', { name: member.name })}
       />
