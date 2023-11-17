@@ -6,9 +6,9 @@ export const PRECEDING_ELEMENT_KEY = '__precedingElement__';
 
 export const DEFAULT_EXCALIDRAW_ELEMENTS_APP_DATA = {
   type: APP_DATA_TYPES.EXCALIDRAW_ELEMENTS,
-  visibility: AppDataVisibility.Item,
+  visibility: AppDataVisibility.Member,
   data: {
-    elements: [],
+    elements: '[]',
   },
 };
 

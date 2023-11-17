@@ -18,13 +18,14 @@ import { THUMBNAIL_HEIGHT, THUMBNAIL_WIDTH } from '@/config/constants';
 import {
   getExcalidrawElementsFromAppData,
   getExcalidrawStateFromAppData,
+  parseExcalidrawElementsAppData,
+  parseExcalidrawStateAppData,
 } from '@/data/excalidraw';
 import blobToDataURL from '@/utils/blobToDataUrl';
 import stringToColor from '@/utils/stringToColor';
 import { getInitials } from '@/utils/utils';
 import { exportToBlob } from '@excalidraw/excalidraw';
 import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types';
-import { AppState } from '@excalidraw/excalidraw/types/types';
 
 import { useAppDataContext } from '../context/AppDataContext';
 import { useSettings } from '../context/SettingsContext';
@@ -41,12 +42,12 @@ const ExcalidrawPreviewCard: FC<{
   const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
-    const elements = JSON.parse(
-      getExcalidrawElementsFromAppData(appData, member.id).data.elements,
+    const elements = parseExcalidrawElementsAppData(
+      getExcalidrawElementsFromAppData(appData, member.id),
     ) as readonly ExcalidrawElement[];
-    const appState = JSON.parse(
-      getExcalidrawStateFromAppData(appData).data.appState,
-    ) as AppState;
+    const appState = parseExcalidrawStateAppData(
+      getExcalidrawStateFromAppData(appData),
+    );
 
     const thumbnailBlob = exportToBlob({
       elements,
@@ -72,12 +73,12 @@ const ExcalidrawPreviewCard: FC<{
   const handleDownload: MouseEventHandler<
     HTMLButtonElement
   > = async (): Promise<void> => {
-    const elements = JSON.parse(
-      getExcalidrawElementsFromAppData(appData, member.id).data.elements,
+    const elements = parseExcalidrawElementsAppData(
+      getExcalidrawElementsFromAppData(appData, member.id),
     ) as readonly ExcalidrawElement[];
-    const appState = JSON.parse(
-      getExcalidrawStateFromAppData(appData).data.appState,
-    ) as AppState;
+    const appState = parseExcalidrawStateAppData(
+      getExcalidrawStateFromAppData(appData),
+    );
 
     setIsDownloading(true);
     await exportToBlob({

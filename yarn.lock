@@ -9769,7 +9769,6 @@ __metadata:
     react-dom: "npm:18.2.0"
     react-i18next: "npm:13.3.1"
     react-router-dom: "npm:^6.18.0"
-    react-toastify: "npm:9.1.3"
     stylis-plugin-rtl: "npm:^2.1.1"
     typescript: "npm:5.2.2"
     uuid: "npm:9.0.1"
@@ -12744,18 +12743,6 @@ __metadata:
   peerDependencies:
     react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
   checksum: 9d035a48eb82f00db59102849826d112280cde6e89654d58f4f01cca4d438bcff0443c360c21976bae5439694b50e583238a8f1bea2b6e6012b3d4d7853de80e
-  languageName: node
-  linkType: hard
-
-"react-toastify@npm:9.1.3":
-  version: 9.1.3
-  resolution: "react-toastify@npm:9.1.3"
-  dependencies:
-    clsx: "npm:^1.1.1"
-  peerDependencies:
-    react: ">=16"
-    react-dom: ">=16"
-  checksum: 12667aa10e6cf3f74be2e3c704c2d5570dd7de66fff89ae38fbfab1122e9a9f632de1cb712fe44a9a60b8ecca7590578157cb4ca6c4e8105a8cf80936a94e181
   languageName: node
   linkType: hard
 

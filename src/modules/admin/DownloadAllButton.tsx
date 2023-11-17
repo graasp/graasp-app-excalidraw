@@ -12,6 +12,8 @@ import { ExcalidrawElementsAppData } from '@/config/appDataTypes';
 import {
   getExcalidrawElementsFromAppData,
   getExcalidrawStateFromAppData,
+  parseExcalidrawElementsAppData,
+  parseExcalidrawStateAppData,
 } from '@/data/excalidraw';
 import { showErrorToast } from '@/utils/toasts';
 import { exportToBlob } from '@excalidraw/excalidraw';
@@ -36,12 +38,12 @@ const DownloadAllButton: FC = () => {
   ): Promise<void> => {
     await Promise.all(
       elementsArray.map(async (elementsAppData) => {
-        const elements = JSON.parse(elementsAppData.data.elements);
+        const elements = parseExcalidrawElementsAppData(elementsAppData);
         const appStateAppData = getExcalidrawStateFromAppData(
           appData,
           elementsAppData.creator?.id,
         );
-        const appState = JSON.parse(appStateAppData.data.appState);
+        const appState = parseExcalidrawStateAppData(appStateAppData);
         return exportToBlob({
           elements,
           appState,

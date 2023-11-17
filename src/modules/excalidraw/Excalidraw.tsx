@@ -25,6 +25,8 @@ import {
 import {
   getExcalidrawElementsFromAppData,
   getExcalidrawStateFromAppData,
+  parseExcalidrawElementsAppData,
+  parseExcalidrawStateAppData,
 } from '@/data/excalidraw';
 import { getListOfFileIds, useFiles } from '@/data/files';
 import Loader from '@/modules/common/Loader';
@@ -65,7 +67,6 @@ const ExcalidrawView: FC = () => {
 
   useEffect(() => {
     const elementsAppData = getExcalidrawElementsFromAppData(appData);
-
     const stateAppData = getExcalidrawStateFromAppData(appData);
 
     setFilesAppData(
@@ -74,9 +75,9 @@ const ExcalidrawView: FC = () => {
       ) as List<FileAppData>,
     );
 
-    const { id, data: newData } = elementsAppData;
+    const { id } = elementsAppData;
     setIdElements(id);
-    const newElements = JSON.parse(newData.elements);
+    const newElements = parseExcalidrawElementsAppData(elementsAppData);
     if (excalidrawRef.current && typeof localElements !== 'undefined') {
       const currentAppState = excalidrawRef.current.getAppState();
       const reconciledElements = reconcileElements(
@@ -93,10 +94,15 @@ const ExcalidrawView: FC = () => {
       setLocalElements(newElements);
     }
     setIdState(stateAppData.id);
-    setAppState({
-      ...JSON.parse(stateAppData.data.appState),
-      collaborators: new Map<string, never>(),
-    });
+    if (stateAppData) {
+      const appStateTmp = parseExcalidrawStateAppData(stateAppData);
+      if (appStateTmp) {
+        setAppState({
+          ...appStateTmp,
+          collaborators: new Map<string, never>(),
+        });
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appData]);
 
