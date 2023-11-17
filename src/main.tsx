@@ -4,16 +4,15 @@ import ReactDOM from 'react-dom/client';
 import { mockApi } from '@graasp/apps-query-client';
 
 import * as Sentry from '@sentry/react';
-import { BrowserTracing } from '@sentry/tracing';
 
-import Root from './components/Root';
 import { MOCK_API } from './config/env';
 import { generateSentryConfig } from './config/sentry';
 import buildDatabase, { mockContext, mockMembers } from './data/db';
 import './index.css';
+import Root from './modules/Root';
 
 Sentry.init({
-  integrations: [new BrowserTracing()],
+  integrations: [new Sentry.BrowserTracing()],
 
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.

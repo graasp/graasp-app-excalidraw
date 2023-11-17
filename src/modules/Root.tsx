@@ -1,3 +1,5 @@
+import { SnackbarProvider } from 'notistack';
+
 import React, { FC } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
@@ -18,9 +20,9 @@ import {
   hooks,
   queryClient,
 } from '../config/queryClient';
-import { showErrorToast } from '../utils/toast';
-import App from './App';
+import { showErrorToast } from '../utils/toasts';
 import Loader from './common/Loader';
+import App from './main/App';
 
 // declare the module to enable theme modification
 declare module '@mui/material/styles' {
@@ -63,7 +65,7 @@ const theme = createTheme({
 
 const RootDiv = styled('div')({
   flexGrow: 1,
-  height: '100%',
+  height: window.innerHeight,
 });
 
 const Root: FC = () => {
@@ -80,7 +82,7 @@ const Root: FC = () => {
     LoadingComponent: <Loader />,
     useGetLocalContext: hooks.useGetLocalContext,
     // do not use because this will collapse the view
-    // useAutoResize: hooks.useAutoResize,
+    useAutoResize: hooks.useAutoResize,
     onError:
       /* istanbul ignore next */
       () => {
@@ -94,10 +96,14 @@ const Root: FC = () => {
         <ThemeProvider theme={theme}>
           <CssBaseline enableColorScheme />
           <I18nextProvider i18n={i18nConfig}>
-            <QueryClientProvider client={queryClient}>
-              <AppWithContextAndToken />
-              {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
-            </QueryClientProvider>
+            <SnackbarProvider>
+              <QueryClientProvider client={queryClient}>
+                <AppWithContextAndToken />
+                {process.env.NODE_ENV === 'development' && (
+                  <ReactQueryDevtools />
+                )}
+              </QueryClientProvider>
+            </SnackbarProvider>
           </I18nextProvider>
         </ThemeProvider>
       </StyledEngineProvider>

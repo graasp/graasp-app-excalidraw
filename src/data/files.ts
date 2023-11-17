@@ -8,8 +8,8 @@ import {
 } from '@excalidraw/excalidraw/types/element/types';
 import { BinaryFileData, DataURL } from '@excalidraw/excalidraw/types/types';
 
-import { useAppDataContext } from '../components/context/AppDataContext';
 import { FileAppData } from '../config/appDataTypes';
+import { useAppDataContext } from '../modules/context/AppDataContext';
 
 export const getListOfFileIds = (
   elements: ExcalidrawImageElement[],
@@ -30,7 +30,8 @@ export const useFiles = (filesAppData: List<FileAppData>): BinaryFileData[] => {
           fr.onerror = (err) => reject(err);
           fr.readAsDataURL(file);
         });
-      const { name: fileName, mimetype } = fileAppDataData.extra.s3File;
+      // WHY ???
+      const { name: fileName, mimetype } = fileAppDataData.extra.s3File.s3File;
       const fileData = await getFileContent(id || '').then((result) =>
         reader(result),
       );

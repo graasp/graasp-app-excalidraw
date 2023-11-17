@@ -25,11 +25,12 @@ jobs:
       - name: Yarn build
         # Set environment variables required to perform the build. These are only available to this step
         env:
-          VITE_API_HOST: ${{ secrets.REACT_APP_API_HOST_DEV }}
+          VITE_API_HOST: ${{ vars.API_HOST }}
           VITE_GRAASP_APP_KEY: ${{ secrets.APP_KEY }}
-          VITE_SENTRY_ENV: development
+          VITE_SENTRY_ENV: ${{ vars.SENTRY_ENV }}
           VITE_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           VITE_VERSION: ${{ github.sha }}
+          VITE_WS_HOST: ${{ vars.WS_HOST }}
           # add any env variable needed by your app here
         run: yarn build
         shell: bash
@@ -39,10 +40,10 @@ jobs:
         with:
           # Replace input build-folder or version if needed
           build-folder: 'build'
-          graasp-app-id: ${{ secrets.APP_KEY }}
+          graasp-app-id: ${{ secrets.APP_ID }}
           version: 'latest'
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-          aws-region: ${{ secrets.APPS_AWS_REGION }}
+          aws-region: ${{ vars.APPS_AWS_REGION_DEV }}
           aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_APPS_DEV }}
           cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_DEV }}

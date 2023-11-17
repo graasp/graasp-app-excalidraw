@@ -1,4 +1,5 @@
 import { List } from 'immutable';
+import cloneDeep from 'lodash.clonedeep';
 import debounce from 'lodash.debounce';
 import isEqual from 'lodash.isequal';
 
@@ -6,6 +7,31 @@ import { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
 
+import { APP_DATA_TYPES, FileAppData } from '@/config/appDataTypes';
+import {
+  DEFAULT_EXCALIDRAW_ELEMENTS_APP_DATA,
+  DEFAULT_EXCALIDRAW_STATE_APP_DATA,
+} from '@/config/constants';
+import i18n from '@/config/i18n';
+import {
+  DEBOUNCE_COMPARE_ELEMENTS,
+  DEBOUNCE_SAVE_ELEMENTS,
+  DEBOUNCE_SAVE_STATE,
+  EXCALIDRAW_ENABLE_GRID_MODE,
+  EXCALIDRAW_ENABLE_VIEW_MODE,
+  EXCALIDRAW_ENABLE_ZEN_MODE,
+  EXCALIDRAW_THEME,
+} from '@/config/settings';
+import {
+  getExcalidrawElementsFromAppData,
+  getExcalidrawStateFromAppData,
+  parseExcalidrawElementsAppData,
+  parseExcalidrawStateAppData,
+} from '@/data/excalidraw';
+import { getListOfFileIds, useFiles } from '@/data/files';
+import Loader from '@/modules/common/Loader';
+import { useAppDataContext } from '@/modules/context/AppDataContext';
+import { reconcileElements } from '@/utils/reconciliation';
 import { Excalidraw } from '@excalidraw/excalidraw';
 import type {
   ExcalidrawElement,
@@ -17,31 +43,7 @@ import {
   ExcalidrawImperativeAPI,
 } from '@excalidraw/excalidraw/types/types';
 
-import {
-  APP_DATA_TYPES,
-  ExcalidrawElementsAppData,
-  ExcalidrawStateAppData,
-  FileAppData,
-} from '../config/appDataTypes';
-import {
-  DEFAULT_EXCALIDRAW_ELEMENTS_APP_DATA,
-  DEFAULT_EXCALIDRAW_STATE_APP_DATA,
-} from '../config/constants';
-import i18n from '../config/i18n';
-import {
-  DEBOUNCE_COMPARE_ELEMENTS,
-  DEBOUNCE_SAVE_ELEMENTS,
-  DEBOUNCE_SAVE_STATE,
-  EXCALIDRAW_ENABLE_GRID_MODE,
-  EXCALIDRAW_ENABLE_VIEW_MODE,
-  EXCALIDRAW_ENABLE_ZEN_MODE,
-  EXCALIDRAW_THEME,
-} from '../config/settings';
-import { getListOfFileIds, useFiles } from '../data/files';
-import { reconcileElements } from '../utils/reconciliation';
-import Loader from './common/Loader';
-import RefreshButton from './common/RefreshButton';
-import { useAppDataContext } from './context/AppDataContext';
+import MainMenu from './MainMenu';
 
 const ExcalidrawView: FC = () => {
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null);
@@ -64,21 +66,8 @@ const ExcalidrawView: FC = () => {
   const { isLoading } = status;
 
   useEffect(() => {
-    const elementsAppData: ExcalidrawElementsAppData = (appData.find(
-      ({ type }) => type === APP_DATA_TYPES.EXCALIDRAW_ELEMENTS,
-    ) as ExcalidrawElementsAppData) ?? {
-      type: APP_DATA_TYPES.EXCALIDRAW_ELEMENTS,
-      id: '',
-      data: { elements: '[]' },
-    };
-
-    const stateAppData: ExcalidrawStateAppData = (appData.find(
-      ({ type }) => type === APP_DATA_TYPES.EXCALIDRAW_STATE,
-    ) as ExcalidrawStateAppData) ?? {
-      type: APP_DATA_TYPES.EXCALIDRAW_STATE,
-      id: '',
-      data: { appState: '{}' },
-    };
+    const elementsAppData = getExcalidrawElementsFromAppData(appData);
+    const stateAppData = getExcalidrawStateFromAppData(appData);
 
     setFilesAppData(
       appData.filter(
@@ -86,17 +75,18 @@ const ExcalidrawView: FC = () => {
       ) as List<FileAppData>,
     );
 
-    const { id, data: newData } = elementsAppData;
+    const { id } = elementsAppData;
     setIdElements(id);
-    const newElements = JSON.parse(newData.elements);
+    const newElements = parseExcalidrawElementsAppData(elementsAppData);
     if (excalidrawRef.current && typeof localElements !== 'undefined') {
+      const currentAppState = excalidrawRef.current.getAppState();
       const reconciledElements = reconcileElements(
         localElements,
         newElements,
-        excalidrawRef.current.getAppState(),
+        currentAppState,
       );
       excalidrawRef.current.updateScene({
-        elements: reconciledElements,
+        elements: cloneDeep(reconciledElements),
         commitToHistory: false,
       });
       setLocalElements(reconciledElements as readonly ExcalidrawElement[]);
@@ -104,10 +94,15 @@ const ExcalidrawView: FC = () => {
       setLocalElements(newElements);
     }
     setIdState(stateAppData.id);
-    setAppState({
-      ...JSON.parse(stateAppData.data.appState),
-      collaborators: new Map<string, never>(),
-    });
+    if (stateAppData) {
+      const appStateTmp = parseExcalidrawStateAppData(stateAppData);
+      if (appStateTmp) {
+        setAppState({
+          ...appStateTmp,
+          collaborators: new Map<string, never>(),
+        });
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appData]);
 
@@ -133,6 +128,38 @@ const ExcalidrawView: FC = () => {
     }
   };
 
+  const debouncedSaveElements = useRef(
+    debounce(saveElements, DEBOUNCE_SAVE_ELEMENTS),
+  ).current;
+
+  /**
+   * Compare two sets of elements and only save if the elements are different than the previous elements.
+   *
+   * @param elements The _new_ elements.
+   * @param prevElements The previous elements.
+   * @param id The id of the *AppData* containing the elements.
+   */
+  const compareAndSaveElements = (
+    elements: readonly ExcalidrawElement[],
+    prevElements: readonly ExcalidrawElement[],
+    id: string,
+  ): void => {
+    const elementsJSON = JSON.stringify(elements);
+    const prevElementsJSON = JSON.stringify(prevElements);
+    if (!isEqual(elementsJSON, prevElementsJSON)) {
+      debouncedSaveElements(elementsJSON, id);
+    }
+  };
+
+  const debouncedCompareElements = useRef(
+    debounce(compareAndSaveElements, DEBOUNCE_COMPARE_ELEMENTS),
+  ).current;
+
+  /**
+   * Saves Excalidraw's app state in app data.
+   * @param newAppState The new AppState (from Excalidraw)
+   * @param id The id of the *AppData* containing the app state.
+   */
   const saveState = (newAppState: AppState, id: string): void => {
     const newAppStateJSON = JSON.stringify(newAppState);
     if (id.length > 0) {
@@ -152,22 +179,10 @@ const ExcalidrawView: FC = () => {
     }
   };
 
-  const debouncedSaveElements = useRef(
-    debounce(saveElements, DEBOUNCE_SAVE_ELEMENTS),
-  ).current;
-
-  const compareAndSaveElements = (
-    elements: readonly ExcalidrawElement[],
-    prevElements: readonly ExcalidrawElement[],
-    id: string,
-  ): void => {
-    const elementsJSON = JSON.stringify(elements);
-    const prevElementsJSON = JSON.stringify(prevElements);
-    if (!isEqual(elementsJSON, prevElementsJSON)) {
-      debouncedSaveElements(elementsJSON, id);
-    }
-  };
-
+  /**
+   * Compare and save the files uploaded to excalidraw.
+   * Currently not working well.
+   */
   const compareAndSaveFiles = useCallback(
     async (
       filesLocal: BinaryFiles,
@@ -197,10 +212,6 @@ const ExcalidrawView: FC = () => {
     [deleteFile, uploadFile],
   );
 
-  const debouncedCompareElements = useRef(
-    debounce(compareAndSaveElements, DEBOUNCE_COMPARE_ELEMENTS),
-  ).current;
-
   const debouncedSaveState = useRef(
     debounce(saveState, DEBOUNCE_SAVE_STATE),
   ).current;
@@ -209,6 +220,12 @@ const ExcalidrawView: FC = () => {
     debounce(compareAndSaveFiles, DEBOUNCE_COMPARE_ELEMENTS),
   ).current;
 
+  /**
+   * Handle any change event.
+   * @param {ExcalidrawElement[]} elements The current excalidraw elements.
+   * @param {AppState} newAppState The current app state.
+   * @param {BinaryFiles} filesLocal The current files.
+   */
   const handleChange = (
     elements: readonly ExcalidrawElement[],
     newAppState: AppState,
@@ -223,7 +240,7 @@ const ExcalidrawView: FC = () => {
       !(isExcalidrawLoading || isResizing || isRotating) &&
       typeof localElements !== 'undefined'
     ) {
-      debouncedCompareElements(elements, localElements, idElements);
+      compareAndSaveElements(elements, localElements, idElements);
       if (!appState?.pendingImageElementId) {
         debouncedCompareAndSaveFiles(filesLocal, filesAppData, [...elements]);
       }
@@ -248,7 +265,7 @@ const ExcalidrawView: FC = () => {
     return <Loader />;
   }
   return (
-    <Box height="100vh" width="100%">
+    <Box height="100%" width="100%">
       <Excalidraw
         initialData={{
           elements: localElements,
@@ -263,8 +280,9 @@ const ExcalidrawView: FC = () => {
         theme={EXCALIDRAW_THEME}
         name={name}
         langCode={lang}
-        renderTopRightUI={() => <RefreshButton />}
-      />
+      >
+        <MainMenu />
+      </Excalidraw>
     </Box>
   );
 };
