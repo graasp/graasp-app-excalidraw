@@ -1,3 +1,5 @@
+import { SnackbarProvider } from 'notistack';
+
 import React, { FC } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
@@ -18,7 +20,7 @@ import {
   hooks,
   queryClient,
 } from '../config/queryClient';
-import { showErrorToast } from '../utils/toast';
+import { showErrorToast } from '../utils/toasts';
 import Loader from './common/Loader';
 import App from './main/App';
 
@@ -94,10 +96,14 @@ const Root: FC = () => {
         <ThemeProvider theme={theme}>
           <CssBaseline enableColorScheme />
           <I18nextProvider i18n={i18nConfig}>
-            <QueryClientProvider client={queryClient}>
-              <AppWithContextAndToken />
-              {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
-            </QueryClientProvider>
+            <SnackbarProvider>
+              <QueryClientProvider client={queryClient}>
+                <AppWithContextAndToken />
+                {process.env.NODE_ENV === 'development' && (
+                  <ReactQueryDevtools />
+                )}
+              </QueryClientProvider>
+            </SnackbarProvider>
           </I18nextProvider>
         </ThemeProvider>
       </StyledEngineProvider>

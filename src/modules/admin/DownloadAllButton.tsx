@@ -13,6 +13,7 @@ import {
   getExcalidrawElementsFromAppData,
   getExcalidrawStateFromAppData,
 } from '@/data/excalidraw';
+import { showErrorToast } from '@/utils/toasts';
 import { exportToBlob } from '@excalidraw/excalidraw';
 
 import { useAppDataContext } from '../context/AppDataContext';
@@ -77,7 +78,7 @@ const DownloadAllButton: FC = () => {
           })
           .catch((reason) =>
             // eslint-disable-next-line no-console
-            console.error(
+            showErrorToast(
               t('ADMIN_VIEW.ERROR_DOWNLOAD_ALL', { reason: reason.toString() }),
             ),
           );
