@@ -6,6 +6,7 @@ declare global {
     Cypress: boolean;
     database: Database;
     apiErrors: object;
+    EXCALIDRAW_ASSET_PATH: string;
   }
 }
 

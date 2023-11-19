@@ -33,6 +33,8 @@ if (MOCK_API) {
   });
 }
 
+window.EXCALIDRAW_ASSET_PATH = '/';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );

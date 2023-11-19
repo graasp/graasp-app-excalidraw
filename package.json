@@ -65,7 +65,8 @@
     "cypress:open": "env-cmd -f ./.env.development cypress open",
     "test": "concurrently -k -s first \"yarn start:test\" \"yarn test:ci\" ",
     "test:ci": "env-cmd -f ./.env.test cypress run --browser chrome --headless && nyc report --reporter=text --reporter=text-summary",
-    "cov:report": "open ./coverage/lcov-report/index.html"
+    "cov:report": "open ./coverage/lcov-report/index.html",
+    "upgrade-assets:excalidraw": "cp -R node_modules/@excalidraw/excalidraw/dist/excalidraw-assets public/"
   },
   "devDependencies": {
     "@commitlint/cli": "18.4.2",
