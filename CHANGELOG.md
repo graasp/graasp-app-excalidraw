@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.1](https://github.com/graasp/graasp-app-excalidraw/compare/v3.0.0...v3.0.1) (2023-11-19)
+
+
+### Bug Fixes
+
+* imperative API excalidraw prop ([b9a9a3f](https://github.com/graasp/graasp-app-excalidraw/commit/b9a9a3f3b1fd65027cac90d99acb24720bf79c6c))
+* imperative API props for Excalidraw 0.17 ([#39](https://github.com/graasp/graasp-app-excalidraw/issues/39)) ([b9a9a3f](https://github.com/graasp/graasp-app-excalidraw/commit/b9a9a3f3b1fd65027cac90d99acb24720bf79c6c))
+
 ## [3.0.0](https://github.com/graasp/graasp-app-excalidraw/compare/v2.0.0...v3.0.0) (2023-08-02)
 
 
