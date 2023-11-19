@@ -46,11 +46,12 @@ import {
 import MainMenu from './MainMenu';
 
 const ExcalidrawView: FC = () => {
-  const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null);
   const lang = i18n.language;
   const date = new Date();
   const name = `drawing${date.toISOString()}`;
 
+  const [excalidrawAPI, setExcalidrawApi] =
+    useState<ExcalidrawImperativeAPI | null>(null);
   const [localElements, setLocalElements] = useState<
     readonly ExcalidrawElement[]
   >([]);
@@ -78,14 +79,14 @@ const ExcalidrawView: FC = () => {
     const { id } = elementsAppData;
     setIdElements(id);
     const newElements = parseExcalidrawElementsAppData(elementsAppData);
-    if (excalidrawRef.current && typeof localElements !== 'undefined') {
-      const currentAppState = excalidrawRef.current.getAppState();
+    if (excalidrawAPI && typeof localElements !== 'undefined') {
+      const currentAppState = excalidrawAPI.getAppState();
       const reconciledElements = reconcileElements(
         localElements,
         newElements,
         currentAppState,
       );
-      excalidrawRef.current.updateScene({
+      excalidrawAPI.updateScene({
         elements: cloneDeep(reconciledElements),
         commitToHistory: false,
       });
@@ -107,8 +108,8 @@ const ExcalidrawView: FC = () => {
   }, [appData]);
 
   useEffect(() => {
-    excalidrawRef.current?.addFiles(files);
-  }, [files]);
+    excalidrawAPI?.addFiles(files);
+  }, [excalidrawAPI, files]);
 
   const saveElements = (elements: string, id: string): void => {
     if (id.length > 0) {
@@ -272,7 +273,7 @@ const ExcalidrawView: FC = () => {
           appState,
           // files, // TODO: reimplement.
         }}
-        ref={excalidrawRef}
+        excalidrawAPI={(api) => setExcalidrawApi(api)}
         onChange={handleChange}
         viewModeEnabled={EXCALIDRAW_ENABLE_VIEW_MODE}
         zenModeEnabled={EXCALIDRAW_ENABLE_ZEN_MODE}

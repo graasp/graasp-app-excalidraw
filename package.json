@@ -19,7 +19,7 @@
   "dependencies": {
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
-    "@excalidraw/excalidraw": "^0.16.1",
+    "@excalidraw/excalidraw": "^0.17.0",
     "@graasp/apps-query-client": "^2.0.4",
     "@graasp/sdk": "1.2.1",
     "@graasp/ui": "^3.7.0",
