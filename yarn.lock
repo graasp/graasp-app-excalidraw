@@ -5628,10 +5628,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/i18n@npm:0.13.9":
-  version: 0.13.9
-  resolution: "@types/i18n@npm:0.13.9"
-  checksum: 1bebdf4f7e7998fe436e62825dd0d4ab2898c1bdb07e7fd3a897673c2842c692e693a38221e8bddd7eab43686e382613159e57177ae8b879e14c366b0c111727
+"@types/i18n@npm:0.13.10":
+  version: 0.13.10
+  resolution: "@types/i18n@npm:0.13.10"
+  checksum: 4b6c84536bf891d07fb1b1daf2e8d66889d0c317dc3c2b653d65a922ee3df3cef93b811b71e46dfb6483a95beb1515a7c82bf3f0fb05d54084ac519ff93f706d
   languageName: node
   linkType: hard
 
@@ -9734,7 +9734,7 @@ __metadata:
     "@tanstack/react-query-devtools": "npm:^4.36.1"
     "@trivago/prettier-plugin-sort-imports": "npm:4.3.0"
     "@types/file-saver": "npm:^2.0.7"
-    "@types/i18n": "npm:0.13.9"
+    "@types/i18n": "npm:0.13.10"
     "@types/lodash.clonedeep": "npm:^4.5.9"
     "@types/lodash.debounce": "npm:4.0.9"
     "@types/lodash.isequal": "npm:~4.5.8"
