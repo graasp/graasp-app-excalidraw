@@ -3367,9 +3367,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:3.12.10":
-  version: 3.12.10
-  resolution: "@cypress/code-coverage@npm:3.12.10"
+"@cypress/code-coverage@npm:3.12.15":
+  version: 3.12.15
+  resolution: "@cypress/code-coverage@npm:3.12.15"
   dependencies:
     "@cypress/webpack-preprocessor": "npm:^6.0.0"
     chalk: "npm:4.1.2"
@@ -3377,7 +3377,7 @@ __metadata:
     debug: "npm:4.3.4"
     execa: "npm:4.1.0"
     globby: "npm:11.1.0"
-    istanbul-lib-coverage: "npm:3.0.0"
+    istanbul-lib-coverage: "npm:^3.0.0"
     js-yaml: "npm:4.1.0"
     nyc: "npm:15.1.0"
   peerDependencies:
@@ -3386,7 +3386,7 @@ __metadata:
     babel-loader: ^8.3 || ^9
     cypress: "*"
     webpack: ^4 || ^5
-  checksum: 6ba933c6078090043e779e7760cfd5cafd6037b0b9151cbe477eca2707a2ac641cf4466203bf8b2666c1e13f5a7d2e926ce10160ad0a345a58e2ac2df7a974ba
+  checksum: 7411a3d11a18b5d28ed962792d82b2a573ffd37c0330643f31c94793ac3e6597b50ab93edec2e4cb129fb9ce84e774d762a4f7ca1bc90b3d3abb16fc1291b374
   languageName: node
   linkType: hard
 
@@ -9793,7 +9793,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": "npm:18.4.2"
     "@commitlint/config-conventional": "npm:18.4.2"
-    "@cypress/code-coverage": "npm:3.12.10"
+    "@cypress/code-coverage": "npm:3.12.15"
     "@cypress/instrument-cra": "npm:1.4.0"
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:11.11.0"
@@ -10647,13 +10647,6 @@ __metadata:
   version: 0.1.2
   resolution: "isstream@npm:0.1.2"
   checksum: 22d9c181015226d4534a227539256897bbbcb7edd1066ca4fc4d3a06dbd976325dfdd16b3983c7d236a89f256805c1a685a772e0364e98873d3819b064ad35a1
-  languageName: node
-  linkType: hard
-
-"istanbul-lib-coverage@npm:3.0.0":
-  version: 3.0.0
-  resolution: "istanbul-lib-coverage@npm:3.0.0"
-  checksum: eb0ba205890ee02ea9d76b31d6adf196f532b28a158c0c4db0db6ee6b60de476aca7bba34a9321d17fc396853db758d9430f1202ed28a7a6060e9d1cc8f555c0
   languageName: node
   linkType: hard
 
