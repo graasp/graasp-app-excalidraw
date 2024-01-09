@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.2](https://github.com/graasp/graasp-app-excalidraw/compare/v3.0.1...v3.0.2) (2024-01-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/react to v7.89.0 ([#51](https://github.com/graasp/graasp-app-excalidraw/issues/51)) ([dd75fe4](https://github.com/graasp/graasp-app-excalidraw/commit/dd75fe4b1b02d21286211fb5f96de2fd6e4f0465))
+* update renovate config to use graasp app config ([#57](https://github.com/graasp/graasp-app-excalidraw/issues/57)) ([f0f4935](https://github.com/graasp/graasp-app-excalidraw/commit/f0f49353322ee5d6b27691782df98a8357e26570))
+
 ## [3.0.1](https://github.com/graasp/graasp-app-excalidraw/compare/v3.0.0...v3.0.1) (2023-11-19)
 
 
