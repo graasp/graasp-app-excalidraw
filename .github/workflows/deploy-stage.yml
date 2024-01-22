@@ -43,5 +43,5 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_STAGE }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGE }}
           aws-region: ${{ vars.APPS_AWS_REGION_STAGE }}
-          aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_APPS_STAGE }}
+          aws-s3-bucket-name: ${{ vars.AWS_S3_BUCKET_NAME_APPS_STAGE }}
           cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_STAGE }}
