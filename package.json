@@ -138,5 +138,5 @@
   "resolutions": {
     "immutable": "4.3.1"
   },
-  "packageManager": "yarn@4.0.1"
+  "packageManager": "yarn@4.0.2"
 }
