@@ -230,7 +230,7 @@ const ExcalidrawView: FC = () => {
   const handleChange = (
     elements: readonly ExcalidrawElement[],
     newAppState: AppState,
-    filesLocal: BinaryFiles,
+    // filesLocal: BinaryFiles,
   ): void => {
     const {
       isResizing,
@@ -242,9 +242,9 @@ const ExcalidrawView: FC = () => {
       typeof localElements !== 'undefined'
     ) {
       compareAndSaveElements(elements, localElements, idElements);
-      if (!appState?.pendingImageElementId) {
-        debouncedCompareAndSaveFiles(filesLocal, filesAppData, [...elements]);
-      }
+      // if (!appState?.pendingImageElementId) {
+      //   debouncedCompareAndSaveFiles(filesLocal, filesAppData, [...elements]);
+      // }
       debouncedSaveState(newAppState, idState);
     } else {
       debouncedCompareElements.cancel();
@@ -265,6 +265,8 @@ const ExcalidrawView: FC = () => {
   if (isLoading) {
     return <Loader />;
   }
+
+  // files button is disabled via css as well
   return (
     <Box height="100%" width="100%">
       <Excalidraw

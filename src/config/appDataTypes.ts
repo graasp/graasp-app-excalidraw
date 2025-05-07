@@ -1,4 +1,4 @@
-import { AppDataVisibility, S3FileItemExtra } from '@graasp/sdk';
+import { AppDataVisibility, FileItemExtra } from '@graasp/sdk';
 import { AppDataRecord } from '@graasp/sdk/frontend';
 
 /* eslint-disable no-shadow */
@@ -30,20 +30,20 @@ type ExcalidrawElementsAppData = AppDataRecord &
   ExcalidrawElementsAppDataExtension;
 type ExcalidrawStateAppData = AppDataRecord & ExcalidrawStateAppDataExtension;
 
-type s3FileData = {
+type fileData = {
   name: string;
   type: string;
   extra: {
-    s3File: S3FileItemExtra;
+    file: FileItemExtra;
   };
 };
 
-type FileAppData = AppDataRecord & { data: s3FileData };
+type FileAppData = AppDataRecord & { data: fileData };
 
 export { APP_DATA_TYPES };
 export type {
   ExcalidrawElementsAppData,
   ExcalidrawStateAppData,
-  s3FileData,
+  fileData,
   FileAppData,
 };
