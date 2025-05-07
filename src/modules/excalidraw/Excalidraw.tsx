@@ -265,6 +265,8 @@ const ExcalidrawView: FC = () => {
   if (isLoading) {
     return <Loader />;
   }
+
+  // files button is disabled via css as well
   return (
     <Box height="100%" width="100%">
       <Excalidraw
