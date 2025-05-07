@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.1.0](https://github.com/graasp/graasp-app-excalidraw/compare/v3.0.2...v3.1.0) (2025-05-07)
+
+
+### Features
+
+* remove s3 ([#74](https://github.com/graasp/graasp-app-excalidraw/issues/74)) ([84e9067](https://github.com/graasp/graasp-app-excalidraw/commit/84e9067aba66b47109dafadbb0e4b09d6519125d))
+
+
+### Bug Fixes
+
+* fix deploy workflows ([7f30ba2](https://github.com/graasp/graasp-app-excalidraw/commit/7f30ba24d91c6131fb51b488fa2f461a6c8de362))
+
 ## [3.0.2](https://github.com/graasp/graasp-app-excalidraw/compare/v3.0.1...v3.0.2) (2024-01-09)
 
 
