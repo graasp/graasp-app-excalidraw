@@ -11,5 +11,5 @@ body {
 
 /* disable uploading images */
 [title='Insert image — 9'] {
-  display: 'none';
+  display: none !important;
 }
