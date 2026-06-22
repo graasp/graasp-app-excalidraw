@@ -9839,7 +9839,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:4.6.0"
     file-saver: "npm:^2.0.5"
     husky: "npm:8.0.3"
-    i18next: "npm:23.7.6"
+    i18next: "npm:23.7.20"
     immutable: "npm:^4.3.1"
     jszip: "npm:^3.10.1"
     lodash.clonedeep: "npm:^4.5.0"
@@ -10140,12 +10140,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:23.7.6":
-  version: 23.7.6
-  resolution: "i18next@npm:23.7.6"
+"i18next@npm:23.7.20":
+  version: 23.7.20
+  resolution: "i18next@npm:23.7.20"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-  checksum: ae16654e08e10c38d4d17c6a28ae7cb4ac894f03bccfa7ae1637b6c6705937009d5f625f9cd0c3b664bec1acaa7116e5dda7a5e9fbbf41bf97260b49da2875e7
+  checksum: e6eac61ee6785910c30fe99480ec58284071ef541e4070453b6f265d0cf1f67dbb0fe749cb1a2eda1d2e757516b1d2a24fbb6f52817a382feb39fce9e552a729
   languageName: node
   linkType: hard
 
