@@ -17,8 +17,8 @@
   ],
   "homepage": "https://github.com/graasp/graasp-app-excalidraw/blob/main/README.md",
   "dependencies": {
-    "@emotion/react": "11.11.1",
-    "@emotion/styled": "11.11.0",
+    "@emotion/react": "11.11.4",
+    "@emotion/styled": "11.11.5",
     "@excalidraw/excalidraw": "^0.17.0",
     "@graasp/apps-query-client": "^2.0.4",
     "@graasp/sdk": "1.2.1",
